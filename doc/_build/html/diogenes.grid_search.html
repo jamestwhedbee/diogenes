@@ -1,0 +1,1040 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diogenes.grid_search package &mdash; Diogenes 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="diogenes-grid-search-package">
+<h1>diogenes.grid_search package<a class="headerlink" href="#diogenes-grid-search-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-diogenes.grid_search.experiment">
+<span id="diogenes-grid-search-experiment-module"></span><h2>diogenes.grid_search.experiment module<a class="headerlink" href="#module-diogenes.grid_search.experiment" title="Permalink to this headline">¶</a></h2>
+<p>Provides classes necessary for organizing an Experiment</p>
+<dl class="class">
+<dt id="diogenes.grid_search.experiment.Experiment">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Experiment</code><span class="sig-paren">(</span><em>M, y, clfs=[{'clf': &lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;}], subsets=[{'subset': &lt;class 'diogenes.grid_search.subset.SubsetNoSubset'&gt;}], cvs=[{'cv': &lt;class 'sklearn.cross_validation.KFold'&gt;}], trials=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class to execute and organize grid searches.</p>
+<p>Several of the init arguments are of type list of dict. Experiment
+expects these to be in a particular format:</p>
+<dl class="docutils">
+<dt>[{CLASS_SPECIFIER: CLASS_1,</dt>
+<dd><blockquote class="first">
+<div><dl class="docutils">
+<dt>CLASS_1_PARAM_1: [CLASS_1_PARAM_1_VALUE_1, CLASS_1_PARAM_1_VALUE_2, ...</dt>
+<dd>CLASS_1_PARAM_1_VALUE_N],</dd>
+<dt>CLASS_1_PARAM_2: [CLASS_1_PARAM_2_VALUE_1, CLASS_1_PARAM_2_VALUE_2, ...</dt>
+<dd>CLASS_1_PARAM_2_VALUE_N],</dd>
+</dl>
+<p>...
+CLASS_1_PARAM_M: [CLASS_1_PARAM_M_VALUE_1, CLASS_1_PARAM_M_VALUE_2, ...</p>
+<blockquote>
+<div>CLASS_1_PARAM_M_VALUE_N]},</div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>{CLASS_SPECIFIER: CLASS_2,</dt>
+<dd><dl class="first docutils">
+<dt>CLASS_2_PARAM_1: [CLASS_2_PARAM_1_VALUE_1, CLASS_2_PARAM_1_VALUE_2, ...</dt>
+<dd>CLASS_2_PARAM_1_VALUE_N],</dd>
+<dt>CLASS_2_PARAM_2: [CLASS_2_PARAM_2_VALUE_1, CLASS_2_PARAM_2_VALUE_2, ...</dt>
+<dd>CLASS_2_PARAM_2_VALUE_N],</dd>
+</dl>
+<p>...
+CLASS_2_PARAM_M: [CLASS_2_PARAM_M_VALUE_1, CLASS_2_PARAM_M_VALUE_2, ...</p>
+<blockquote class="last">
+<div>CLASS_2_PARAM_M_VALUE_N]},</div></blockquote>
+</dd>
+</dl>
+<p>...
+{CLASS_SPECIFIER: CLASS_L,</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>CLASS_L_PARAM_1: [CLASS_L_PARAM_1_VALUE_1, CLASS_L_PARAM_1_VALUE_2, ...</dt>
+<dd>CLASS_L_PARAM_1_VALUE_N],</dd>
+<dt>CLASS_L_PARAM_2: [CLASS_L_PARAM_2_VALUE_1, CLASS_L_PARAM_2_VALUE_2, ...</dt>
+<dd>CLASS_L_PARAM_2_VALUE_N],</dd>
+</dl>
+<p>...
+CLASS_L_PARAM_M: [CLASS_L_PARAM_M_VALUE_1, CLASS_L_PARAM_M_VALUE_2, ...</p>
+<blockquote>
+<div>CLASS_L_PARAM_M_VALUE_N]}]</div></blockquote>
+</div></blockquote>
+</dd>
+</dl>
+<p>CLASS_SPECIFIER is a different string constant for each argument. for
+clfs, it is &#8216;clf&#8217;. For subsets, it is &#8216;subset&#8217;, and for cvs it is &#8216;cv&#8217;.</p>
+<p>CLASS_* is a class object which will be used to either classify data
+(in clfs), take a subset of data (in subsets) or specify train/test
+splits (in cvs). In clfs, it should be a subclass
+of sklearn.base.BaseEstimator. In subsets, it should be a
+subclass of diogenes.grid_search.subset.BaseSubsetIter. In cvs, it
+should be a subclass of sklearn.cross_validation._PartitionIterator</p>
+<p>CLASS_X_PARAM_* is an init argument of CLASS_X. For example, if CLASS_1
+is sklearn.ensemble.RandomForest, CLASS_1_PARAM_1 might be the string
+literal &#8216;n_estimators&#8217; or the string literal &#8216;n_features&#8217;</p>
+<p>CLASS_X_PARAM_Y_VALUE_* is a single value to try as the argument for
+CLASS_X_PARAM. For example, if CLASS_1_PARAM_1 is &#8216;n_estimators&#8217;,
+then CLASS_1_PARAM_1_VALUE_1 could be 10 and CLASS_1_PARAM_1_VALUE_1
+could be 100.</p>
+<p>When we run the Experiment with Experiment.run, Experiment will create
+a Trial for each element in the cartesian product of all parameters
+for each class. if we have {&#8216;clf&#8217; : RandomForestEstimator,
+&#8216;n_estimators&#8217; : [10, 100], &#8216;n_features&#8217;: [3, 5]} Then there will be
+a Trial for each of RandomForestEstimator(n_estimators=10, n_features=3),
+RandomForestEstimator(n_estimators=100, n_features=3),
+RandomForestEstimator(n_estimators=10, n_features=5), and
+RandomForestEstimator(n_estimators=100, n_features=5).</p>
+<p>For examples of how to create these arguments, look at
+diogenes.grid_search.standard_clfs.py.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array corresponding to features to experiment on</li>
+<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; vector of labels</li>
+<li><strong>clfs</strong> (<em>list of dict</em>) &#8211; classifiers to run</li>
+<li><strong>subsets</strong> (<em>list of dict</em>) &#8211; subsetting operations to perform</li>
+<li><strong>cvs</strong> (<em>list of dict</em>) &#8211; directives to make train and test sets</li>
+<li><strong>trials</strong> (<em>list or Trial or None</em>) &#8211; If a number of Trials have already been run, and we just want to
+collect them into an Experiment rather than starting from scratch,
+Experiment can be initiazed with a list of already run Trials</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Experiment.trials">
+<code class="descname">trials</code><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.trials" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of Trial</em></p>
+<p>Trials corresponding to this experiment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.average_score">
+<code class="descname">average_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.average_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get average score for all Trials in this experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict of Trial</strong> &#8211;
+Provides the average score of each trial</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="diogenes.grid_search.experiment.Experiment.csv_header">
+<em class="property">static </em><code class="descname">csv_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.csv_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the header required to make a csv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.has_run">
+<code class="descname">has_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.has_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns boolean specifying whether this experiment has been run</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.iterate_over_dimension">
+<code class="descname">iterate_over_dimension</code><span class="sig-paren">(</span><em>dimension</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.iterate_over_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over sets of Trials with respect to dimension</p>
+<p>For example, if we iterate across CLF, each iteration will
+include all the Trials that use a given CLF. If the experiment
+has RandomForestClassifier and SVC trials, then  one iteration
+will have all trials with RandomForestClassifer and the other
+iteration will have all trials with SVC</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dimension</strong> (<em>{CLF, CLF_PARAMS, SUBSET, SUBSET_PARAMS, CV, CV_PARAMS}</em>) &#8211; <p>dimension to iterate over:</p>
+<dl class="docutils">
+<dt>CLF</dt>
+<dd>iterate over Trials on classifier</dd>
+<dt>CLF_PARAMS</dt>
+<dd>iterate over Trials on classifier parameters</dd>
+<dt>SUBSET</dt>
+<dd>iterate over Trials on subset iterator</dd>
+<dt>SUBSET_PARAMS</dt>
+<dd>iterate over Trials on subset iterator parameters</dd>
+<dt>CV</dt>
+<dd>iterate over Trials on cross-validation partition iterator</dd>
+<dt>CV_PARAMS</dt>
+<dd>iterate over Trials on partition iterator</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The first element of the tuple is the value of dimension that
+all trials in the second element of the tuple has.<p>The second element of the tuple is an Experiment contain all
+trials where the given dimension is equal to the value in the
+first element of the tuple.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterator of (?, Experiment)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.make_csv">
+<code class="descname">make_csv</code><span class="sig-paren">(</span><em>file_name='report.csv'</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.make_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a csv summarizing the experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> (<em>str</em>) &#8211; path of csv to be generated</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">path of generated csv</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.make_report">
+<code class="descname">make_report</code><span class="sig-paren">(</span><em>report_file_name='report.pdf'</em>, <em>dimension=None</em>, <em>return_report_object=False</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.make_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a pdf report of this experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>report_file_name</strong> (<em>str</em>) &#8211; path of file for report output</li>
+<li><strong>dimension</strong> (<em>{CLF, CLF_PARAMS, SUBSET, SUBSET_PARAMS, CV, CV_PARAMS, None}</em>) &#8211; If not None, will make a subreport for each unique value of
+dimension</li>
+<li><strong>return_report_object</strong> (<em>boolean</em>) &#8211; Iff True, this function returns the report file name and the
+diogenes.display.Report object. Otherwise, just returns the report
+file name.</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, gives output about report generation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">If return_report_object is False, returns the file name of the
+generated report. Else, returns a tuple of the filename of the
+generated report as well as the Report object representing the
+report</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str or (str, diogenes.display.Report)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.roc_auc">
+<code class="descname">roc_auc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.roc_auc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get average area under the roc curve for all Trials in this experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict of Trial</strong> &#8211;
+Provides the average area under the roc curve of each trial</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the experiment. Fits all classifiers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Trials with fitted classifiers</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of Trial</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.slice_by_best_score">
+<code class="descname">slice_by_best_score</code><span class="sig-paren">(</span><em>dimension</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.slice_by_best_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns trials that have the best score across dimension</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dimension</strong> (<em>{CLF, CLF_PARAMS, SUBSET, SUBSET_PARAMS, CV, CV_PARAMS}</em>) &#8211; <p>dimension to find best trials over</p>
+<dl class="docutils">
+<dt>CLF</dt>
+<dd>find best Trials over classifier</dd>
+<dt>CLF_PARAMS</dt>
+<dd>find best Trials over classifier parameters</dd>
+<dt>SUBSET</dt>
+<dd>find best Trials over subset iterator</dd>
+<dt>SUBSET_PARAMS</dt>
+<dd>find best Trials over subset iterator parameters</dd>
+<dt>CV</dt>
+<dd>find best Trials over cross-validation partition iterator</dd>
+<dt>CV_PARAMS</dt>
+<dd>find best Trials over partition iterator</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">With only trials that have the best scores over the selected
+dimension</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#diogenes.grid_search.experiment.Experiment" title="diogenes.grid_search.experiment.Experiment">Experiment</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Experiment.slice_on_dimension">
+<code class="descname">slice_on_dimension</code><span class="sig-paren">(</span><em>dimension</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment.slice_on_dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select Trials where dimension == value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dimension</strong> (<em>{CLF, CLF_PARAMS, SUBSET, SUBSET_PARAMS, CV, CV_PARAMS}</em>) &#8211; <p>dimension to slice on:</p>
+<dl class="docutils">
+<dt>CLF</dt>
+<dd>select Trials where the classifier == value</dd>
+<dt>CLF_PARAMS</dt>
+<dd>select Trials where the classifier parameters == value</dd>
+<dt>SUBSET</dt>
+<dd>select Trials where the subset iterator == value</dd>
+<dt>SUBSET_PARAMS</dt>
+<dd>select Trials where the subset iterator parameters == value</dd>
+<dt>CV</dt>
+<dd>select Trials where the cross-validation partition iterator ==
+value</dd>
+<dt>CV_PARAMS</dt>
+<dd>select Trials where the partition iterator params == value</dd>
+</dl>
+</li>
+<li><strong>value</strong> &#8211; Value to match</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">containing only the specified Trials</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#diogenes.grid_search.experiment.Experiment" title="diogenes.grid_search.experiment.Experiment">Experiment</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.experiment.Run">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Run</code><span class="sig-paren">(</span><em>M</em>, <em>y</em>, <em>col_names</em>, <em>clf</em>, <em>train_indices</em>, <em>test_indices</em>, <em>sub_col_names</em>, <em>sub_col_inds</em>, <em>subset_note</em>, <em>cv_note</em>, <em>M_test=None</em>, <em>y_test=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Object encapsulating a single fitted classifier and specific data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Homogeneous (not structured) array. The array of features.
+If M_test is None, M contains both train and test sets. If
+M_test is not None, M contains only the training set.</li>
+<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; Array of labels. If y_test is None, y contains both train and
+test sets. If y_test is not None, M contains only the training
+set.</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; Names of features</li>
+<li><strong>clf</strong> (<em>sklearn.base.BaseEstimator</em>) &#8211; clf fitted with testing data</li>
+<li><strong>train_indices</strong> (<em>np.ndarray or None</em>) &#8211; If M_test and y_test are None, The indices of M and y that
+comprise the training set</li>
+<li><strong>test_indices</strong> (<em>np.ndarray or None</em>) &#8211; If M_test and y_test are None, The indices of M and y that
+comprise the testing set</li>
+<li><strong>sub_col_names</strong> (<em>list of str</em>) &#8211; If subset takes a subset of columns, these are the column names
+involved in this subset</li>
+<li><strong>sub_col_inds</strong> (<em>np.ndarray</em>) &#8211; If subset takes a subset of columns, these are the indices of the
+columns involved in this subset</li>
+<li><strong>subset_note</strong> (<em>dict of str : ?</em>) &#8211; Extra information about this Run provided by the subsetter</li>
+<li><strong>cv_note</strong> (<em>dict of str : ?</em>) &#8211; Extra information about this run provided by the partition iterator</li>
+<li><strong>M_test</strong> (<em>np.ndarray or None</em>) &#8211; If not None, the features in the test set</li>
+<li><strong>y_test</strong> (<em>np.ndarray or None</em>) &#8211; If not None, the labels in the test set</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.M">
+<code class="descname">M</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.M" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em></p>
+<p>Homogeneous (not structured) array. The array of features.
+If M_test is None, M contains both train and test sets. If
+M_test is not None, M contains only the training set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.y">
+<code class="descname">y</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em></p>
+<p>Array of labels. If y_test is None, y contains both train and
+test sets. If y_test is not None, M contains only the training
+set.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.col_names">
+<code class="descname">col_names</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.col_names" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of str</em></p>
+<p>Names of features</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.clf">
+<code class="descname">clf</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.clf" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>sklearn.base.BaseEstimator</em></p>
+<p>clf fitted with testing data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.train_indices">
+<code class="descname">train_indices</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.train_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>np.ndarray or None</em></p>
+<p>If M_test and y_test are None, The indices of M and y that
+comprise the training set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.test_indices">
+<code class="descname">test_indices</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.test_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>np.ndarray or None</em></p>
+<p>If M_test and y_test are None, The indices of M and y that
+comprise the testing set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.sub_col_names">
+<code class="descname">sub_col_names</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.sub_col_names" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of str</em></p>
+<p>If subset takes a subset of columns, these are the column names
+involved in this subset</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.sub_col_inds">
+<code class="descname">sub_col_inds</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.sub_col_inds" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>np.ndarray</em></p>
+<p>If subset takes a subset of columns, these are the indices of the
+columns involved in this subset</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.subset_note">
+<code class="descname">subset_note</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.subset_note" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str : ?</em></p>
+<p>Extra information about this Run provided by the subsetter</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.cv_note">
+<code class="descname">cv_note</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.cv_note" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str : ?</em></p>
+<p>Extra information about this run provided by the partition iterator</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.M_test">
+<code class="descname">M_test</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.M_test" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>np.ndarray or None</em></p>
+<p>If not None, the features in the test set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Run.y_test">
+<code class="descname">y_test</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.y_test" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>np.ndarray or None</em></p>
+<p>If not None, the labels in the test set</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="diogenes.grid_search.experiment.Run.csv_header">
+<em class="property">static </em><code class="descname">csv_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.csv_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a portion of the header necessary in constructing the csv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.csv_row">
+<code class="descname">csv_row</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.csv_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Run&#8217;s portion of its row in produces csv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.f1_score">
+<code class="descname">f1_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.f1_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns f1 score</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.prec_recall_curve">
+<code class="descname">prec_recall_curve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.prec_recall_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns matplotlib.figure.Figure of precision/recall curve</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.precision_at_thresholds">
+<code class="descname">precision_at_thresholds</code><span class="sig-paren">(</span><em>query_thresholds</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.precision_at_thresholds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns precision at given thresholds</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>query_thresholds</strong> (<em>list of float</em>) &#8211; for each element, 0 &lt;= thresh &lt;= 1</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.roc_auc">
+<code class="descname">roc_auc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.roc_auc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns area under ROC curve</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.roc_curve">
+<code class="descname">roc_curve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.roc_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns matplotlib.figure.Figure of ROC curve</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.score">
+<code class="descname">score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns score of fitted clf</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Run.sorted_top_feat_importance">
+<code class="descname">sorted_top_feat_importance</code><span class="sig-paren">(</span><em>n=25</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run.sorted_top_feat_importance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns top feature importances</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) &#8211; number of feature importances to return</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">names and scores of top features</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[list of str, list of floats]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.experiment.Trial">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Trial</code><span class="sig-paren">(</span><em>M</em>, <em>y</em>, <em>col_names</em>, <em>clf=&lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;</em>, <em>clf_params={}</em>, <em>subset=&lt;class 'diogenes.grid_search.subset.SubsetNoSubset'&gt;</em>, <em>subset_params={}</em>, <em>cv=&lt;class 'diogenes.grid_search.partition_iterator.NoCV'&gt;</em>, <em>cv_params={}</em>, <em>runs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Object encapsulating all Runs for a given configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Homogeneous (not structured) array of features</li>
+<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; Array of labels</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; Names of features</li>
+<li><strong>clf</strong> (<em>sklearn.base.BaseEstimator class</em>) &#8211; Classifier for this trial</li>
+<li><strong>clf_params</strong> (<em>dict of str : ?</em>) &#8211; init parameters for clf</li>
+<li><strong>subset</strong> (<em>diogenes.grid_search.subset.BaseSubsetIter class</em>) &#8211; class of object making subsets</li>
+<li><strong>subset_params</strong> (<em>dict of str : ?</em>) &#8211; init parameters for subset</li>
+<li><strong>cv</strong> (<em>sklearn.cross_validation._PartitionIterator class</em>) &#8211; class used to product train and test sets</li>
+<li><strong>cv_params</strong> (<em>dict of str : ?</em>) &#8211; init parameters of cv</li>
+<li><strong>runs</strong> (<em>list of list of Run or None</em>) &#8211; if not None, can initialize this trial with a list of Runs
+that have already been created.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.M">
+<code class="descname">M</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.M" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em></p>
+<p>Homogeneous (not structured) array of features</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.y">
+<code class="descname">y</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.y" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em></p>
+<p>Array of labels</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.col_names">
+<code class="descname">col_names</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.col_names" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of str</em></p>
+<p>Names of features</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.clf">
+<code class="descname">clf</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.clf" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>sklearn.base.BaseEstimator class</em></p>
+<p>Classifier for this trial</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.clf_params">
+<code class="descname">clf_params</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.clf_params" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str : ?</em></p>
+<p>init parameters for clf</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.subset">
+<code class="descname">subset</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.subset" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>diogenes.grid_search.subset.BaseSubsetIter class</em></p>
+<p>class of object making subsets</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.subset_params">
+<code class="descname">subset_params</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.subset_params" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str : ?</em></p>
+<p>init parameters for subset</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.cv">
+<code class="descname">cv</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.cv" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>sklearn.cross_validation._PartitionIterator class</em></p>
+<p>class used to product train and test sets</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.cv_params">
+<code class="descname">cv_params</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.cv_params" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str : ?</em></p>
+<p>init parameters of cv</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.experiment.Trial.runs">
+<code class="descname">runs</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.runs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list or Run or None</em></p>
+<p>Runs in this Trial. The outer list signifies different subsets. The
+outer lists signify different train/test splits using the same subset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.average_score">
+<code class="descname">average_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.average_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns average score accross all Runs</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="diogenes.grid_search.experiment.Trial.csv_header">
+<em class="property">static </em><code class="descname">csv_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.csv_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns portion of header used when creating csv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.csv_rows">
+<code class="descname">csv_rows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.csv_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns portions of rows used in creating csv</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.has_run">
+<code class="descname">has_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.has_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True iff this Trial has been run</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.median_run">
+<code class="descname">median_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.median_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Run with median score</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.prec_recall_curve">
+<code class="descname">prec_recall_curve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.prec_recall_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns matplotlib.figure.Figure of precision/recall curve</p>
+<p>(of median run)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.roc_auc">
+<code class="descname">roc_auc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.roc_auc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns area under roc curve of median run</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.roc_curve">
+<code class="descname">roc_curve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.roc_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns matplotlib.figure.Figure of roc_curve of median run</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Trial</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.grid_search.experiment.Trial.runs_flattened">
+<code class="descname">runs_flattened</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.runs_flattened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of all Runs (rather than list of list of Runs)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.grid_search.partition_iterator">
+<span id="diogenes-grid-search-partition-iterator-module"></span><h2>diogenes.grid_search.partition_iterator module<a class="headerlink" href="#module-diogenes.grid_search.partition_iterator" title="Permalink to this headline">¶</a></h2>
+<p>Custom objects used to produce train/test splits.</p>
+<p>Also, anything in sklearn.cross_validation should work in Experiments</p>
+<dl class="class">
+<dt id="diogenes.grid_search.partition_iterator.NoCV">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.partition_iterator.</code><code class="descname">NoCV</code><span class="sig-paren">(</span><em>n</em>, <em>indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.partition_iterator.NoCV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.cross_validation._PartitionIterator</span></code></p>
+<p>Partition iterator that just returns the entire set as the training set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> (<em>int</em>) &#8211; The number of rows in the data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.partition_iterator.SlidingWindowIdx">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.partition_iterator.</code><code class="descname">SlidingWindowIdx</code><span class="sig-paren">(</span><em>n</em>, <em>train_start</em>, <em>train_window_size</em>, <em>test_start</em>, <em>test_window_size</em>, <em>inc_value</em>, <em>expanding_train=False</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.partition_iterator.SlidingWindowIdx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.cross_validation._PartitionIterator</span></code></p>
+<p>Partition iterator that iterates across indices of array</p>
+<p>Has a moving window of indices for the training set and a moving
+window of indices for the testing set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> (<em>int</em>) &#8211; Number of rows in the data</li>
+<li><strong>train_start</strong> (<em>int</em>) &#8211; start index of training window</li>
+<li><strong>train_window_size</strong> (<em>int</em>) &#8211; number of rows in the (initial) training window</li>
+<li><strong>test_start</strong> (<em>int</em>) &#8211; start index of testing window</li>
+<li><strong>test_window_size</strong> (<em>int</em>) &#8211; number of rows in testing window</li>
+<li><strong>inc_value</strong> (<em>int</em>) &#8211; number of rows to increment train and test sets in each iteration</li>
+<li><strong>expanding_train</strong> (<em>bool</em>) &#8211; <p>If True, the end of the train window moves forward with each
+iteration, but the beginning of the train window does not.
+Consequently, more rows are added to the training set with each
+iteration</p>
+<p>If False, the beginning and end of the train window both move
+forward, so the training set remains the same size.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="diogenes.grid_search.partition_iterator.SlidingWindowIdx.cv_note">
+<code class="descname">cv_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.partition_iterator.SlidingWindowIdx.cv_note" title="Permalink to this definition">¶</a></dt>
+<dd><p>dict of str providing extra info about the current iteration</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.partition_iterator.SlidingWindowValue">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.partition_iterator.</code><code class="descname">SlidingWindowValue</code><span class="sig-paren">(</span><em>M</em>, <em>col_names</em>, <em>guide_col_name</em>, <em>train_start</em>, <em>train_window_size</em>, <em>test_start</em>, <em>test_window_size</em>, <em>inc_value</em>, <em>expanding_train=False</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.partition_iterator.SlidingWindowValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sklearn.cross_validation._PartitionIterator</span></code></p>
+<p>Partition iterator that iterates across values of a column in an array</p>
+<p>Has a moving window of indices for the training set and a moving
+window of indices for the testing set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; homogeneous (not structured) array. Feature array from which to draw
+train and test sets</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names of features in M</li>
+<li><strong>guide_col_name</strong> (<em>str</em>) &#8211; name of feature to use to determine train and test sets</li>
+<li><strong>train_start</strong> (<em>number</em>) &#8211; start value for guide_col_name in training window</li>
+<li><strong>train_window_size</strong> (<em>number</em>) &#8211; size of the (initial) training window</li>
+<li><strong>test_start</strong> (<em>number</em>) &#8211; start value for guide_col_name in testing window</li>
+<li><strong>test_window_size</strong> (<em>number</em>) &#8211; size in testing window</li>
+<li><strong>inc_value</strong> (<em>number</em>) &#8211; value to increment train and test sets in each iteration</li>
+<li><strong>expanding_train</strong> (<em>bool</em>) &#8211; <p>If True, the end of the train window moves forward with each
+iteration, but the beginning of the train window does not.
+Consequently, more rows are added to the training set with each
+iteration</p>
+<p>If False, the beginning and end of the train window both move
+forward, so the training window remains the same size.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="diogenes.grid_search.partition_iterator.SlidingWindowValue.cv_note">
+<code class="descname">cv_note</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.partition_iterator.SlidingWindowValue.cv_note" title="Permalink to this definition">¶</a></dt>
+<dd><p>dict of str providing extra info about the current iteration</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.grid_search.standard_clfs">
+<span id="diogenes-grid-search-standard-clfs-module"></span><h2>diogenes.grid_search.standard_clfs module<a class="headerlink" href="#module-diogenes.grid_search.standard_clfs" title="Permalink to this headline">¶</a></h2>
+<p>Provides a standard set of classifiers and params to try with Experiment</p>
+<dl class="attribute">
+<dt id="diogenes.grid_search.standard_clfs.std_clfs">
+<code class="descclassname">diogenes.grid_search.standard_clfs.</code><code class="descname">std_clfs</code><a class="headerlink" href="#diogenes.grid_search.standard_clfs.std_clfs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of dict</em></p>
+<p>A set of supervised, binary classifiers</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="diogenes.grid_search.standard_clfs.rg_clfs">
+<code class="descclassname">diogenes.grid_search.standard_clfs.</code><code class="descname">rg_clfs</code><a class="headerlink" href="#diogenes.grid_search.standard_clfs.rg_clfs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of dict</em></p>
+<p>A much more extensive list</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.grid_search.subset">
+<span id="diogenes-grid-search-subset-module"></span><h2>diogenes.grid_search.subset module<a class="headerlink" href="#module-diogenes.grid_search.subset" title="Permalink to this headline">¶</a></h2>
+<p>This module provides different ways to take subsets of data</p>
+<dl class="class">
+<dt id="diogenes.grid_search.subset.BaseSubsetIter">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.subset.</code><code class="descname">BaseSubsetIter</code><span class="sig-paren">(</span><em>y</em>, <em>col_names</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.subset.BaseSubsetIter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.subset.SubsetNoSubset">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.subset.</code><code class="descname">SubsetNoSubset</code><span class="sig-paren">(</span><em>y</em>, <em>col_names</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.subset.SubsetNoSubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diogenes.grid_search.subset.BaseSubsetIter" title="diogenes.grid_search.subset.BaseSubsetIter"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.BaseSubsetIter</span></code></a></p>
+<p>Generates a single subset consisting of all data</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.subset.SubsetRandomRowsActualDistribution">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.subset.</code><code class="descname">SubsetRandomRowsActualDistribution</code><span class="sig-paren">(</span><em>y</em>, <em>col_names</em>, <em>subset_size</em>, <em>n_subsets=3</em>, <em>random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.subset.SubsetRandomRowsActualDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diogenes.grid_search.subset.BaseSubsetIter" title="diogenes.grid_search.subset.BaseSubsetIter"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.BaseSubsetIter</span></code></a></p>
+<p>Generates subsets reflecting actual distribution of labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; labels in data</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names of all features in data</li>
+<li><strong>subset_size</strong> (<em>int</em>) &#8211; number of rows in each subset</li>
+<li><strong>n_subsets</strong> (<em>int</em>) &#8211; number of subsets to pick</li>
+<li><strong>random_state</strong> (<em>int</em>) &#8211; random seed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.subset.SubsetRandomRowsEvenDistribution">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.subset.</code><code class="descname">SubsetRandomRowsEvenDistribution</code><span class="sig-paren">(</span><em>y</em>, <em>col_names</em>, <em>subset_size</em>, <em>n_subsets=3</em>, <em>random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.subset.SubsetRandomRowsEvenDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diogenes.grid_search.subset.BaseSubsetIter" title="diogenes.grid_search.subset.BaseSubsetIter"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.BaseSubsetIter</span></code></a></p>
+<p>Generates subsets where each label appears at about the same frequency</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; labels in data</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names of all features in data</li>
+<li><strong>subset_size</strong> (<em>int</em>) &#8211; number of rows in each subset</li>
+<li><strong>n_subsets</strong> (<em>int</em>) &#8211; number of subsets to pick</li>
+<li><strong>random_state</strong> (<em>int</em>) &#8211; random seed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.subset.SubsetSweepNumRows">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.subset.</code><code class="descname">SubsetSweepNumRows</code><span class="sig-paren">(</span><em>y</em>, <em>col_names</em>, <em>num_rows</em>, <em>random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.subset.SubsetSweepNumRows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diogenes.grid_search.subset.BaseSubsetIter" title="diogenes.grid_search.subset.BaseSubsetIter"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.BaseSubsetIter</span></code></a></p>
+<p>Generates subsets with varying number of rows</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; labels in data</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names of all features in data</li>
+<li><strong>num_rows</strong> (<em>list of int</em>) &#8211; number of rows in each subset</li>
+<li><strong>random_state</strong> (<em>int</em>) &#8211; random seed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="diogenes.grid_search.subset.SubsetSweepVaryStratification">
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.subset.</code><code class="descname">SubsetSweepVaryStratification</code><span class="sig-paren">(</span><em>y</em>, <em>col_names</em>, <em>proportions_positive</em>, <em>subset_size</em>, <em>random_state=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.subset.SubsetSweepVaryStratification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diogenes.grid_search.subset.BaseSubsetIter" title="diogenes.grid_search.subset.BaseSubsetIter"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.BaseSubsetIter</span></code></a></p>
+<p>Generates subsets with varying proportion of True and False labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>y</strong> (<em>np.ndarray</em>) &#8211; labels in data</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names of all features in data</li>
+<li><strong>proportions_positive</strong> (<em>list of float</em>) &#8211; proportions of positive labels in each subset</li>
+<li><strong>subset_size</strong> (<em>int</em>) &#8211; number of rows in each subset</li>
+<li><strong>random_state</strong> (<em>int</em>) &#8211; random seed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.grid_search">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-diogenes.grid_search" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">diogenes.grid_search package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-diogenes.grid_search.experiment">diogenes.grid_search.experiment module</a></li>
+<li><a class="reference internal" href="#module-diogenes.grid_search.partition_iterator">diogenes.grid_search.partition_iterator module</a></li>
+<li><a class="reference internal" href="#module-diogenes.grid_search.standard_clfs">diogenes.grid_search.standard_clfs module</a></li>
+<li><a class="reference internal" href="#module-diogenes.grid_search.subset">diogenes.grid_search.subset module</a></li>
+<li><a class="reference internal" href="#module-diogenes.grid_search">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/diogenes.grid_search.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, DSaPP.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

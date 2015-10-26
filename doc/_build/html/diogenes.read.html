@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diogenes.read package &mdash; Diogenes 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="diogenes-read-package">
+<h1>diogenes.read package<a class="headerlink" href="#diogenes-read-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-diogenes.read.read">
+<span id="diogenes-read-read-module"></span><h2>diogenes.read.read module<a class="headerlink" href="#module-diogenes.read.read" title="Permalink to this headline">¶</a></h2>
+<p>This module provides functions that convert databases in external formats
+to Numpy structured arrays.</p>
+<dl class="class">
+<dt id="diogenes.read.read.SQLConnection">
+<em class="property">class </em><code class="descclassname">diogenes.read.read.</code><code class="descname">SQLConnection</code><span class="sig-paren">(</span><em>conn_str</em>, <em>allow_caching=False</em>, <em>tmp_dir='.'</em>, <em>parse_datetimes=[]</em>, <em>allow_pgres_copy_optimization=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.read.read.SQLConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Connection to SQL that returns numpy structured arrays
+Intended to vaguely implement DBAPI 2</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>conn_str</strong> (<em>str</em>) &#8211; SQLAlchemy connection string (<a class="reference external" href="http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html">http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html</a>)</li>
+<li><strong>allow_caching</strong> (<em>bool</em>) &#8211; If True, diogenes will cache the results of each query and return
+the cached result if the same query is performed twice. If False,
+each query will be sent to the database</li>
+<li><strong>tmp_dir</strong> (<em>str</em>) &#8211; If allow_caching is True, the cached results will be stored in
+tmp_dir. Also, where csvs will be stored for postgres servers</li>
+<li><strong>parse_datetimes</strong> (<em>list of col names</em>) &#8211; Columns that should be interpreted as datetimes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="diogenes.read.read.SQLConnection.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>exec_str</em>, <em>invalidate_cache=False</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.read.read.SQLConnection.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>exec_str</strong> (<em>str</em>) &#8211; SQL query to execute</li>
+<li><strong>invalidate_cache</strong> (<em>bool</em>) &#8211; If this SQLConnection object was initialized with
+allow_caching=True, identical queries will always return
+the same result. If invalidate_cache is True, this behavior
+is overriden and the query will be reexecuted.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Results of the query in terms of a numpy structured array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="diogenes.read.read.SQLError">
+<em class="property">exception </em><code class="descclassname">diogenes.read.read.</code><code class="descname">SQLError</code><a class="headerlink" href="#diogenes.read.read.SQLError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.read.read.connect_sql">
+<code class="descclassname">diogenes.read.read.</code><code class="descname">connect_sql</code><span class="sig-paren">(</span><em>con_str</em>, <em>allow_caching=False</em>, <em>tmp_dir='.'</em>, <em>parse_datetimes=[]</em>, <em>allow_pgres_copy_optimization=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.read.read.connect_sql" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides an SQLConnection object, which makes structured arrays from SQL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>conn_str</strong> (<em>str</em>) &#8211; SQLAlchemy connection string (<a class="reference external" href="http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html">http://docs.sqlalchemy.org/en/rel_0_9/core/engines.html</a>)</li>
+<li><strong>allow_caching</strong> (<em>bool</em>) &#8211; If True, diogenes will cache the results of each query and return
+the cached result if the same query is performed twice. If False,
+each query will be sent to the database</li>
+<li><strong>tmp_dir</strong> (<em>str</em>) &#8211; If allow_caching is True, the cached results will be stored in
+tmp_dir. Also where csvs will be stored for postgres servers</li>
+<li><strong>parse_datetimes</strong> (<em>list of col names</em>) &#8211; Columns that should be interpreted as datetimes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Object that executes SQL queries and returns numpy structured
+arrays</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#diogenes.read.read.SQLConnection" title="diogenes.read.read.SQLConnection">SQLConnection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.read.read.open_csv">
+<code class="descclassname">diogenes.read.read.</code><code class="descname">open_csv</code><span class="sig-paren">(</span><em>path</em>, <em>delimiter='</em>, <em>'</em>, <em>header=True</em>, <em>col_names=None</em>, <em>parse_datetimes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.read.read.open_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a structured array from a local .csv file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) &#8211; path of the csv file</li>
+<li><strong>delimiter</strong> (<em>str</em>) &#8211; Character used to delimit csv fields</li>
+<li><strong>header</strong> (<em>bool</em>) &#8211; If True, assumes the first line of the csv has column names</li>
+<li><strong>col_names</strong> (<em>list of str or None</em>) &#8211; If header is False, this list will be used for column names</li>
+<li><strong>parse_datetimes</strong> (<em>list of col names</em>) &#8211; Columns that should be interpreted as datetimes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>numpy.ndarray</em> &#8211;
+structured array corresponding to the csv</li>
+<li><em>If header is False and col_names is None, diogenes will assign</em></li>
+<li><em>arbitrary column names</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.read.read.open_csv_url">
+<code class="descclassname">diogenes.read.read.</code><code class="descname">open_csv_url</code><span class="sig-paren">(</span><em>url</em>, <em>delimiter='</em>, <em>'</em>, <em>header=True</em>, <em>col_names=None</em>, <em>parse_datetimes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.read.read.open_csv_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a structured array from a url</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>url</strong> (<em>str</em>) &#8211; url of the csv file</li>
+<li><strong>delimiter</strong> (<em>str</em>) &#8211; Character used to delimit csv fields</li>
+<li><strong>header</strong> (<em>bool</em>) &#8211; If True, assumes the first line of the csv has column names</li>
+<li><strong>col_names</strong> (<em>list of str or None</em>) &#8211; If header is False, this list will be used for column names</li>
+<li><strong>parse_datetimes</strong> (<em>list of col names</em>) &#8211; Columns that should be interpreted as datetimes</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>numpy.ndarray</em> &#8211;
+structured array corresponding to the csv</li>
+<li><em>If header is False and col_names is None, diogenes will assign</em></li>
+<li><em>arbitrary column names</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.read">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-diogenes.read" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">diogenes.read package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-diogenes.read.read">diogenes.read.read module</a></li>
+<li><a class="reference internal" href="#module-diogenes.read">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/diogenes.read.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, DSaPP.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

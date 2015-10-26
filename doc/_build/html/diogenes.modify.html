@@ -1,0 +1,741 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diogenes.modify package &mdash; Diogenes 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="diogenes-modify-package">
+<h1>diogenes.modify package<a class="headerlink" href="#diogenes-modify-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-diogenes.modify.modify">
+<span id="diogenes-modify-modify-module"></span><h2>diogenes.modify.modify module<a class="headerlink" href="#module-diogenes.modify.modify" title="Permalink to this headline">¶</a></h2>
+<p>This module provides a number of operations to modify structured arrays</p>
+<p>A number of functions take a parameter called &#8220;arguments&#8221; of type list of
+dict. Diogenes expects these parameters to be expressed in the following
+format for functions operating on columns (choose_cols_where,
+remove_cols_where):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>[{&#8216;func&#8217;: LAMBDA_1, &#8216;vals&#8217;: LAMBDA_ARGUMENTS_1},</dt>
+<dd>{&#8216;func&#8217;: LAMBDA_2, &#8216;vals&#8217;: LAMBDA_ARGUMENTS_2},
+...
+{&#8216;func&#8217;: LAMBDA_N, &#8216;vals&#8217;: LAMBDA_ARGUMENTS_N}]</dd>
+</dl>
+</div></blockquote>
+<p>and in this format for functions operating on rows (choose_rows_where,
+remove_rows_where, where_all_are_true):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>[{&#8216;func&#8217;: LAMBDA_1, &#8216;vals&#8217;: LAMBDA_ARGUMENTS_1, &#8216;col_name&#8217;: LAMBDA_COL_1},</dt>
+<dd>{&#8216;func&#8217;: LAMBDA_2, &#8216;vals&#8217;: LAMBDA_ARGUMENTS_2, &#8216;col_name&#8217;: LAMBDA_COL_2},
+...
+{&#8216;func&#8217;: LAMBDA_N, &#8216;vals&#8217;: LAMBDA_ARGUMENTS_N, &#8216;col_name&#8217;: LAMBDA_COL_N}]</dd>
+</dl>
+</div></blockquote>
+<p>In either case, the user can think of arguments as a query to be matched
+against certain rows or columns. Some operation will then be performed on
+the matched rows or columns. For example, in choose_rows_where, an array
+will be returned that has only the rows that matched the query. In
+remove_cols_where, all columns that matched the query will be removed.</p>
+<p>Each dictionary is a single directive. The value assigned to the &#8216;func&#8217; key
+is a function that returns a binary array signifying the rows or columns
+that pass a certain check. The value assigned to the &#8216;vals&#8217; key is an argument
+to be passed to the function assigned to the &#8216;func&#8217; key. For queries affecting
+rows, the value assigned to the &#8216;col_name&#8217; key is the column over which the
+&#8216;func&#8217; function should be applied. For example, in order to pick all rows
+for which the &#8216;year&#8217; column is between 1990 and 2000, we would create the
+directive:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{&#8216;func&#8217;: diogenes.modify.row_val_between, &#8216;vals&#8217;: [1990, 2000],</dt>
+<dd>&#8216;col_name&#8217;: &#8216;year&#8217;}</dd>
+</dl>
+</div></blockquote>
+<p>To pick columns where every cell in the column is 0, we would create the
+directive:</p>
+<blockquote>
+<div>{&#8216;func&#8217;: diogenes.modify.col_val_eq, &#8216;vals&#8217;: 0}</div></blockquote>
+<p>Ultimately, diogenes will pick the columns or rows for which all directives
+in the passed list are True. For example, if we want to pick rows for which
+the &#8216;year&#8217; column is between 1990 and 2000. We use:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>arguments=[{&#8216;func&#8217;: diogenes.modify.row_val_between, &#8216;vals&#8217;: [1990, 2000],</dt>
+<dd>&#8216;col_name&#8217;: &#8216;year&#8217;}]</dd>
+</dl>
+</div></blockquote>
+<p>If we want to pick rows for which the &#8216;year&#8217; column is between 1990 and 2000
+<em>and</em> the &#8216;gender&#8217; column is &#8216;F&#8217; we use:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>arguments=[{&#8216;func&#8217;: diogenes.modify.row_val_between, &#8216;vals&#8217;: [1990, 2000],</dt>
+<dd><blockquote class="first">
+<div>&#8216;col_name&#8217;: &#8216;year&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;func&#8217;: diogenes.modify.row_val_eq, &#8216;vals&#8217;: &#8216;F&#8217;,</dt>
+<dd>&#8216;col_name&#8217;: &#8216;gender&#8217;}]</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>Note that arguments must always be a list of dict, so even if there is only
+one directive it must be in a list.</p>
+<dl class="function">
+<dt id="diogenes.modify.modify.choose_cols_where">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">choose_cols_where</code><span class="sig-paren">(</span><em>M</em>, <em>arguments</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.choose_cols_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a structured array containing only columns adhering to a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Structured array</li>
+<li><strong>arguments</strong> (<em>list of dict</em>) &#8211; See module documentation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Structured array with only specified columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.choose_rows_where">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">choose_rows_where</code><span class="sig-paren">(</span><em>M</em>, <em>arguments</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.choose_rows_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a structured array containing only rows adhering to a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Structured array</li>
+<li><strong>arguments</strong> (<em>list of dict</em>) &#8211; See module documentation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Structured array with only specified rows</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.col_fewer_than_n_nonzero">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">col_fewer_than_n_nonzero</code><span class="sig-paren">(</span><em>M</em>, <em>boundary=2</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.col_fewer_than_n_nonzero" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pick columns that have fewer than a specified number of nonzeros</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_cols_where or remove_cols_where
+(see module documentation)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>boundary</strong> (<em>int</em>) &#8211; If the number of nonzeros is at or above boundary nonzeros, the column
+will not be picked</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if column picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.col_has_lt_threshold_unique_values">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">col_has_lt_threshold_unique_values</code><span class="sig-paren">(</span><em>M</em>, <em>threshold</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.col_has_lt_threshold_unique_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pick columns that have fewer than a specified number of unique values</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_cols_where or remove_cols_where
+(see module documentation)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>boundary</strong> (<em>int</em>) &#8211; If the number of nonzeros is at or above boundary unique values, the column
+will not be picked</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if column picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.col_random">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">col_random</code><span class="sig-paren">(</span><em>M</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.col_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pick random columns</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_cols_where or remove_cols_where
+(see module documentation)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>boundary</strong> (<em>int</em>) &#8211; number of columns to pick</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if column picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.col_val_eq">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">col_val_eq</code><span class="sig-paren">(</span><em>M</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.col_val_eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pick columns where every cell equals specified value</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_cols_where or remove_cols_where
+(see module documentation)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>boundary</strong> (<em>number or str or bool</em>) &#8211; if every cell==boundary, the column will be picked</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if column picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.col_val_eq_any">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">col_val_eq_any</code><span class="sig-paren">(</span><em>M</em>, <em>boundary=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.col_val_eq_any" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pick columns for which every cell has the same value</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_cols_where or remove_cols_where
+(see module documentation)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>boundary</strong> (<em>None</em>) &#8211; ignored</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if column picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.combine_cols">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">combine_cols</code><span class="sig-paren">(</span><em>M</em>, <em>lambd</em>, <em>col_names</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.combine_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an array that is the function of existing columns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lambd</strong> (<em>list of np.array &gt; np.array</em>) &#8211; Function that takes a list of columns and produces a single
+column.</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; Names of columns to combine</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.distance_from_point">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">distance_from_point</code><span class="sig-paren">(</span><em>lat_origin</em>, <em>lng_origin</em>, <em>lat_col</em>, <em>lng_col</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.distance_from_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a column of how far each record is from the origin</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lat_origin</strong> (<em>number</em>) &#8211; </li>
+<li><strong>lng_origin</strong> (<em>number</em>) &#8211; </li>
+<li><strong>lat_col</strong> (<em>np.ndarray</em>) &#8211; </li>
+<li><strong>lng_col</strong> (<em>np.ndarray</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.generate_bin">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">generate_bin</code><span class="sig-paren">(</span><em>col</em>, <em>num_bins</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.generate_bin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a column of categories, where each category is a bin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>col</strong> (<em>np.ndarray</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generate_bin</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">[0 3 0 1 2 1 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.label_encode">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">label_encode</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.label_encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes string cols to ints so that there is a 1-1 mapping between
+strings and ints</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.normalize">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">normalize</code><span class="sig-paren">(</span><em>col</em>, <em>mean=None</em>, <em>stddev=None</em>, <em>return_fit=False</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a normalized column.</p>
+<p>Normalize both mean and std dev.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> (<em>np.ndarray</em>) &#8211; </li>
+<li><strong>mean</strong> (<em>float or None</em>) &#8211; Mean to use for fit. If none, will use 0</li>
+<li><strong>stddev</strong> (<em>float or None</em>) &#8211; </li>
+<li><strong>return_fit</strong> (<em>boolean</em>) &#8211; If True, returns tuple of fitted col, mean, and standard dev of fit.
+If False, only returns fitted col</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray or (np.array, float, float)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.remove_cols_where">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">remove_cols_where</code><span class="sig-paren">(</span><em>M</em>, <em>arguments</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.remove_cols_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a structured array containing columns not adhering to a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Structured array</li>
+<li><strong>arguments</strong> (<em>list of dict</em>) &#8211; See module documentation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Structured array without specified columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.remove_rows_where">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">remove_rows_where</code><span class="sig-paren">(</span><em>M</em>, <em>arguments</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.remove_rows_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a structured array containing rows not adhering to a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Structured array</li>
+<li><strong>arguments</strong> (<em>list of dict</em>) &#8211; See module documentation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Structured array without specified rows</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.replace_missing_vals">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">replace_missing_vals</code><span class="sig-paren">(</span><em>M</em>, <em>strategy</em>, <em>missing_val=nan</em>, <em>constant=0</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.replace_missing_vals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace values signifying missing data with some substitute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>strategy</strong> (<em>{&#8216;mean&#8217;, &#8216;median&#8217;, &#8216;most_frequent&#8217;, &#8216;constant&#8217;}</em>) &#8211; method to use to replace missing data</li>
+<li><strong>missing_val</strong> (<em>value that M uses to represent missint data. i.e.</em>) &#8211; numpy.nan for floats or -999 for integers</li>
+<li><strong>constant</strong> (<em>int</em>) &#8211; If the &#8216;constant&#8217; strategy is chosen, this is the value to
+replace missing_val with</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.row_is_outlier">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">row_is_outlier</code><span class="sig-paren">(</span><em>M</em>, <em>col_name</em>, <em>boundary=3.0</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.row_is_outlier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks rows that are not within some a number of deviations of the mean</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_rows_where, remove_rows_where,
+or where_all_are_true (see module documentation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_name</strong> (<em>str</em>) &#8211; name of column to check</li>
+<li><strong>boundary</strong> (<em>float</em>) &#8211; number of standard deviations from mean required to be considered
+an outlier</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if row picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.row_is_within_region">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">row_is_within_region</code><span class="sig-paren">(</span><em>M</em>, <em>col_names</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.row_is_within_region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks rows for which cell is within a spacial region</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_rows_where, remove_rows_where,
+or where_all_are_true (see module documentation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; pair of column names signifying x and y coordinates</li>
+<li><strong>boundary</strong> (<em>array of points</em>) &#8211; shape which cell must be within</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if row picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.row_val_between">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">row_val_between</code><span class="sig-paren">(</span><em>M</em>, <em>col_name</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.row_val_between" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks rows for which cell is between the specified values</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_rows_where, remove_rows_where,
+or where_all_are_true (see module documentation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_name</strong> (<em>str</em>) &#8211; name of column to check</li>
+<li><strong>boundary</strong> (<em>(number, number)</em>) &#8211; To pick a row, the cell must be greater than or equal to boundary[0]
+and less than or equal to boundary[1]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if row picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.row_val_eq">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">row_val_eq</code><span class="sig-paren">(</span><em>M</em>, <em>col_name</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.row_val_eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks rows for which cell is equal to a specified value</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_rows_where, remove_rows_where,
+or where_all_are_true (see module documentation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_name</strong> (<em>str</em>) &#8211; name of column to check</li>
+<li><strong>boundary</strong> (<em>number</em>) &#8211; value to which cell must be equal</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if row picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.row_val_gt">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">row_val_gt</code><span class="sig-paren">(</span><em>M</em>, <em>col_name</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.row_val_gt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks rows for which cell is greater than to a specified value</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_rows_where, remove_rows_where,
+or where_all_are_true (see module documentation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_name</strong> (<em>str</em>) &#8211; name of column to check</li>
+<li><strong>boundary</strong> (<em>number</em>) &#8211; value which cell must be greater than</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if row picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.row_val_lt">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">row_val_lt</code><span class="sig-paren">(</span><em>M</em>, <em>col_name</em>, <em>boundary</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.row_val_lt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Picks rows for which cell is less than to a specified value</p>
+<p>To be used as a &#8216;func&#8217; argument in choose_rows_where, remove_rows_where,
+or where_all_are_true (see module documentation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_name</strong> (<em>str</em>) &#8211; name of column to check</li>
+<li><strong>boundary</strong> (<em>number</em>) &#8211; value which cell must be less than</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array: True if row picked, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.modify.modify.where_all_are_true">
+<code class="descclassname">diogenes.modify.modify.</code><code class="descname">where_all_are_true</code><span class="sig-paren">(</span><em>M</em>, <em>arguments</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.modify.modify.where_all_are_true" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a boolean array which specifies which rows pass a query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Structured array</li>
+<li><strong>arguments</strong> (<em>list of dict</em>) &#8211; See module documentation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">boolean array specifying which rows pass a query</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.modify">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-diogenes.modify" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">diogenes.modify package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-diogenes.modify.modify">diogenes.modify.modify module</a></li>
+<li><a class="reference internal" href="#module-diogenes.modify">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/diogenes.modify.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, DSaPP.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+
+.. code:: python
+
+    %matplotlib inline
+    import numpy as np
+    from diogenes.read import (open_csv,
+                               open_csv_url,
+                               connect_sql)
+    from diogenes.utils import convert_to_sa
+.. code:: python
+
+    data = open_csv_url(
+                'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv',  
+                delimiter=';')
+The default behavior expects a csv with the first row as a header.
+
+In this data set, we've decided to classify according to the column
+which has the col\_name 'quality'.
+
+So we assign y the values in the 'quality' column. Next we convert this
+to a binary classification problem to accomdate the report generation.
+
+.. code:: python
+
+    labels = data['quality']
+    lables = labels < np.average(labels)
+diogenes.modify
+---------------
+
+modify provides a great number fucntions but they fall into one of two
+camps. 1. feature enginiering 2. removing rows and columns
+
+We will focus on the second case, as we need to remove the column that
+we're using as the labels.
+
+.. code:: python
+
+    from diogenes.modify import remove_cols
+    
+    M = remove_cols(data, 'quality')
+Now we have are going to investigate the data.
+
+.. code:: python
+
+    from diogenes.display import (plot_correlation_scatter_plot,
+                                   plot_correlation_matrix, 
+                                   plot_kernel_density,
+                                   plot_box_plot,
+                                   describe_cols,
+                                   pprint_sa)
+.. code:: python
+
+    
+    pprint_sa(describe_cols(M))
+
+
+.. parsed-literal::
+
+                Column Name Count            Mean     Standard Dev Minimum Maximum
+     0        fixed acidity  4898   6.85478766844   0.843782079126     3.8    14.2
+     1     volatile acidity  4898  0.278241118824   0.100784258542    0.08     1.1
+     2          citric acid  4898  0.334191506737    0.12100744957     0.0    1.66
+     3       residual sugar  4898   6.39141486321    5.07153998933     0.6    65.8
+     4            chlorides  4898 0.0457723560637  0.0218457376851   0.009   0.346
+     5  free sulfur dioxide  4898   35.3080849326    17.0054011058     2.0   289.0
+     6 total sulfur dioxide  4898   138.360657411    42.4937260248     9.0   440.0
+     7              density  4898   0.99402737648 0.00299060158215 0.98711 1.03898
+     8                   pH  4898   3.18826663944   0.150985184312    2.72    3.82
+     9            sulphates  4898  0.489846876276   0.114114183106    0.22    1.08
+    10              alcohol  4898   10.5142670478    1.23049493654     8.0    14.2
+
+
+.. code:: python
+
+    #to prevent double printing in notebooks, caputre the return of the plot functions.
+    p = plot_correlation_scatter_plot(M)
+    #printing is very small in notebooks.
+
+
+.. image:: 2_read_and_display_files/2_read_and_display_9_0.png
+
+
+.. code:: python
+
+    p = plot_correlation_matrix(M)
+
+
+.. image:: 2_read_and_display_files/2_read_and_display_10_0.png
+
+
+.. code:: python
+
+    p = plot_kernel_density(M['fixed acidity'])
+
+
+.. image:: 2_read_and_display_files/2_read_and_display_11_0.png
+
+
+.. code:: python
+
+    p = plot_box_plot(M['fixed acidity'])
+
+::
+
+
+    ---------------------------------------------------------------------------
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-1-41c4e61d755c> in <module>()
+    ----> 1 p = plot_box_plot(M['fixed acidity'])
+    
+
+    NameError: name 'plot_box_plot' is not defined
+
+
+That ends the basic open and view the columns/matrix commands.
+

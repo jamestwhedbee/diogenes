@@ -1,0 +1,694 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diogenes.display package &mdash; Diogenes 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="diogenes-display-package">
+<h1>diogenes.display package<a class="headerlink" href="#diogenes-display-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-diogenes.display.display">
+<span id="diogenes-display-display-module"></span><h2>diogenes.display.display module<a class="headerlink" href="#module-diogenes.display.display" title="Permalink to this headline">¶</a></h2>
+<p>Tools to visualize data and display results</p>
+<dl class="class">
+<dt id="diogenes.display.display.Report">
+<em class="property">class </em><code class="descclassname">diogenes.display.display.</code><code class="descname">Report</code><span class="sig-paren">(</span><em>exp=None</em>, <em>report_path='report.pdf'</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Creates pdf reports.</p>
+<p>Reports can either be associated with a particular
+diogenes.grid_search.experiment.Experiment or it can simply be used as
+a way to concatenate figures, text, and tables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>exp</strong> (<em>diogenes.grid_search.experiment.Experiment or None</em>) &#8211; Experiment used to make figures. Optional.</li>
+<li><strong>report_path</strong> (<em>path of the generated pdf</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_fig">
+<code class="descname">add_fig</code><span class="sig-paren">(</span><em>fig</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_fig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds matplotlib.figure.Figure to report</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_graph_for_best">
+<code class="descname">add_graph_for_best</code><span class="sig-paren">(</span><em>func_name</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_graph_for_best" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a graph to report that gives performance of the best Trial</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func_name</strong> (<em>str</em>) &#8211; Name of a function that can be run on a Trial that returns a
+figure. For example &#8216;roc_curve&#8217; or &#8216;prec_recall_curve&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_graph_for_best_prec_recall">
+<code class="descname">add_graph_for_best_prec_recall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_graph_for_best_prec_recall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds prec/recall for best Trial in an experiment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_graph_for_best_roc">
+<code class="descname">add_graph_for_best_roc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_graph_for_best_roc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds roc curve for best Trial in an experiment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_heading">
+<code class="descname">add_heading</code><span class="sig-paren">(</span><em>heading</em>, <em>level=2</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_heading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a heading to the report</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>heading</strong> (<em>str</em>) &#8211; text of heading</li>
+<li><strong>level</strong> (<em>int</em>) &#8211; heading level (1 corresponds to html h1, 2 corresponds to
+html h2, etc)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_legend">
+<code class="descname">add_legend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_legend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a legend that shows which trial number in a summary graph
+corresponds to which Trial</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_subreport">
+<code class="descname">add_subreport</code><span class="sig-paren">(</span><em>subreport</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_subreport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Incorporates another Report into this one</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subreport</strong> (<a class="reference internal" href="#diogenes.display.display.Report" title="diogenes.display.display.Report"><em>Report</em></a>) &#8211; report to add</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_summary_graph">
+<code class="descname">add_summary_graph</code><span class="sig-paren">(</span><em>measure</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_summary_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a graph to report that summarizes across an Experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>measure</strong> (<em>str</em>) &#8211; Function of Experiment to call. The function must return a dict of
+Trial: score. Examples are &#8216;average_score&#8217; and &#8216;roc_auc&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_summary_graph_average_score">
+<code class="descname">add_summary_graph_average_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_summary_graph_average_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a graph to report that summarizes average_score across Experiment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_summary_graph_roc_auc">
+<code class="descname">add_summary_graph_roc_auc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_summary_graph_roc_auc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a graph to report that summarizes roc_auc across Experiment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_table">
+<code class="descname">add_table</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds structured array to report</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.add_text">
+<code class="descname">add_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.add_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds block of text to report</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.get_report_path">
+<code class="descname">get_report_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.get_report_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns path of generated pdf</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.display.display.Report.to_pdf">
+<code class="descname">to_pdf</code><span class="sig-paren">(</span><em>options={}</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.Report.to_pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a pdf</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>options</strong> (<em>dict</em>) &#8211; options are pdfkit.from_url options. See
+<a class="reference external" href="https://pypi.python.org/pypi/pdfkit">https://pypi.python.org/pypi/pdfkit</a></li>
+<li><strong>verbose</strong> (<em>bool</em>) &#8211; iff True, gives output regarding pdf creation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Path of generated pdf</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="diogenes.display.display.ReportError">
+<em class="property">exception </em><code class="descclassname">diogenes.display.display.</code><code class="descname">ReportError</code><a class="headerlink" href="#diogenes.display.display.ReportError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<p>Error generated by Report</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.crosstab">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">crosstab</code><span class="sig-paren">(</span><em>col1</em>, <em>col2</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.crosstab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a crosstab of col1 and col2. This is represented as a
+structured array with the following properties:</p>
+<ol class="arabic simple">
+<li>The first column is the value of col1 being crossed</li>
+<li>The name of every column except the first is the value of col2 being
+crossed</li>
+<li>To find the number of cooccurences of x from col1 and y in col2,
+find the row that has &#8216;x&#8217; in col1 and the column named &#8216;y&#8217;. The
+corresponding cell is the number of cooccurrences of x and y</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col1</strong> (<em>np.ndarray</em>) &#8211; </li>
+<li><strong>col2</strong> (<em>np.ndarray</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">structured array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.describe_cols">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">describe_cols</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.describe_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns summary statistics for a numpy array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">structured array of summary statistics for M</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.feature_pairs_in_rf">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">feature_pairs_in_rf</code><span class="sig-paren">(</span><em>rf</em>, <em>weight_by_depth=None</em>, <em>verbose=True</em>, <em>n=10</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.feature_pairs_in_rf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the frequency of features appearing subsequently in each tree
+in a random forest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rf</strong> (<em>sklearn.ensemble.RandomForestClassifier</em>) &#8211; Fitted random forest</li>
+<li><strong>weight_by_depth</strong> (<em>iterable or None</em>) &#8211; <p>Weights to give to each depth in the &#8220;occurences weighted by depth
+metric&#8221;</p>
+<p>weight_by_depth is a vector. The 0th entry is the weight of being at
+depth 0; the 1st entry is the weight of being at depth 1, etc.
+If not provided, wdiogenes are linear with negative depth. If
+the provided vector is not as long as the number of depths, then
+remaining depths are weighted with 0</p>
+</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, prints metrics to console</li>
+<li><strong>n</strong> (<em>int</em>) &#8211; Prints the top-n-scoring feature pairs to console if verbose==True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p>A tuple with a number of metrics</p>
+<ol class="arabic simple">
+<li>A Counter of cooccuring feature pairs at all depths</li>
+<li>A list of Counters of feature pairs. Element 0 corresponds to
+depth 0, element 1 corresponds to depth 1 etc.</li>
+<li>A dict where keys are feature pairs and values are the average
+depth of those feature pairs</li>
+<li>A dict where keys are feature pairs and values are the number
+of occurences of those feature pairs weighted by depth</li>
+</ol>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(collections.Counter, list of collections.Counter, dict, dict)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.feature_pairs_in_tree">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">feature_pairs_in_tree</code><span class="sig-paren">(</span><em>dt</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.feature_pairs_in_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists subsequent features sorted by importance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dt</strong> (<em>sklearn.tree.DecisionTreeClassifer</em>) &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Going from inside to out:<ol class="arabic simple">
+<li>Each int is a feature that a node split on</li>
+<li>If two ints appear in the same tuple, then there was a node
+that split on the second feature immediately below a node
+that split on the first feature</li>
+<li>Tuples appearing in the same inner list appear at the same
+depth in the tree</li>
+<li>The outer list describes the entire tree</li>
+</ol>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of list of tuple of int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.get_roc_auc">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">get_roc_auc</code><span class="sig-paren">(</span><em>labels</em>, <em>score</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.get_roc_auc" title="Permalink to this definition">¶</a></dt>
+<dd><p>return area under ROC curve</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>labels</strong> (<em>np.ndarray</em>) &#8211; vector of ground truth</li>
+<li><strong>score</strong> (<em>np.ndarray</em>) &#8211; vector of scores assigned by classifier (i.e.
+clf.pred_proba(...)[-1] in sklearn)</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, prints area under the curve</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">area under the curve</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.get_top_features">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">get_top_features</code><span class="sig-paren">(</span><em>clf</em>, <em>M=None</em>, <em>col_names=None</em>, <em>n=10</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.get_top_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the top features for a fitted clf</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>clf</strong> (<em>sklearn.base.BaseEstimator</em>) &#8211; Fitted classifier with a <a href="#id1"><span class="problematic" id="id2">feature_importances_</span></a> attribute</li>
+<li><strong>M</strong> (<em>numpy.ndarray or None</em>) &#8211; Structured array corresponding to fitted clf. Used here to deterimine
+column names</li>
+<li><strong>col_names</strong> (<em>list of str or None</em>) &#8211; List of column names corresponding to fitted clf.</li>
+<li><strong>n</strong> (<em>int</em>) &#8211; Number of features to return</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, prints ranked features</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">structured array with top feature names and scores</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_box_plot">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_box_plot</code><span class="sig-paren">(</span><em>col</em>, <em>title=None</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_box_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a box plot for a feature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> (<em>np.array</em>) &#8211; </li>
+<li><strong>title</strong> (<em>str or None</em>) &#8211; title of a plot</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_correlation_matrix">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_correlation_matrix</code><span class="sig-paren">(</span><em>M</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_correlation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot correlation between variables in M</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_correlation_scatter_plot">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_correlation_scatter_plot</code><span class="sig-paren">(</span><em>M</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_correlation_scatter_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a grid of scatter plots representing relationship between variables</p>
+<p>Each scatter plot is one variable plotted against another variable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_kernel_density">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_kernel_density</code><span class="sig-paren">(</span><em>col</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_kernel_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots kernel density function of column</p>
+<p>From:
+<a class="reference external" href="https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/">https://jakevdp.github.io/blog/2013/12/01/kernel-density-estimation/</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> (<em>np.ndarray</em>) &#8211; </li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_on_timeline">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_on_timeline</code><span class="sig-paren">(</span><em>col</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_on_timeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots points on a timeline</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> (<em>np.array</em>) &#8211; </li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">matplotlib.figure.Figure</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_prec_recall">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_prec_recall</code><span class="sig-paren">(</span><em>labels</em>, <em>score</em>, <em>title='Prec/Recall'</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_prec_recall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot precision/recall curve</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>labels</strong> (<em>np.ndarray</em>) &#8211; vector of ground truth</li>
+<li><strong>score</strong> (<em>np.ndarray</em>) &#8211; vector of scores assigned by classifier (i.e.
+clf.pred_proba(...)[-1] in sklearn)</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; title of plot</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_roc">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_roc</code><span class="sig-paren">(</span><em>labels</em>, <em>score</em>, <em>title='ROC'</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_roc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot ROC curve</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>labels</strong> (<em>np.ndarray</em>) &#8211; vector of ground truth</li>
+<li><strong>score</strong> (<em>np.ndarray</em>) &#8211; vector of scores assigned by classifier (i.e.
+clf.pred_proba(...)[-1] in sklearn)</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; title of plot</li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.plot_simple_histogram">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">plot_simple_histogram</code><span class="sig-paren">(</span><em>col</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.plot_simple_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a histogram of values in a column</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> (<em>np.ndarray</em>) &#8211; </li>
+<li><strong>verbose</strong> (<em>boolean</em>) &#8211; iff True, display the graph</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Figure containing plot</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">matplotlib.figure.Figure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.display.display.pprint_sa">
+<code class="descclassname">diogenes.display.display.</code><code class="descname">pprint_sa</code><span class="sig-paren">(</span><em>M</em>, <em>row_labels=None</em>, <em>col_labels=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.display.display.pprint_sa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a nicely formatted Structured array (or similar object) to console</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>M</strong> (<em>numpy.ndarray or list of lists</em>) &#8211; structured array or homogeneous array or list of lists to print</li>
+<li><strong>row_labels</strong> (<em>list or None</em>) &#8211; labels to put in front of rows. Defaults to row number</li>
+<li><strong>col_labels</strong> (<em>list of str or None</em>) &#8211; names to label columns with. If M is a structured array, its column
+names will be used instead</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.display">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-diogenes.display" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">diogenes.display package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-diogenes.display.display">diogenes.display.display module</a></li>
+<li><a class="reference internal" href="#module-diogenes.display">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/diogenes.display.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, DSaPP.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

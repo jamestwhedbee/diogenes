@@ -1,0 +1,1132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diogenes package &mdash; Diogenes 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="diogenes-package">
+<h1>diogenes package<a class="headerlink" href="#diogenes-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="diogenes.display.html">diogenes.display package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.display.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.display.html#module-diogenes.display.display">diogenes.display.display module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.display.html#module-diogenes.display">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diogenes.grid_search.html">diogenes.grid_search package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.grid_search.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.grid_search.html#module-diogenes.grid_search.experiment">diogenes.grid_search.experiment module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.grid_search.html#module-diogenes.grid_search.partition_iterator">diogenes.grid_search.partition_iterator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.grid_search.html#module-diogenes.grid_search.standard_clfs">diogenes.grid_search.standard_clfs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.grid_search.html#module-diogenes.grid_search.subset">diogenes.grid_search.subset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.grid_search.html#module-diogenes.grid_search">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diogenes.modify.html">diogenes.modify package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.modify.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.modify.html#module-diogenes.modify.modify">diogenes.modify.modify module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.modify.html#module-diogenes.modify">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diogenes.read.html">diogenes.read package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.read.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.read.html#module-diogenes.read.read">diogenes.read.read module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diogenes.read.html#module-diogenes.read">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-diogenes.array_emitter">
+<span id="diogenes-array-emitter-module"></span><h2>diogenes.array_emitter module<a class="headerlink" href="#module-diogenes.array_emitter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diogenes.array_emitter.ArrayEmitter">
+<em class="property">class </em><code class="descclassname">diogenes.array_emitter.</code><code class="descname">ArrayEmitter</code><span class="sig-paren">(</span><em>convert_to_unix_time=False</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Array emitter is a tool that accepts tables from either SQL or CSVs in the
+RG format, then generates Numpy structured arrays in the M format based on
+selection criteria on those tables.</p>
+<p><strong>RG Tables</strong></p>
+<p>Tables can be specified from either a CSV file (using the
+get_rg_from_csv method) or from a SQL query (using the
+get_rg_from_SQL method). Imported tables must adhere to the <em>RG</em> format:</p>
+<p><em>Table 1&#8211;an example RG-format table</em></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="22%" />
+<col width="19%" />
+<col width="24%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">student_id</th>
+<th class="head">start_year</th>
+<th class="head">end_year</th>
+<th class="head">feature</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>2005</td>
+<td>2006</td>
+<td>math_gpa</td>
+<td>2.3</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>2005</td>
+<td>2006</td>
+<td>english_gpa</td>
+<td>4.0</td>
+</tr>
+<tr class="row-even"><td>0</td>
+<td>2005</td>
+<td>2006</td>
+<td>absences</td>
+<td>7</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>2006</td>
+<td>2007</td>
+<td>math_gpa</td>
+<td>2.1</td>
+</tr>
+<tr class="row-even"><td>0</td>
+<td>2006</td>
+<td>2007</td>
+<td>english_gpa</td>
+<td>3.9</td>
+</tr>
+<tr class="row-odd"><td>0</td>
+<td>2006</td>
+<td>2007</td>
+<td>absences</td>
+<td>8</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>2005</td>
+<td>2006</td>
+<td>math_gpa</td>
+<td>3.4</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>2005</td>
+<td>2006</td>
+<td>absences</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>2006</td>
+<td>2007</td>
+<td>math_gpa</td>
+<td>3.5</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>2007</td>
+<td>2008</td>
+<td>english_gpa</td>
+<td>2.4</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>2004</td>
+<td>2005</td>
+<td>math_gpa</td>
+<td>2.4</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>2005</td>
+<td>2006</td>
+<td>math_gpa</td>
+<td>3.4</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>2005</td>
+<td>2006</td>
+<td>absences</td>
+<td>14</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>2006</td>
+<td>2007</td>
+<td>absences</td>
+<td>96</td>
+</tr>
+</tbody>
+</table>
+<p>In an RG-formatted table, there are five columns:</p>
+<ol class="arabic simple">
+<li>The unique identifier of a unit. By &#8220;unit,&#8221; we mean unit in a
+statistical sense, where a population consists of a number of units.
+In Table 1, a unit is a student, and each student is uniquely
+identified by a value that appears in the student_id column.
+Table 1 defines data for students 0, 1, and 2.</li>
+<li>The time at which a certain record begins to be applicable. In Table 1,
+start_year is this start time.</li>
+<li>The time at which a certain record ceases to be applicable. In Table 1,
+end_year is this stop time.</li>
+<li>The name of a feature applicable to that unit at that time. In Table 1,
+this is &#8220;feature&#8221;</li>
+<li>The value of the feature for that unit at that time. In Table 1, this is
+Value</li>
+</ol>
+<p>The values in the first column uniquely identify each unit, but there
+can be more than one row in the table per unit. These tables give us
+information in the form of: &#8220;For unit u, from time t1 to time t2, feature f
+had value x&#8221;</p>
+<p>In Table 1, the values of the student_id column each correspond to
+one student. Each student may have multiple rows on this table
+corresponding to multiple features at multiple times. For example, during
+2005-2006, student 0 had a math_gpa of 2.3 and an english_gpa of 4.0.
+During 2006-2007, student 0&#8217;s math_gpa dropped to 2.1, while his or her
+english_gpa dropped to 3.9.</p>
+<p>If a record does not have a time frame, but can be considered to last
+&#8220;forever&#8221; (somebody&#8217;s name, for example) then the start time and end
+time columns can be left NULL. These records will appear in all time
+intervals</p>
+<p>If a record only has one time associated
+(for example, the time that a parking tissue was issued) then either
+start time or stop time can be left NULL, and the other can be filled in.</p>
+<p><strong>M Tables</strong></p>
+<p>ArrayEmitter generates M formatted tables based on RG formatted tables.
+For example, the RG-formatted table Table 1 might result in the following
+M-formatted table:</p>
+<p><em>Table 2</em></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="22%" />
+<col width="29%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">student_id</th>
+<th class="head">math_gpa</th>
+<th class="head">english_gpa</th>
+<th class="head">absences</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>2.2</td>
+<td>3.95</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>3.45</td>
+<td>nan</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>3.4</td>
+<td>nan</td>
+<td>96</td>
+</tr>
+</tbody>
+</table>
+<p>In an M-formatted table, each unit has a single row, and each feature has
+its own column. Notice that the student_ids in Table 2 correspond to the
+student_ids in Table 1, and the names of the columns in Table 2 correspond
+to the entries in the &#8220;feature&#8221; column of Table 1. The process used to
+determine the values in these columns is elucidated below.</p>
+<p><strong>Converting an RG-formatted table to an M-formatted table.</strong></p>
+<p>In order to decide what values appear in our M-formatted table, we:</p>
+<ol class="arabic simple">
+<li>Optionally select a aggregation methods with set_aggregation and
+set_default_aggregation</li>
+<li>Select a timeframe with emit_M</li>
+</ol>
+<p>When creating the M table, we first take only entries in the RG table
+table that fall within the timeframe specified in emit_M, then we aggregate
+those entries using the user_specified aggretation method. If an aggreagation
+method is not specified, ArrayGenerator will take the mean. For example, if
+we have Table 1 stored in table1.csv, and run the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">get_rg_from_csv</span><span class="p">(</span><span class="s">&#39;table1.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;math_gpa&#39;</span><span class="p">,</span> <span class="s">&#39;AVG&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;absences&#39;</span><span class="p">,</span> <span class="s">&#39;MAX&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_interval</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2006</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table2</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">emit_M</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>we end up with Table 2</p>
+<p>Notice that math_gpa and english_gpa are the average for 2005 and 2006
+per student, while absences is the max over 2005 and 2006. Also notice
+that english_gpa for student 1 is nan, since the only english_gpa for
+student 1 is from 2007, which is outside of our range. For student 2,
+english_gpa is nan because student 2 has no entries in the table for
+english_gpa.</p>
+<p><strong>Taking subsets of units</strong></p>
+<p>In addition to taking subsets of items in RG tables, we might also
+want to take subsets of units (i.e. rows in M-format tables) according
+to some perameter. For example, we might want to consider only
+students with a math_gpa at or below 3.4. In order to subset units, we use
+the select_rows_in_M function. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">get_rg_from_csv</span><span class="p">(</span><span class="s">&#39;table1.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;math_gpa&#39;</span><span class="p">,</span> <span class="s">&#39;AVG&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;absences&#39;</span><span class="p">,</span> <span class="s">&#39;MAX&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">select_rows_in_M</span><span class="p">(</span><span class="s">&#39;math_gpa &lt;= 3.4&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_interval</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2006</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table3</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">emit_M</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Gives us</p>
+<p><em>Table 3:</em></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="22%" />
+<col width="29%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">student_id</th>
+<th class="head">math_gpa</th>
+<th class="head">english_gpa</th>
+<th class="head">absences</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>2.2</td>
+<td>3.95</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>3.4</td>
+<td>nan</td>
+<td>96</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that Table 3 is identical to Table 2, except student 1 has been
+omitted because his/her GPA is higher than 3.4.</p>
+<p><strong>Note on function call semantics</strong></p>
+<p>Most methods of ArrayEmitter return new ArrayEmitters rather than
+modifying the existing ArrayEmitter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>convert_to_unix_time</strong> (<em>boolean</em>) &#8211; Iff true, user queries in set_interval will be translated from
+datetimes to unix time (seconds since The Epoch). The user may wish
+to set this variable if the database stores times in unix time</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.emit_M">
+<code class="descname">emit_M</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.emit_M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a structured array in M-format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Numpy structured array constructed using the specified queries and
+subsets</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.get_query">
+<code class="descname">get_query</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.get_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SQL query that will be used to create the M-formatted table</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.get_rg_from_csv">
+<code class="descname">get_rg_from_csv</code><span class="sig-paren">(</span><em>csv_file_path</em>, <em>parse_datetimes=[]</em>, <em>unit_id_col=None</em>, <em>start_time_col=None</em>, <em>stop_time_col=None</em>, <em>feature_col=None</em>, <em>val_col=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.get_rg_from_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an RG-formatted table from a CSV file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>csv_file_path</strong> (<em>str</em>) &#8211; Path of the csv file to import table from</li>
+<li><strong>parse_datetimes</strong> (<em>list of col names</em>) &#8211; Columns that should be interpreted as datetimes</li>
+<li><strong>unit_id_col</strong> (<em>str or None</em>) &#8211; The name of the column containing unique unit IDs. For example,
+in Table 1, this is &#8216;student_id&#8217;. If None, ArrayEmitter will
+pick the first otherwise unspecified column</li>
+<li><strong>start_time_col</strong> (<em>str or None</em>) &#8211; The name of the column containing start time. In Table 1,
+this is &#8216;start_year&#8217;. If None, ArrayEmitter will pick the second
+otherwise unspecified column.</li>
+<li><strong>end_time_col</strong> (<em>str or None</em>) &#8211; The name of the column containing the stop time. In Table 1,
+this is &#8216;end_year&#8217;. If None, ArrayEmitter will pick the third
+otherwise unspecified column.</li>
+<li><strong>feature_col</strong> (<em>str or None</em>) &#8211; The name of the column containing the feature name. In Table 1,
+this is &#8216;feature&#8217;. If None, ArrayEmitter will pick the fourth
+otherwise unspecified column.</li>
+<li><strong>val_col</strong> (<em>str or None</em>) &#8211; The name of the column containing the value for the given
+feature for the given user at the given time. In Table 1,
+this is &#8216;value&#8217;. If None, ArrayEmitter will pick the fifth
+otherwise unspecified column.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Copy of this ArrayGenerator which has rg_table specified</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ArrayGenerator</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">get_rg_from_csv</span><span class="p">(</span><span class="s">&#39;table_1.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.get_rg_from_sql">
+<code class="descname">get_rg_from_sql</code><span class="sig-paren">(</span><em>conn_str</em>, <em>table_name</em>, <em>unit_id_col=None</em>, <em>start_time_col=None</em>, <em>stop_time_col=None</em>, <em>feature_col=None</em>, <em>val_col=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.get_rg_from_sql" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an RG-formatted matrix from a CSV file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>conn_str</strong> (<em>str</em>) &#8211; SQLAlchemy connection string to connect to the database and run
+the query.</li>
+<li><strong>table_name</strong> (<em>str</em>) &#8211; The name of the RG-formatted table in the database</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>unit_id_col <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd>The name of the column containing unique unit IDs. For example,
+in Table 1, this is &#8216;student_id&#8217;. If None, ArrayEmitter will
+pick the first otherwise unspecified column</dd>
+<dt>start_time_col <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd>The name of the column containing start time. In Table 1,
+this is &#8216;start_year&#8217;. If None, ArrayEmitter will pick the second
+otherwise unspecified column.</dd>
+<dt>end_time_col <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd>The name of the column containing the stop time. In Table 1,
+this is &#8216;end_year&#8217;. If None, ArrayEmitter will pick the third
+otherwise unspecified column.</dd>
+<dt>feature_col <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd>The name of the column containing the feature name. In Table 1,
+this is &#8216;feature&#8217;. If None, ArrayEmitter will pick the fourth
+otherwise unspecified column.</dd>
+<dt>val_col <span class="classifier-delimiter">:</span> <span class="classifier">str or None</span></dt>
+<dd>The name of the column containing the value for the given
+feature for the given user at the given time. In Table 1,
+this is &#8216;value&#8217;. If None, ArrayEmitter will pick the fifth
+otherwise unspecified column.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Copy of this ArrayGenerator which has rg_table specified</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">ArrayGenerator</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conn_str</span> <span class="o">=</span> <span class="o">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">get_rg_from_SQL</span><span class="p">(</span><span class="s">&#39;SELECT * FROM table_1&#39;</span><span class="p">,</span> <span class="s">&#39;student_id&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                        <span class="n">conn_str</span><span class="o">=</span><span class="n">conn_str</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.select_rows_in_M">
+<code class="descname">select_rows_in_M</code><span class="sig-paren">(</span><em>where</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.select_rows_in_M" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies a subset of the units to be returned in the M-table
+according to some constraint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>where</strong> (<em>str</em>) &#8211; A statement required to be true about the returned table using
+at least one column name, constant values, parentheses and the
+operators: =, !=, &lt;, &gt;, &lt;=, &gt;=, AND, OR, NOT, and other things
+that can appear in a SQL WHERE statement</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A copy of the current ArrayGenerator with the additional where
+condition added</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ArrayGenerator</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span> <span class="c"># Populate ag with Table 1 and Table 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;math_gpa&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;absences&#39;</span><span class="p">,</span> <span class="s">&#39;max&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">select_rows_in_M</span><span class="p">(</span><span class="s">&#39;grad_year == 2007&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_interval</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2006</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">emit_M</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.set_aggregation">
+<code class="descname">set_aggregation</code><span class="sig-paren">(</span><em>feature_name</em>, <em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.set_aggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the method used to aggregate across dates in a RG table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>feature_name</strong> (<em>str</em>) &#8211; Name of feature for which we are aggregating</li>
+<li><strong>method</strong> (<em>str</em>) &#8211; <p>Method used to aggregate the feature across year.
+Can be one of:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>&#8216;AVG&#8217;</dt>
+<dd>Mean average</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;COUNT&#8217;</dt>
+<dd>Number of results</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;MAX&#8217;</dt>
+<dd>Largest result</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;MIN&#8217;</dt>
+<dd>Smallest result</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;SUM&#8217;</dt>
+<dd>Sum of results</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Additionally, method can be any aggregation function supported
+by the database in which the RG table lives.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Copy of this ArrayGenerator with aggregation set</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ArrayGenerator</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span> <span class="c"># Populate ag with Table 1 and Table 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;math_gpa&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_aggregation</span><span class="p">(</span><span class="s">&#39;absences&#39;</span><span class="p">,</span> <span class="s">&#39;max&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_interval</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2006</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sa</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">emit_M</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.set_default_aggregation">
+<code class="descname">set_default_aggregation</code><span class="sig-paren">(</span><em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.set_default_aggregation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the default method used to aggregate across dates</p>
+<p>ArrayEmitter will use the value of set_default_aggregation when
+a method has not been set for a given feature using the
+set_aggregation method.</p>
+<p>When set_default_aggregation has not been called, the default
+aggregation method is &#8216;AVG&#8217;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>method</strong> (<em>str</em>) &#8211; <p>Method used to aggregate features across year.
+Can be one of:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>&#8216;AVG&#8217;</dt>
+<dd>Mean average</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;COUNT&#8217;</dt>
+<dd>Number of results</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;MAX&#8217;</dt>
+<dd>Largest result</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;MIN&#8217;</dt>
+<dd>Smallest result</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8216;SUM&#8217;</dt>
+<dd>Sum of results</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Additionally, method can be any aggregation function supported
+by the database in which the RG table lives.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Copy of this ArrayGenerator with default aggregation set</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ArrayGenerator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.set_interval">
+<code class="descname">set_interval</code><span class="sig-paren">(</span><em>start_time</em>, <em>stop_time</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.set_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets interval used to create M-formatted table</p>
+<p>Start times and stop times are inclusive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start_time</strong> (<em>number or datetime.datetime</em>) &#8211; Start time of log tables to include in this sa</li>
+<li><strong>stop_time</strong> (<em>number or datetime.datetime</em>) &#8211; Stop time of log tables to include in this sa</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">With interval set</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#diogenes.array_emitter.ArrayEmitter" title="diogenes.array_emitter.ArrayEmitter">ArrayEmitter</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diogenes.array_emitter.ArrayEmitter.subset_over">
+<code class="descname">subset_over</code><span class="sig-paren">(</span><em>label_col, interval_train_window_start, interval_train_window_size, interval_test_window_start, interval_test_window_size, interval_inc_value, interval_expanding=False, row_M_col_name=None, row_M_train_window_start=None, row_M_train_window_size=None, row_M_test_window_start=None, row_M_test_window_size=None, row_M_inc_value=None, row_M_expanding=False, clfs=[{'clf': &lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;}]</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.array_emitter.ArrayEmitter.subset_over" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates ArrayGenerators according to some subsetting directive.</p>
+<p>There are two ways that we determine what the train and test sets are
+for each trial:</p>
+<ol class="arabic simple">
+<li>The start time/stop time interval. This is the interval used to
+create features in the M-formatted matrix. Setting the start
+time/stop time of this interval is equalivalent to passing values
+to set_interval.  variables pertaining to this interval have the
+interval* prefix.</li>
+<li>The rows of the M matrix to select, based on the value of some
+column in the M matrix. Setting the start and end of this interval
+is equivalent to passing values to select_rows_in_M. Values
+pertaining to this set of rows have the row_M* prefix. Taking
+subsets over rows of M is optional, and it will only occur if
+row_M_col_name is not None</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>label_col</strong> (<em>str</em>) &#8211; The name of the column containing labels</li>
+<li><strong>interval_train_window_start</strong> (<em>number or datetime</em>) &#8211; start of training interval</li>
+<li><strong>interval_train_window_size</strong> (<em>number or datetime</em>) &#8211; (Initial) size of training interval</li>
+<li><strong>interval_test_window_start</strong> (<em>number or datetime</em>) &#8211; start of testing interval</li>
+<li><strong>interval_test_window_size</strong> (<em>number or datetime</em>) &#8211; size of testing interval</li>
+<li><strong>interval_inc_value</strong> (<em>datetime, timedelta, or number</em>) &#8211; interval to increment train and test interval</li>
+<li><strong>interval_expanding</strong> (<em>boolean</em>) &#8211; whether or not the training interval is expanding</li>
+<li><strong>row_M_col_name</strong> (<em>str or None</em>) &#8211; <p>If not None, the name of the feature which will be used to select
+different training and testing sets in addition to the interval</p>
+<p>If None, train and testing sets will use all rows given a
+particular time interval</p>
+</li>
+<li><strong>row_M_train_window_start</strong> (<em>? or None</em>) &#8211; Start of train window for M rows. If None, uses
+interval_train_window_start</li>
+<li><strong>row_M_train_window_size</strong> (<em>? or None</em>) &#8211; (Initial) size of train window for M rows. If None, uses
+interval_train_window_size</li>
+<li><strong>row_M_test_window_start</strong> (<em>? or None</em>) &#8211; Start of test window for M rows. If None, uses
+interval_test_window_start</li>
+<li><strong>row_M_train_window_size</strong> &#8211; size of test window for M rows. If None, uses
+interval_test_window_size</li>
+<li><strong>row_M_inc_value</strong> (<em>? or None</em>) &#8211; interval to increment train and test window for M rows. If None,
+uses interval_inc_value</li>
+<li><strong>row_M_expanding</strong> (<em>bool</em>) &#8211; whether or not the training window for M rows is expanding</li>
+<li><strong>clfs</strong> (<em>list of dict</em>) &#8211; classifiers and parameters to run with each train/test set. See
+documentation for diogenes.grid_search.experiment.Experiment.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Experiment collecting train/test sets that have been run</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="diogenes.grid_search.html#diogenes.grid_search.experiment.Experiment" title="diogenes.grid_search.experiment.Experiment">diogenes.grid_search.experiment.Experiment</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes.utils">
+<span id="diogenes-utils-module"></span><h2>diogenes.utils module<a class="headerlink" href="#module-diogenes.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="diogenes.utils.append_cols">
+<code class="descclassname">diogenes.utils.</code><code class="descname">append_cols</code><span class="sig-paren">(</span><em>M</em>, <em>cols</em>, <em>col_names</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.append_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append columns to an existing structured array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>cols</strong> (<em>list of numpy.ndarray</em>) &#8211; </li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names for new columns</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">structured array with new columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.cast_list_of_list_to_sa">
+<code class="descclassname">diogenes.utils.</code><code class="descname">cast_list_of_list_to_sa</code><span class="sig-paren">(</span><em>L</em>, <em>col_names=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.cast_list_of_list_to_sa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a list of lists to a numpy structured array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>L</strong> (<em>list of lists</em>) &#8211; Signifies a table. Each inner list should have the same length</li>
+<li><strong>col_names</strong> (<em>list of str or None</em>) &#8211; Names for columns. If unspecified, names will be arbitrarily chosen</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Structured array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.cast_np_sa_to_nd">
+<code class="descclassname">diogenes.utils.</code><code class="descname">cast_np_sa_to_nd</code><span class="sig-paren">(</span><em>sa</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.cast_np_sa_to_nd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a view of a numpy structured array as a single-type 1 or
+2-dimensional array. If the resulting nd array would be a column vector,
+returns a 1-d array instead. If the resulting array would have a single
+entry, returns a 0-d array instead
+All elements are converted to the most permissive type. permissiveness
+is determined first by finding the most permissive type in the ordering:
+datetime64 &lt; int &lt; float &lt; string
+then by selecting the longest typelength among all columns with with that
+type.
+If the sa does not have a homogeneous datatype already, this may require
+copying and type conversion rather than just casting. Consequently, this
+operation should be avoided for heterogeneous arrays
+Based on <a class="reference external" href="http://wiki.scipy.org/Cookbook/Recarray">http://wiki.scipy.org/Cookbook/Recarray</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sa</strong> (<em>numpy.ndarray</em>) &#8211; The structured array to view</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.convert_to_sa">
+<code class="descclassname">diogenes.utils.</code><code class="descname">convert_to_sa</code><span class="sig-paren">(</span><em>M</em>, <em>col_names=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.convert_to_sa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an list of lists or a np ndarray to a Structured Arrray
+:param M: This is the Matrix M, that it is assumed is the basis for the ML algorithm
+:type M: List of List or np.ndarray
+:param col_names: Column names for new sa. If M is already a structured array, col_names</p>
+<blockquote>
+<div>will be ignored. If M is not a structured array and col_names is None,
+names will be generated</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">structured array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.csv_to_sql">
+<code class="descclassname">diogenes.utils.</code><code class="descname">csv_to_sql</code><span class="sig-paren">(</span><em>conn</em>, <em>csv_path</em>, <em>table_name=None</em>, <em>parse_datetimes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.csv_to_sql" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a csv to a table in SQL</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>conn</strong> (<em>sqlalchemy engine</em>) &#8211; Connection to database</li>
+<li><strong>csv_path</strong> (<em>str</em>) &#8211; Path to csv</li>
+<li><strong>table_name</strong> (<em>str or None</em>) &#8211; Name of table to add to db. if None, will use the
+name of the csv with the .csv suffix stripped</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">THe table name</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.dist_less_than">
+<code class="descclassname">diogenes.utils.</code><code class="descname">dist_less_than</code><span class="sig-paren">(</span><em>lat_1</em>, <em>lon_1</em>, <em>lat_2</em>, <em>lon_2</em>, <em>threshold</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.dist_less_than" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether distance between two points is less than a threshold</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lat1</strong> (<em>float</em>) &#8211; </li>
+<li><strong>lon1</strong> (<em>float</em>) &#8211; </li>
+<li><strong>lat2</strong> (<em>float</em>) &#8211; </li>
+<li><strong>lon2</strong> (<em>float</em>) &#8211; </li>
+<li><strong>threshold</strong> (<em>float</em>) &#8211; max distance in kilometers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.distance">
+<code class="descclassname">diogenes.utils.</code><code class="descname">distance</code><span class="sig-paren">(</span><em>lat_1</em>, <em>lon_1</em>, <em>lat_2</em>, <em>lon_2</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the great circle distance between two points on earth</p>
+<p>In Kilometers</p>
+<p>From:
+<a class="reference external" href="http://stackoverflow.com/questions/4913349/haversine-formula-in-python-bearing-and-distance-between-two-gps-points">http://stackoverflow.com/questions/4913349/haversine-formula-in-python-bearing-and-distance-between-two-gps-points</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.fix_pandas_datetimes">
+<code class="descclassname">diogenes.utils.</code><code class="descname">fix_pandas_datetimes</code><span class="sig-paren">(</span><em>df</em>, <em>dtime_cols</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.fix_pandas_datetimes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.invert_dictionary">
+<code class="descclassname">diogenes.utils.</code><code class="descname">invert_dictionary</code><span class="sig-paren">(</span><em>aDict</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.invert_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a dict so that keys become values and values become keys</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.is_nd">
+<code class="descclassname">diogenes.utils.</code><code class="descname">is_nd</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.is_nd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True iff M is a numpy.ndarray</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.is_not_a_time">
+<code class="descclassname">diogenes.utils.</code><code class="descname">is_not_a_time</code><span class="sig-paren">(</span><em>dt</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.is_not_a_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>True iff dt is equlivalent to numpy.datetime64(&#8216;NaT&#8217;) Does casting so
+It&#8217;s the correct &#8220;NOT A TIME&#8221;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.is_sa">
+<code class="descclassname">diogenes.utils.</code><code class="descname">is_sa</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.is_sa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True iff M is a structured array</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.join">
+<code class="descclassname">diogenes.utils.</code><code class="descname">join</code><span class="sig-paren">(</span><em>left</em>, <em>right</em>, <em>how</em>, <em>left_on</em>, <em>right_on</em>, <em>suffixes=('_x'</em>, <em>'_y')</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does SQL-stype join between two numpy tables</p>
+<p>Supports equality join on an arbitrary number of columns</p>
+<p>Approximates Pandas DataFrame.merge
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html">http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.merge.html</a>
+Implements a hash join
+<a class="reference external" href="http://blogs.msdn.com/b/craigfr/archive/2006/08/10/687630.aspx">http://blogs.msdn.com/b/craigfr/archive/2006/08/10/687630.aspx</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>left</strong> (<em>numpy.ndarray</em>) &#8211; left structured array to join</li>
+<li><strong>right</strong> (<em>numpy.ndarray</em>) &#8211; right structured array to join</li>
+<li><strong>how</strong> (<em>{&#8216;inner&#8217;, &#8216;outer&#8217;, &#8216;left&#8217;, &#8216;right&#8217;}</em>) &#8211; As in SQL, signifies whether rows on one table should be included
+when they do not have matches in the other table.</li>
+<li><strong>left_on</strong> (<em>str or list or str</em>) &#8211; names of column(s) for left table to join on.
+If a list, the nth entry of left_on is joined to the nth entry of
+right_on</li>
+<li><strong>right_on</strong> (<em>str or list or str</em>) &#8211; names of column(s) for right table to join on
+If a list, the nth entry of left_on is joined to the nth entry of
+right_on</li>
+<li><strong>suffixes</strong> (<em>(str, str)</em>) &#8211; Suffixes to add to column names when left and right share column names</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">joined structured array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.np_dtype_is_homogeneous">
+<code class="descclassname">diogenes.utils.</code><code class="descname">np_dtype_is_homogeneous</code><span class="sig-paren">(</span><em>A</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.np_dtype_is_homogeneous" title="Permalink to this definition">¶</a></dt>
+<dd><p>True iff dtype is nonstructured or every sub dtype is the same</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.open_csv_as_sa">
+<code class="descclassname">diogenes.utils.</code><code class="descname">open_csv_as_sa</code><span class="sig-paren">(</span><em>fin</em>, <em>delimiter='</em>, <em>'</em>, <em>header=True</em>, <em>col_names=None</em>, <em>verbose=True</em>, <em>parse_datetimes=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.open_csv_as_sa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a csv to a structured array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fin</strong> (<em>file-like object</em>) &#8211; file-like object containing csv</li>
+<li><strong>delimiter</strong> (<em>str</em>) &#8211; Character used to delimit csv fields</li>
+<li><strong>header</strong> (<em>bool</em>) &#8211; If True, assumes the first line of the csv has column names</li>
+<li><strong>col_names</strong> (<em>list of str or None</em>) &#8211; If header is False, this list will be used for column names</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>numpy.ndarray</em> &#8211;
+structured array corresponding to the csv</li>
+<li><em>If header is False and col_names is None, diogenes will assign</em></li>
+<li><em>arbitrary column names</em></li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.remove_cols">
+<code class="descclassname">diogenes.utils.</code><code class="descname">remove_cols</code><span class="sig-paren">(</span><em>M</em>, <em>col_names</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.remove_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove columns specified by col_names from structured array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</li>
+<li><strong>col_names</strong> (<em>list of str</em>) &#8211; names for columns to remove</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">structured array without columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.sa_from_cols">
+<code class="descclassname">diogenes.utils.</code><code class="descname">sa_from_cols</code><span class="sig-paren">(</span><em>cols</em>, <em>col_names=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.sa_from_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of columns to a structured array</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.stack_rows">
+<code class="descclassname">diogenes.utils.</code><code class="descname">stack_rows</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.stack_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a structured array containing all the rows in its arguments</p>
+<p>Each argument must be a structured array with the same column names
+and column types. Similar to SQL UNION</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.str_to_time">
+<code class="descclassname">diogenes.utils.</code><code class="descname">str_to_time</code><span class="sig-paren">(</span><em>date_text</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.str_to_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the datetime.datetime representation of a string</p>
+<p>Returns NOT_A_TIME if the string does not signify a valid datetime</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.to_unix_time">
+<code class="descclassname">diogenes.utils.</code><code class="descname">to_unix_time</code><span class="sig-paren">(</span><em>dt</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.to_unix_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a datetime.datetime to seconds since epoch</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.transpose_dict_of_lists">
+<code class="descclassname">diogenes.utils.</code><code class="descname">transpose_dict_of_lists</code><span class="sig-paren">(</span><em>dol</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.transpose_dict_of_lists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a dictionary of lists into a list of dictionaries</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.utf_to_ascii">
+<code class="descclassname">diogenes.utils.</code><code class="descname">utf_to_ascii</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.utf_to_ascii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a unicode string to an ascii string</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diogenes">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-diogenes" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">diogenes package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-diogenes.array_emitter">diogenes.array_emitter module</a></li>
+<li><a class="reference internal" href="#module-diogenes.utils">diogenes.utils module</a></li>
+<li><a class="reference internal" href="#module-diogenes">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/diogenes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, DSaPP.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

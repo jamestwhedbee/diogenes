@@ -1,0 +1,19 @@
+
+.. code:: python
+
+    %matplotlib inline
+    import numpy as np
+    from diogenes.read import open_csv_url
+    from diogenes.modify import remove_cols
+    
+    
+    data = open_csv_url(
+                'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv',  
+                delimiter=';')
+    labels = data['quality']
+    lables = labels < np.average(labels)
+    
+    M = remove_cols(data, 'quality')
+    
+    
+
