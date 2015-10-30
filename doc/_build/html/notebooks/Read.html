@@ -6,40 +6,36 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>User Guide &mdash; Diogenes 0.0.1 documentation</title>
+    <title>The Read Module &mdash; Diogenes 0.0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
+        URL_ROOT:    '../',
         VERSION:     '0.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" />
-    <link rel="prev" title="Introduction" href="getting_started.html" /> 
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="../index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="getting_started.html" title="Introduction"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -48,30 +44,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="user-guide">
-<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
-<p>Diogenes is a set of tools designed to make common machine learning tasks
-easier. Diogenes is divided into several parts:</p>
-<ul class="simple">
-<li><a class="reference internal" href="diogenes.read.html#module-diogenes.read" title="diogenes.read"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.read</span></code></a> provides tools for reading data from external sources
-into Diogenes&#8217; preferred Numpy
-<a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.rec.html">structured array</a>
-format.</li>
-<li><a class="reference internal" href="diogenes.display.html#module-diogenes.display" title="diogenes.display"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.display</span></code></a> provides tools for summarizing data and the
-performance of trained classifiers.</li>
-<li><a class="reference internal" href="diogenes.modify.html#module-diogenes.modify" title="diogenes.modify"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.modify</span></code></a> provides tools for manipulating arrays and
-generating features.</li>
-<li><a class="reference internal" href="diogenes.grid_search.html#module-diogenes.grid_search" title="diogenes.grid_search"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.grid_search</span></code></a> provides tools for finding the best classifier,
-testing classifier sensitivity to data sets, and cross-validating
-classifier performance.</li>
-<li><a class="reference internal" href="diogenes.html#module-diogenes.array_emitter" title="diogenes.array_emitter"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.array_emitter</span></code></a> provides tools for processing and iterating
-over &#8220;RG-formatted&#8221; (transposed) arrays.</li>
-<li><a class="reference internal" href="diogenes.html#module-diogenes.utils" title="diogenes.utils"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.utils</span></code></a> provides miscilaneous utilities&#8211;mostly for processing
-structured arrays.</li>
-</ul>
-<div class="section" id="the-read-module">
-<h2>The Read Module<a class="headerlink" href="#the-read-module" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="diogenes.read.html#module-diogenes.read" title="diogenes.read"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.read</span></code></a> module provides tools for reading data from
+  <div class="section" id="the-read-module">
+<h1>The Read Module<a class="headerlink" href="#the-read-module" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="../diogenes.read.html#module-diogenes.read" title="diogenes.read"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.read</span></code></a> module provides tools for reading data from
 external sources into Diogenes&#8217; preferred Numpy <a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.rec.html">structured
 array</a> format.</p>
 <p>The module can read from either:</p>
@@ -81,8 +56,8 @@ array</a> format.</p>
 <li>Any sort of SQL database</li>
 </ul>
 <div class="section" id="local-csv-files">
-<h3>Local CSV Files<a class="headerlink" href="#local-csv-files" title="Permalink to this headline">¶</a></h3>
-<p>We can read local CSV files using <a class="reference internal" href="diogenes.read.html#diogenes.read.read.open_csv" title="diogenes.read.read.open_csv"><code class="xref py py-func docutils literal"><span class="pre">diogenes.read.read.open_csv()</span></code></a>.</p>
+<h2>Local CSV Files<a class="headerlink" href="#local-csv-files" title="Permalink to this headline">¶</a></h2>
+<p>We can read local CSV files using <a class="reference internal" href="../diogenes.read.html#diogenes.read.read.open_csv" title="diogenes.read.read.open_csv"><code class="xref py py-func docutils literal"><span class="pre">diogenes.read.read.open_csv()</span></code></a>.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">diogenes</span>
 
 <span class="n">sample_csv_text</span> <span class="o">=</span> <span class="s">&#39;id,name,age</span><span class="se">\n</span><span class="s">0,Anne,57</span><span class="se">\n</span><span class="s">1,Bill,76</span><span class="se">\n</span><span class="s">2,Cecil,26</span><span class="se">\n</span><span class="s">&#39;</span>
@@ -108,8 +83,8 @@ array</a>).</p>
 </div>
 </div>
 <div class="section" id="remote-csv-files">
-<h3>Remote CSV files<a class="headerlink" href="#remote-csv-files" title="Permalink to this headline">¶</a></h3>
-<p>We read remote CSV files with <a class="reference internal" href="diogenes.read.html#diogenes.read.read.open_csv_url" title="diogenes.read.read.open_csv_url"><code class="xref py py-func docutils literal"><span class="pre">diogenes.read.read.open_csv_url()</span></code></a>,
+<h2>Remote CSV files<a class="headerlink" href="#remote-csv-files" title="Permalink to this headline">¶</a></h2>
+<p>We read remote CSV files with <a class="reference internal" href="../diogenes.read.html#diogenes.read.read.open_csv_url" title="diogenes.read.read.open_csv_url"><code class="xref py py-func docutils literal"><span class="pre">diogenes.read.read.open_csv_url()</span></code></a>,
 using a url</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">remote_csv</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">open_csv_url</span><span class="p">(</span><span class="s">&#39;http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv&#39;</span><span class="p">,</span>
     <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;;&#39;</span><span class="p">)</span>
@@ -136,14 +111,14 @@ using a url</p>
 </div>
 </div>
 <div class="section" id="sql-databases">
-<h3>SQL databases<a class="headerlink" href="#sql-databases" title="Permalink to this headline">¶</a></h3>
+<h2>SQL databases<a class="headerlink" href="#sql-databases" title="Permalink to this headline">¶</a></h2>
 <p>We read from, and write to, databases using
-<a class="reference internal" href="diogenes.read.html#diogenes.read.read.connect_sql" title="diogenes.read.read.connect_sql"><code class="xref py py-func docutils literal"><span class="pre">diogenes.read.read.connect_sql()</span></code></a>. When we pass an <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/core/engines.html">SQLAlchemy
+<a class="reference internal" href="../diogenes.read.html#diogenes.read.read.connect_sql" title="diogenes.read.read.connect_sql"><code class="xref py py-func docutils literal"><span class="pre">diogenes.read.read.connect_sql()</span></code></a>. When we pass an <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/core/engines.html">SQLAlchemy
 connection
 string</a> to
 connect_sql, we get an instance of
-<a class="reference internal" href="diogenes.read.html#diogenes.read.read.SQLConnection" title="diogenes.read.read.SQLConnection"><code class="xref py py-class docutils literal"><span class="pre">diogenes.read.read.SQLConnection</span></code></a>, which can run SQL queries
-with <a class="reference internal" href="diogenes.read.html#diogenes.read.read.SQLConnection" title="diogenes.read.read.SQLConnection"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.read.read.SQLConnection()</span></code></a> in a way that resembles
+<a class="reference internal" href="../diogenes.read.html#diogenes.read.read.SQLConnection" title="diogenes.read.read.SQLConnection"><code class="xref py py-class docutils literal"><span class="pre">diogenes.read.read.SQLConnection</span></code></a>, which can run SQL queries
+with <a class="reference internal" href="../diogenes.read.html#diogenes.read.read.SQLConnection" title="diogenes.read.read.SQLConnection"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.read.read.SQLConnection()</span></code></a> in a way that resembles
 (but does not strictly adhere to) <a class="reference external" href="https://www.python.org/dev/peps/pep-0249/">DBAPI
 2.0</a>.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">conn</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">connect_sql</span><span class="p">(</span><span class="s">&#39;sqlite://&#39;</span><span class="p">)</span>
@@ -169,7 +144,6 @@ is that Diogenes returns queries in structured arrays.</p>
 </div>
 </div>
 </div>
-</div>
 
 
           </div>
@@ -177,32 +151,26 @@ is that Diogenes returns queries in structured arrays.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">User Guide</a><ul>
-<li><a class="reference internal" href="#the-read-module">The Read Module</a><ul>
+<li><a class="reference internal" href="#">The Read Module</a><ul>
 <li><a class="reference internal" href="#local-csv-files">Local CSV Files</a></li>
 <li><a class="reference internal" href="#remote-csv-files">Remote CSV files</a></li>
 <li><a class="reference internal" href="#sql-databases">SQL databases</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="getting_started.html"
-                        title="previous chapter">Introduction</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/user_guide.txt"
+      <li><a href="../_sources/notebooks/Read.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -221,15 +189,12 @@ is that Diogenes returns queries in structured arrays.</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="getting_started.html" title="Introduction"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

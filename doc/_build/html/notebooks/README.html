@@ -6,44 +6,36 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction &mdash; Diogenes 0.0.1 documentation</title>
+    <title>&lt;no title&gt; &mdash; Diogenes 0.0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
+        URL_ROOT:    '../',
         VERSION:     '0.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Diogenes 0.0.1 documentation" href="index.html" />
-    <link rel="next" title="User Guide" href="user_guide.html" />
-    <link rel="prev" title="Welcome to Diogenes’s documentation!" href="index.html" /> 
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="../index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="user_guide.html" title="User Guide"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to Diogenes’s documentation!"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,26 +44,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="highlight-python"><div class="highlight"><pre>================================================
-      ____  _
-     / __ \(_)___  ____ ____  ____  ___  _____
-    / / / / / __ \/ __ `/ _ \/ __ \/ _ \/ ___/
-   / /_/ / / /_/ / /_/ /  __/ / / /  __(__  )
-  /_____/_/\____/\__, /\___/_/ /_/\___/____/
-                /____/
-
-================================================
-</pre></div>
-</div>
-<div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>Diogenes is a a Python library and workflow templet for machine learning.
-Principally it wraps sklearn providing enhanced functionality and simplified
-interface of often used workflows.</p>
-</div>
-<div class="section" id="example">
-<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
-<div class="code python highlight-python"><div class="highlight"><pre>%matplotlib inline
+  <div class="code python highlight-python"><div class="highlight"><pre>%matplotlib inline
 import diogenes
 import numpy as np
 </pre></div>
@@ -154,7 +127,7 @@ into binary classes.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">fig</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">plot_correlation_matrix</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="doc/notebooks/README_files/README_14_0.png" src="doc/notebooks/README_files/README_14_0.png" />
+<img alt="../_images/README_14_0.png" src="../_images/README_14_0.png" />
 <p>Arrange an experiment trying different classifiers</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span>
     <span class="n">M</span><span class="p">,</span>
@@ -189,41 +162,7 @@ into binary classes.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">fig</span> <span class="o">=</span> <span class="n">best_trial</span><span class="o">.</span><span class="n">roc_curve</span><span class="p">()</span>
 </pre></div>
 </div>
-<img alt="doc/notebooks/README_files/README_21_0.png" src="doc/notebooks/README_files/README_21_0.png" />
-</div>
-<div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p><cite>pip install git+git://github.com/dssg/diogenes.git</cite></p>
-<div class="section" id="required-packages">
-<h2>Required Packages<a class="headerlink" href="#required-packages" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="python-packages">
-<h3>Python packages<a class="headerlink" href="#python-packages" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><a class="reference external" href="https://www.python.org/">Python 2.7</a></li>
-<li><a class="reference external" href="http://www.numpy.org/">Numpy 1.10.1</a></li>
-<li><a class="reference external" href="http://scikit-learn.org/stable/">scikit-learn</a></li>
-<li><a class="reference external" href="http://pandas.pydata.org/">pandas</a></li>
-<li><a class="reference external" href="http://www.sqlalchemy.org/">SQLAlchemy</a></li>
-<li><a class="reference external" href="https://github.com/pdfkit/pdfkit">pdfkit</a></li>
-<li><a class="reference external" href="http://matplotlib.org/">plotlib</a></li>
-</ul>
-</div>
-<div class="section" id="other-packages">
-<h3>Other packages<a class="headerlink" href="#other-packages" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><a class="reference external" href="http://wkhtmltopdf.org/">wkhtmltopdf</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="next-steps">
-<h1>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h1>
-<p>Check out the <a class="reference external" href="http://dssg.github.io/diogenes">documentation</a></p>
-</div>
-<div class="section" id="misc">
-<h1>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h1>
-<p>my_* are included in the .gitignore.  We recommend a standard such as my_experiment, my_storage for local folders.</p>
-</div>
+<img alt="../_images/README_21_0.png" src="../_images/README_21_0.png" />
 
 
           </div>
@@ -231,38 +170,16 @@ into binary classes.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Introduction</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
-<li><a class="reference internal" href="#installation">Installation</a><ul>
-<li><a class="reference internal" href="#required-packages">Required Packages</a><ul>
-<li><a class="reference internal" href="#python-packages">Python packages</a></li>
-<li><a class="reference internal" href="#other-packages">Other packages</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
-<li><a class="reference internal" href="#misc">Misc</a></li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to Diogenes&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="user_guide.html"
-                        title="next chapter">User Guide</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/getting_started.txt"
+      <li><a href="../_sources/notebooks/README.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -281,18 +198,12 @@ into binary classes.</p>
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="user_guide.html" title="User Guide"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to Diogenes’s documentation!"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

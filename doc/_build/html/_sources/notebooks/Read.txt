@@ -1,0 +1,125 @@
+
+The Read Module
+---------------
+
+The :mod:`diogenes.read` module provides tools for reading data from
+external sources into Diogenes' preferred Numpy `structured
+array <http://docs.scipy.org/doc/numpy/user/basics.rec.html>`__ format.
+
+The module can read from either:
+
+-  A local CSV file
+-  A remote CSV file
+-  Any sort of SQL database
+
+Local CSV Files
+~~~~~~~~~~~~~~~
+
+We can read local CSV files using :func:`diogenes.read.read.open_csv`.
+
+.. code:: python
+
+    import diogenes
+    
+    sample_csv_text = 'id,name,age\n0,Anne,57\n1,Bill,76\n2,Cecil,26\n'
+    with open('sample.csv', 'w') as csv_in:
+        csv_in.write(sample_csv_text)
+    
+    sample_table = diogenes.read.open_csv('sample.csv')
+``sample_table`` is a structured array (more specifically, a `record
+array <http://docs.scipy.org/doc/numpy/reference/generated/numpy.recarray.html>`__).
+
+.. code:: python
+
+    print sample_table.dtype
+
+.. parsed-literal::
+
+    (numpy.record, [('id', '<i8'), ('name', 'O'), ('age', '<i8')])
+
+
+.. code:: python
+
+    print sample_table
+
+.. parsed-literal::
+
+    [(0, 'Anne', 57) (1, 'Bill', 76) (2, 'Cecil', 26)]
+
+
+Remote CSV files
+~~~~~~~~~~~~~~~~
+
+We read remote CSV files with :func:`diogenes.read.read.open_csv_url`,
+using a url
+
+.. code:: python
+
+    remote_csv = diogenes.read.open_csv_url('http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv',
+        delimiter=';')
+    print remote_csv.dtype
+
+.. parsed-literal::
+
+    (numpy.record, [('fixed acidity', '<f8'), ('volatile acidity', '<f8'), ('citric acid', '<f8'), ('residual sugar', '<f8'), ('chlorides', '<f8'), ('free sulfur dioxide', '<f8'), ('total sulfur dioxide', '<f8'), ('density', '<f8'), ('pH', '<f8'), ('sulphates', '<f8'), ('alcohol', '<f8'), ('quality', '<i8')])
+
+
+.. code:: python
+
+    print remote_csv[:10]
+
+.. parsed-literal::
+
+    [(7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8, 6)
+     (6.3, 0.3, 0.34, 1.6, 0.049, 14.0, 132.0, 0.9940000000000001, 3.3, 0.49, 9.5, 6)
+     (8.1, 0.28, 0.4, 6.9, 0.05, 30.0, 97.0, 0.9951, 3.26, 0.44, 10.1, 6)
+     (7.2, 0.23, 0.32, 8.5, 0.057999999999999996, 47.0, 186.0, 0.9956, 3.19, 0.4, 9.9, 6)
+     (7.2, 0.23, 0.32, 8.5, 0.057999999999999996, 47.0, 186.0, 0.9956, 3.19, 0.4, 9.9, 6)
+     (8.1, 0.28, 0.4, 6.9, 0.05, 30.0, 97.0, 0.9951, 3.26, 0.44, 10.1, 6)
+     (6.2, 0.32, 0.16, 7.0, 0.045, 30.0, 136.0, 0.9949, 3.18, 0.47, 9.6, 6)
+     (7.0, 0.27, 0.36, 20.7, 0.045, 45.0, 170.0, 1.001, 3.0, 0.45, 8.8, 6)
+     (6.3, 0.3, 0.34, 1.6, 0.049, 14.0, 132.0, 0.9940000000000001, 3.3, 0.49, 9.5, 6)
+     (8.1, 0.22, 0.43, 1.5, 0.044000000000000004, 28.0, 129.0, 0.9938, 3.22, 0.45, 11.0, 6)]
+
+
+SQL databases
+~~~~~~~~~~~~~
+
+We read from, and write to, databases using
+:func:`diogenes.read.read.connect_sql`. When we pass an `SQLAlchemy
+connection
+string <http://docs.sqlalchemy.org/en/rel_1_0/core/engines.html>`__ to
+connect\_sql, we get an instance of
+:class:`diogenes.read.read.SQLConnection`, which can run SQL queries
+with :meth:`diogenes.read.read.SQLConnection` in a way that resembles
+(but does not strictly adhere to) `DBAPI
+2.0 <https://www.python.org/dev/peps/pep-0249/>`__.
+
+.. code:: python
+
+    conn = diogenes.read.read.connect_sql('sqlite://')
+    conn.execute('CREATE TABLE sample_table (id INT, name TEXT, age INT)')
+    for row in sample_table:
+        conn.execute('INSERT INTO sample_table (id, name, age) VALUES (?, ?, ?)', row)
+An important difference between most Python SQL libraries and Diogenes
+is that Diogenes returns queries in structured arrays.
+
+.. code:: python
+
+    sql_result = conn.execute('SELECT * FROM sample_table')
+    print sql_result.dtype
+
+.. parsed-literal::
+
+    (numpy.record, [('id', '<i8'), ('name', 'O'), ('age', '<i8')])
+
+
+.. code:: python
+
+    print sql_result
+
+.. parsed-literal::
+
+    [(0, u'Anne', 57) (1, u'Bill', 76) (2, u'Cecil', 26)]
+
+
