@@ -19,7 +19,7 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest coverage gettext
+.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest coverage gettext notebooks
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -50,8 +50,9 @@ help:
 
 clean:
 	rm -rf $(BUILDDIR)/*
+	rm notebooks/*.rst
 
-html:
+html: notebooks
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
@@ -190,3 +191,11 @@ pseudoxml:
 	$(SPHINXBUILD) -b pseudoxml $(ALLSPHINXOPTS) $(BUILDDIR)/pseudoxml
 	@echo
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
+
+notebooks: 
+	bash ./build_notebooks.bash
+	mkdir -p _build/html/user_guide/user_guide
+	cp notebooks/display_sample_report.pdf _build/html/user_guide/
+	cp -r notebooks/grid_search_files _build/html/user_guide/user_guide
+	cp notebooks/grid_search_sample_report.pdf _build/html/user_guide/
+	cp -r notebooks/display_files _build/html/user_guide/user_guide
