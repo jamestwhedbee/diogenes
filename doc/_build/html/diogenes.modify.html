@@ -382,9 +382,13 @@ strings and ints</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>(numpy.ndarray, dict of str</strong> &#8211;
+A tuple: the first element is structured array with strings mapped to
+ints. The second element is a dictionary where keys are column names
+and values are arrays of the strings that belong to each class, as in:
+<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html">http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array)</td>
 </tr>
 </tbody>
 </table>

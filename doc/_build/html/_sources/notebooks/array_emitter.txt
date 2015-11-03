@@ -1,0 +1,48 @@
+
+The Array Emitter Module
+========================
+
+The Array Emitter module provides
+:class:`diogenes.array_emitter.ArrayEmitter`, which generates tables
+digestable by Scikit-Learn from RG-formatted (transposed) tables. See
+class documentation for details
+
+.. code:: python
+
+    from diogenes import array_emitter
+    
+    rg_table_csv = (
+    """student_id,start_year,end_year,feature,value
+    0,2005,2006,math_gpa,2.3
+    0,2005,2006,english_gpa,4.0
+    0,2005,2006,absences,7
+    0,2006,2007,math_gpa,2.1
+    0,2006,2007,english_gpa,3.9
+    0,2006,2007,absences,8
+    1,2005,2006,math_gpa,3.4
+    1,2005,2006,absenses,0
+    1,2006,2007,math_gpa,3.5
+    1,2007,2008,english_gpa,2.4
+    2,2004,2005,math_gpa,2.4
+    2,2005,2006,math_gpa,3.4
+    2,2005,2006,absenses,14
+    2,2006,2007,absenses,96
+    """)
+    
+    with open('sample.csv', 'w') as sample_csv_in:
+        sample_csv_in.write(rg_table_csv)
+    
+    ae = array_emitter.ArrayEmitter()
+    ae = ae.get_rg_from_csv('sample.csv')
+    ae = ae.set_interval(2005, 2007)
+    M = ae.emit_M()
+    diogenes.display.pprint_sa(M)
+
+.. parsed-literal::
+
+      id math_gpa english_gpa absences absenses
+    0  0      2.2        3.95      7.5      nan
+    1  1     3.45         nan      nan      0.0
+    2  2      3.4         nan      nan     55.0
+
+

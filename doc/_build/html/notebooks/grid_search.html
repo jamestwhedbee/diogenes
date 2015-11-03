@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Grid Search Module &mdash; Diogenes 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Diogenes 0.0.1 documentation" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-grid-search-module">
+<h1>The Grid Search Module<a class="headerlink" href="#the-grid-search-module" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="../diogenes.grid_search.html#module-diogenes.grid_search" title="diogenes.grid_search"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.grid_search</span></code></a> module provides tools for finding the
+best classifier, testing classifier sensitivity to data sets, and
+cross-validating classifier performance.</p>
+<p>Most of the work you will do in the <code class="docutils literal"><span class="pre">grid_search</span></code> module centers
+around the class: <a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Experiment" title="diogenes.grid_search.experiment.Experiment"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.experiment.Experiment</span></code></a>.</p>
+<p>An <code class="docutils literal"><span class="pre">Experiment</span></code> exhaustively fits a number of different classifiers to
+different data and measures performance. The Experiment searches across
+a number of dimensions:</p>
+<ol class="arabic simple">
+<li><em>Classifiers</em> and hyper-parameters</li>
+<li>Different <em>subsets</em> of data to classify</li>
+<li>Different ways to cross-validate a subset of the data (<em>partition
+iterators</em>)</li>
+</ol>
+<p>Subsets are distinct from partition iterators in that subsets select the
+portion of the data that will be used for both training and testing,
+while partition iterators take the data given by the subset and splits
+it into training and testing sets.</p>
+<p>We will begin by exploring classifiers, and we will explore subsets and
+partition iterators later.</p>
+<div class="section" id="experiments-classifiers-and-hyperparameters">
+<h2>Experiments, Classifiers and Hyperparameters<a class="headerlink" href="#experiments-classifiers-and-hyperparameters" title="Permalink to this headline">¶</a></h2>
+<p>We start by preparing the wine data set for binary classification</p>
+<div class="code python highlight-python"><div class="highlight"><pre>%matplotlib inline
+import diogenes
+import numpy as np
+data = diogenes.read.open_csv_url(
+    &#39;http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv&#39;,
+    delimiter=&#39;;&#39;)
+labels = data[&#39;quality&#39;]
+labels = labels &lt; np.average(labels)
+M = diogenes.modify.remove_cols(data, &#39;quality&#39;)
+</pre></div>
+</div>
+<p>We then design an experiment that fits data against Random Forest and
+SVC with a number of hyperparameters:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="n">clfs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;clf&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="s">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">],</span>
+         <span class="s">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sqrt&#39;</span><span class="p">,</span><span class="s">&#39;log2&#39;</span><span class="p">],</span> <span class="s">&#39;random_state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]},</span>
+        <span class="p">{</span><span class="s">&#39;clf&#39;</span><span class="p">:</span> <span class="n">SVC</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="s">&#39;rbf&#39;</span><span class="p">],</span>
+         <span class="s">&#39;max_iter&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1000</span><span class="p">],</span> <span class="s">&#39;random_state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}]</span>
+</pre></div>
+</div>
+<p>This experiment will fit the data to one classifier for each element in
+the Cartesian product of the parameters that we passed in. It&#8217;s
+equivalent to creating all the following classifiers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s">&#39;sqrt&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s">&#39;log2&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s">&#39;sqrt&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s">&#39;log2&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">linear</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">rbf</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">linear</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">rbf</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">linear</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">rbf</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Experiment" title="diogenes.grid_search.experiment.Experiment"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.experiment.Experiment</span></code></a> for details on
+how arguments to <code class="docutils literal"><span class="pre">Experiment</span></code> work.</p>
+<p>We can then create and run our experiment, and look at scores to see
+which classifier and which hyperparameters performed the best.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">clfs</span><span class="o">=</span><span class="n">clfs</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">sorted_trial_with_score</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">average_score</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">trial</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">sorted_trial_with_score</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">trial</span>
+    <span class="k">print</span> <span class="n">score</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 50, &#39;max_features&#39;: &#39;sqrt&#39;, &#39;random_state&#39;: 0}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.740104773283
+
+Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 50, &#39;max_features&#39;: &#39;log2&#39;, &#39;random_state&#39;: 0}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.740104773283
+
+Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 10, &#39;max_features&#39;: &#39;sqrt&#39;, &#39;random_state&#39;: 0}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.730916098323
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+  % self.max_iter, ConvergenceWarning)
+/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+  % self.max_iter, ConvergenceWarning)
+/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+  % self.max_iter, ConvergenceWarning)
+</pre></div>
+</div>
+<p>It looks like our best-performing classifier is <code class="docutils literal"><span class="pre">RandomForest</span></code> with
+<code class="docutils literal"><span class="pre">n_estimators=50</span></code> with a score of about <code class="docutils literal"><span class="pre">0.74</span></code>. We also notice that
+the <code class="docutils literal"><span class="pre">max_features</span></code> hyperparameter does not affect score in this case.</p>
+<p>If you want to use a standard set of classifiers rather than specifying
+your own, you can look use <a class="reference internal" href="../diogenes.grid_search.html#module-diogenes.grid_search.standard_clfs" title="diogenes.grid_search.standard_clfs"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.grid_search.standard_clfs</span></code></a>.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">clfs</span><span class="o">=</span><span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">standard_clfs</span><span class="o">.</span><span class="n">std_clfs</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">sorted_trial_with_score</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">average_score</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">trial</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">sorted_trial_with_score</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="k">print</span> <span class="n">trial</span>
+    <span class="k">print</span> <span class="n">score</span>
+    <span class="k">print</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 30, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.757665504965
+
+Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 10, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.756645764041
+
+Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 30, &#39;max_features&#39;: &#39;sqrt&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.756236016554
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+  % self.max_iter, ConvergenceWarning)
+/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+  % self.max_iter, ConvergenceWarning)
+</pre></div>
+</div>
+</div>
+<div class="section" id="subset-iterators-and-partition-iterators">
+<h2>Subset Iterators and Partition Iterators<a class="headerlink" href="#subset-iterators-and-partition-iterators" title="Permalink to this headline">¶</a></h2>
+<p>In addition to iterating over different classifiers and
+hyper-parameters, we can also iterate over different subsets of data and
+different methods of cross validation. We&#8217;ll discuss subsetters first.</p>
+<div class="section" id="subset-iterators">
+<h3>Subset Iterators<a class="headerlink" href="#subset-iterators" title="Permalink to this headline">¶</a></h3>
+<p>A Subset Iterators iterates over different subsets of the data.
+<code class="docutils literal"><span class="pre">Experiment</span></code> will attempt to fit all the classifiers to, and do
+cross-validation on, each subset. A number of these subset iterators are
+defined in <a class="reference internal" href="../diogenes.grid_search.html#module-diogenes.grid_search.subset" title="diogenes.grid_search.subset"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.grid_search.subset</span></code></a>, including:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.subset.SubsetSweepNumRows" title="diogenes.grid_search.subset.SubsetSweepNumRows"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.SubsetSweepNumRows</span></code></a>, which
+takes subsets with different numbers of rows, ignoring which row has
+which label</li>
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.subset.SubsetRandomRowsActualDistribution" title="diogenes.grid_search.subset.SubsetRandomRowsActualDistribution"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.SubsetRandomRowsActualDistribution</span></code></a>,
+which takes a subset of data that have the same frequency
+distribution of labels as the entire data set.</li>
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.subset.SubsetRandomRowsEvenDistribution" title="diogenes.grid_search.subset.SubsetRandomRowsEvenDistribution"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.SubsetRandomRowsEvenDistribution</span></code></a>,
+which takes a subset of data that have an equal number of
+representatives with each label.</li>
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.subset.SubsetSweepVaryStratification" title="diogenes.grid_search.subset.SubsetSweepVaryStratification"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.SubsetSweepVaryStratification</span></code></a>,
+which varies the distribution of rows with each label.</li>
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.subset.SubsetNoSubset" title="diogenes.grid_search.subset.SubsetNoSubset"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.subset.SubsetNoSubset</span></code></a>, which simply
+returns all the data rather than taking a subset. This is what
+<code class="docutils literal"><span class="pre">Experiment</span></code> uses when you do not specify a subset iterator.</li>
+</ul>
+<p>As an example, we will examine the performance of Random Forest when we
+provide different numbers of rows. We want to vary number of rows
+without varying the distribution of labels, so we will use
+<code class="docutils literal"><span class="pre">SubsetRandomRowsActualDistribution</span></code>.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">subsets</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;subset&#39;</span><span class="p">:</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">subset</span><span class="o">.</span><span class="n">SubsetRandomRowsActualDistribution</span><span class="p">,</span>
+            <span class="s">&#39;subset_size&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">500</span><span class="p">),</span>
+            <span class="s">&#39;n_subsets&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]}]</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="n">subsets</span><span class="p">)</span>
+<span class="n">subset_size</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">trial</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">average_score</span><span class="p">()</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+    <span class="n">subset_size</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">subset_params</span><span class="p">[</span><span class="s">&#39;subset_size&#39;</span><span class="p">])</span>
+    <span class="n">all_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">subset_size</span><span class="p">,</span> <span class="n">all_scores</span><span class="p">,</span> <span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;subset size&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="../_images/grid_search_10_0.png" src="../_images/grid_search_10_0.png" />
+<p>We see a weak upward trend, but it isn&#8217;t clear that Random Forest is
+sensitive to the size of the dataset given a constant proportion of
+labels.</p>
+</div>
+<div class="section" id="partition-iterators">
+<h3>Partition Iterators<a class="headerlink" href="#partition-iterators" title="Permalink to this headline">¶</a></h3>
+<p>A partition iterator is a class that iterates over train and test sets.
+Iterators in Scikit Learn&#8217;s <a class="reference external" href="http://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators">cross-validation
+module</a>
+are valid partition iterators, including:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.KFold.html#sklearn.cross_validation.KFold">K-Fold
+cross-validation</a></li>
+<li><a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedKFold.html#sklearn.cross_validation.StratifiedKFold">Stratified K-Fold
+cross-validation</a></li>
+</ul>
+<p>Here&#8217;s an experiment that does 5 folds of stratified K-Fold cross
+validation:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+<span class="n">cvs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;cv&#39;</span><span class="p">:</span> <span class="n">StratifiedKFold</span><span class="p">,</span> <span class="s">&#39;n_folds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">]}]</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cvs</span><span class="o">=</span><span class="n">cvs</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">exp</span><span class="o">.</span><span class="n">trials</span>
+<span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">trials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">runs_flattened</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">run</span><span class="o">.</span><span class="n">score</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.StratifiedKFold&#39;&gt;, cv_params={&#39;n_folds&#39;: 5})]
+0.698979591837
+0.702040816327
+0.755102040816
+0.723186925434
+0.746680286006
+</pre></div>
+</div>
+<p>We have 1 <code class="docutils literal"><span class="pre">Trial</span></code> with 5 <code class="docutils literal"><span class="pre">Run</span></code>s, one <code class="docutils literal"><span class="pre">Run</span></code> per fold. We discuss
+<code class="docutils literal"><span class="pre">Trial</span></code>s and <code class="docutils literal"><span class="pre">Run</span></code>s in more detail below.</p>
+<p>In addition to the Scikit Learn partition iterators, we define partition
+iterators in <a class="reference internal" href="../diogenes.grid_search.html#module-diogenes.grid_search.partition_iterator" title="diogenes.grid_search.partition_iterator"><code class="xref py py-mod docutils literal"><span class="pre">diogenes.grid_search.partition_iterator</span></code></a>,
+including:</p>
+<div class="section" id="slidingwindowidx">
+<h4>SlidingWindowIdx<a class="headerlink" href="#slidingwindowidx" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.partition_iterator.SlidingWindowIdx" title="diogenes.grid_search.partition_iterator.SlidingWindowIdx"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.partition_iterator.SlidingWindowIdx</span></code></a>
+takes a sliding window of rows for the test set and a sliding window of
+rows for the training set. For example, if we create:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cvs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;cv&#39;</span><span class="p">:</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">partition_iterator</span><span class="o">.</span><span class="n">SlidingWindowIdx</span><span class="p">,</span>
+        <span class="s">&#39;train_start&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">],</span>
+        <span class="s">&#39;train_window_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">],</span>
+        <span class="s">&#39;test_start&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">30</span><span class="p">],</span>
+        <span class="s">&#39;test_window_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">],</span>
+        <span class="s">&#39;inc_value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">]}]</span>
+</pre></div>
+</div>
+<p>then the following rows will be included in our train and test sets:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="25%" />
+<col width="25%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">train set start row</th>
+<th class="head">train set stop row</th>
+<th class="head">test set start row</th>
+<th class="head">test set stop row</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>10</td>
+<td>30</td>
+<td>30</td>
+<td>50</td>
+</tr>
+<tr class="row-odd"><td>20</td>
+<td>40</td>
+<td>40</td>
+<td>60</td>
+</tr>
+<tr class="row-even"><td>30</td>
+<td>50</td>
+<td>50</td>
+<td>70</td>
+</tr>
+<tr class="row-odd"><td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>We can also set <code class="docutils literal"><span class="pre">'expanding_train':</span> <span class="pre">True</span></code>, which keeps the train test
+start row constant</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="25%" />
+<col width="25%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">train set start row</th>
+<th class="head">train set stop row</th>
+<th class="head">test set start row</th>
+<th class="head">test set stop row</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>10</td>
+<td>30</td>
+<td>30</td>
+<td>50</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>40</td>
+<td>40</td>
+<td>60</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>50</td>
+<td>50</td>
+<td>70</td>
+</tr>
+<tr class="row-odd"><td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="slidingwindowvalue">
+<h4>SlidingWindowValue<a class="headerlink" href="#slidingwindowvalue" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.partition_iterator.SlidingWindowValue" title="diogenes.grid_search.partition_iterator.SlidingWindowValue"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.partition_iterator.SlidingWindowValue</span></code></a> is
+similar to <code class="docutils literal"><span class="pre">SlidingWindowIdx</span></code> except instead of using row numbers as
+an index, it uses the value of a given column. This is designed for
+cross-validating over time. For example, let&#8217;s say each of our rows
+happened during a particular year:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">years</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1990</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],))</span>
+<span class="k">print</span> <span class="n">years</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">M_with_year</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">append_cols</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">years</span><span class="p">,</span> <span class="s">&#39;year&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>[1995 1990 1993 1993 1997 1999 1993 1995 1992 1994]
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">cvs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;cv&#39;</span><span class="p">:</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">partition_iterator</span><span class="o">.</span><span class="n">SlidingWindowValue</span><span class="p">,</span>
+        <span class="s">&#39;guide_col_name&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">],</span>
+        <span class="s">&#39;train_start&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1990</span><span class="p">],</span>
+        <span class="s">&#39;train_window_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s">&#39;test_start&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1992</span><span class="p">],</span>
+        <span class="s">&#39;test_window_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s">&#39;inc_value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]}]</span>
+
+<span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M_with_year</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cvs</span><span class="o">=</span><span class="n">cvs</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">trials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">runs_flattened</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;train_start: {}, train_end: {}, test_start: {}, test_end: {}, score: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">cv_note</span><span class="p">[</span><span class="s">&#39;train_start&#39;</span><span class="p">],</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">cv_note</span><span class="p">[</span><span class="s">&#39;train_end&#39;</span><span class="p">],</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">cv_note</span><span class="p">[</span><span class="s">&#39;test_start&#39;</span><span class="p">],</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">cv_note</span><span class="p">[</span><span class="s">&#39;test_end&#39;</span><span class="p">],</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">score</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>train_start: 1990, train_end: 1991, test_start: 1992, test_end: 1993, score: 0.765190525232
+train_start: 1992, train_end: 1993, test_start: 1994, test_end: 1995, score: 0.784913353721
+train_start: 1994, train_end: 1995, test_start: 1996, test_end: 1997, score: 0.760288065844
+train_start: 1996, train_end: 1997, test_start: 1998, test_end: 1999, score: 0.746435845214
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="trials-and-runs">
+<h2>Trials and Runs<a class="headerlink" href="#trials-and-runs" title="Permalink to this headline">¶</a></h2>
+<p>In diogenes, there are three levels used to keep track of fitting data
+to classifiers.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Experiment" title="diogenes.grid_search.experiment.Experiment"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.experiment.Experiment</span></code></a> tests a number
+of classifiers, hyperparameters, subsets, and partition iterators.
+<code class="docutils literal"><span class="pre">Experiments</span></code> contain a number of <code class="docutils literal"><span class="pre">Trials</span></code>.</li>
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Trial" title="diogenes.grid_search.experiment.Trial"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.experiment.Trial</span></code></a> contains one
+configuration&#8211; i.e. one classifier, one set of hyperparameters, one
+method of taking subsets, and one method of doing cross-validation. a
+<code class="docutils literal"><span class="pre">Trial</span></code> contains a number of <code class="docutils literal"><span class="pre">Runs</span></code></li>
+<li><a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Run" title="diogenes.grid_search.experiment.Run"><code class="xref py py-class docutils literal"><span class="pre">diogenes.grid_search.experiment.Run</span></code></a> contains one fold of
+one subset of data.</li>
+</ul>
+<p>For example, we&#8217;ll design an experiment with multiple hyperparameters,
+subsets, and folds:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">clfs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;clf&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="s">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">]}]</span>
+<span class="n">subsets</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;subset&#39;</span><span class="p">:</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">subset</span><span class="o">.</span><span class="n">SubsetRandomRowsEvenDistribution</span><span class="p">,</span>
+            <span class="s">&#39;subset_size&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>
+            <span class="s">&#39;n_subsets&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]}]</span>
+<span class="n">cvs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;cv&#39;</span><span class="p">:</span> <span class="n">StratifiedKFold</span><span class="p">,</span> <span class="s">&#39;n_folds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">]}]</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">clfs</span><span class="o">=</span><span class="n">clfs</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="n">subsets</span><span class="p">,</span> <span class="n">cvs</span><span class="o">=</span><span class="n">cvs</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We can access our <code class="docutils literal"><span class="pre">Trial</span></code>s with <code class="docutils literal"><span class="pre">exp.trials</span></code></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">trial</span> <span class="ow">in</span> <span class="n">exp</span><span class="o">.</span><span class="n">trials</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;trial with n_estimators={} and subset_size={}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">trial</span><span class="o">.</span><span class="n">clf_params</span><span class="p">[</span><span class="s">&#39;n_estimators&#39;</span><span class="p">],</span>
+        <span class="n">trial</span><span class="o">.</span><span class="n">subset_params</span><span class="p">[</span><span class="s">&#39;subset_size&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>trial with n_estimators=10 and subset_size=500
+trial with n_estimators=10 and subset_size=1000
+trial with n_estimators=50 and subset_size=500
+trial with n_estimators=50 and subset_size=1000
+</pre></div>
+</div>
+<p>We have 4 <code class="docutils literal"><span class="pre">Trial</span></code>s: one <code class="docutils literal"><span class="pre">Trial</span></code> for each configuration. In this
+case, our configuration varies by <code class="docutils literal"><span class="pre">n_estimators</span></code> for Random Forest and
+<code class="docutils literal"><span class="pre">subset_size</span></code> for our <code class="docutils literal"><span class="pre">SubsetRandomRowsEvenDistribution</span></code> subset
+iterator.</p>
+<p><code class="docutils literal"><span class="pre">Trial</span></code>s expose things like * The classifier, subset iterator, and
+partition iterator classes associated with the <code class="docutils literal"><span class="pre">Trial</span></code> (<code class="docutils literal"><span class="pre">Trial.clf</span></code>,
+<code class="docutils literal"><span class="pre">Trial.subset</span></code>, <code class="docutils literal"><span class="pre">Trial.cv</span></code>). * The set of parameters associated
+with the classifier, subset iterator, and partition iterator
+(<code class="docutils literal"><span class="pre">Trial.clf_params</span></code>, <code class="docutils literal"><span class="pre">Trial.subset_params</span></code>, <code class="docutils literal"><span class="pre">Trial.cv_params</span></code>)</p>
+<p>We can access the <code class="docutils literal"><span class="pre">Run</span></code>s in a given <code class="docutils literal"><span class="pre">Trial</span></code> with <code class="docutils literal"><span class="pre">Trial.runs</span></code></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">trial_0</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">trials</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">runs_by_subset</span> <span class="ow">in</span> <span class="n">trial_0</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs_by_subset</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&#39;Run from subset: {}, fold: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">run</span><span class="o">.</span><span class="n">subset_note</span><span class="p">[</span><span class="s">&#39;sample_num&#39;</span><span class="p">],</span>
+            <span class="n">run</span><span class="o">.</span><span class="n">cv_note</span><span class="p">[</span><span class="s">&#39;fold&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Run from subset: 0, fold: 0
+Run from subset: 0, fold: 1
+Run from subset: 0, fold: 2
+Run from subset: 0, fold: 3
+Run from subset: 1, fold: 0
+Run from subset: 1, fold: 1
+Run from subset: 1, fold: 2
+Run from subset: 1, fold: 3
+Run from subset: 2, fold: 0
+Run from subset: 2, fold: 1
+Run from subset: 2, fold: 2
+Run from subset: 2, fold: 3
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal"><span class="pre">Trial.runs</span></code> is a list of lists. The outer list organizes
+subsets and the inner list organizes folds. To get a flat list, use
+<code class="docutils literal"><span class="pre">Trial.runs_flattened()</span></code></p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">trial_0</span><span class="o">.</span><span class="n">runs_flattened</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Run from subset: {}, fold: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">run</span><span class="o">.</span><span class="n">subset_note</span><span class="p">[</span><span class="s">&#39;sample_num&#39;</span><span class="p">],</span>
+            <span class="n">run</span><span class="o">.</span><span class="n">cv_note</span><span class="p">[</span><span class="s">&#39;fold&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Run from subset: 0, fold: 0
+Run from subset: 0, fold: 1
+Run from subset: 0, fold: 2
+Run from subset: 0, fold: 3
+Run from subset: 1, fold: 0
+Run from subset: 1, fold: 1
+Run from subset: 1, fold: 2
+Run from subset: 1, fold: 3
+Run from subset: 2, fold: 0
+Run from subset: 2, fold: 1
+Run from subset: 2, fold: 2
+Run from subset: 2, fold: 3
+</pre></div>
+</div>
+<p>In general, metrics and graphs are available at the <code class="docutils literal"><span class="pre">Run</span></code> level and
+aggregations of metrics are available at the <code class="docutils literal"><span class="pre">Trial</span></code> level</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">trial_0</span><span class="o">.</span><span class="n">average_score</span><span class="p">()</span>
+
+<span class="n">run_0</span> <span class="o">=</span> <span class="n">trial_0</span><span class="o">.</span><span class="n">runs_flattened</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">run_0</span><span class="o">.</span><span class="n">f1_score</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">run_0</span><span class="o">.</span><span class="n">prec_recall_curve</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0.674880525687</span>
+<span class="mf">0.691729323308</span>
+</pre></div>
+</div>
+<img alt="../_images/grid_search_27_1.png" src="../_images/grid_search_27_1.png" />
+<p><code class="docutils literal"><span class="pre">Run</span></code>s also expose things like:</p>
+<ul class="simple">
+<li>the fitted clf (<code class="docutils literal"><span class="pre">Run.clf</span></code>)</li>
+<li>the train and test indices of <code class="docutils literal"><span class="pre">M</span></code> and <code class="docutils literal"><span class="pre">labels</span></code> applicable to the
+run (<code class="docutils literal"><span class="pre">Run.train_indices</span></code>, <code class="docutils literal"><span class="pre">Run.test_indices</span></code>)</li>
+<li>Information about the subset <code class="docutils literal"><span class="pre">Run.subset_note</span></code> and fold
+<code class="docutils literal"><span class="pre">Run.cv_note</span></code> to which the run belongs.</li>
+</ul>
+</div>
+<div class="section" id="reports">
+<h2>Reports<a class="headerlink" href="#reports" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">Experiments</span></code> offer two primary kinds of reports: * A pdf report,
+which summarizes the performance of various <code class="docutils literal"><span class="pre">Trials</span></code> and provides
+detailed metrics for the best <code class="docutils literal"><span class="pre">Trial</span></code>
+(<a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Experiment.make_report" title="diogenes.grid_search.experiment.Experiment.make_report"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.grid_search.experiment.Experiment.make_report()</span></code></a>) * A
+csv report, which elucidates the performance of all runs in a format
+that can be processed later (e.g. by MS Excel).
+(<a class="reference internal" href="../diogenes.grid_search.html#diogenes.grid_search.experiment.Experiment.make_csv" title="diogenes.grid_search.experiment.Experiment.make_csv"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.grid_search.experiment.Experiment.make_csv()</span></code></a>)</p>
+<p>We&#8217;ll look at the pdf report in detail:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">clfs</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&#39;clf&#39;</span><span class="p">:</span> <span class="n">RandomForestClassifier</span><span class="p">,</span> <span class="s">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">],</span>
+         <span class="s">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;sqrt&#39;</span><span class="p">,</span><span class="s">&#39;log2&#39;</span><span class="p">],</span> <span class="s">&#39;random_state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]}]</span>
+<span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">clfs</span><span class="o">=</span><span class="n">clfs</span><span class="p">)</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">exp</span><span class="o">.</span><span class="n">make_report</span><span class="p">(</span><span class="n">report_file_name</span><span class="o">=</span><span class="s">&#39;grid_search_sample_report.pdf&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s">&#39;&lt;iframe src=grid_search_sample_report.pdf width=800 height=350&gt;&lt;/iframe&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<iframe src=grid_search_sample_report.pdf width=800 height=350></iframe><p>The first two graphs are summaries of how well the <code class="docutils literal"><span class="pre">Trial</span></code>s
+performed by two different metrics (classifier.score and area under ROC,
+respectively). The number above the bar signifies the configuration,
+which can be looked up in the legend at the end of the report. Here, we
+see that the best <code class="docutils literal"><span class="pre">Trial</span></code> by both metrics is trial 2, which, as we can
+see in the legend, has 50 estimators and <code class="docutils literal"><span class="pre">'sqrt'</span></code> for its
+<code class="docutils literal"><span class="pre">max_features</span></code>. The second two graphs are ROC and precision/recall for
+trial 2.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Grid Search Module</a><ul>
+<li><a class="reference internal" href="#experiments-classifiers-and-hyperparameters">Experiments, Classifiers and Hyperparameters</a></li>
+<li><a class="reference internal" href="#subset-iterators-and-partition-iterators">Subset Iterators and Partition Iterators</a><ul>
+<li><a class="reference internal" href="#subset-iterators">Subset Iterators</a></li>
+<li><a class="reference internal" href="#partition-iterators">Partition Iterators</a><ul>
+<li><a class="reference internal" href="#slidingwindowidx">SlidingWindowIdx</a></li>
+<li><a class="reference internal" href="#slidingwindowvalue">SlidingWindowValue</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#trials-and-runs">Trials and Runs</a></li>
+<li><a class="reference internal" href="#reports">Reports</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/notebooks/grid_search.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Diogenes 0.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, DSaPP.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

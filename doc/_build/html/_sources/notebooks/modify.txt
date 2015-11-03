@@ -1,0 +1,397 @@
+
+The Modify Module
+=================
+
+:mod:`diogenes.modify` provides tools for manipulating arrays and
+generating features.
+
+-  Cleaning
+
+   -  :func:`diogenes.modify.modify.replace_missing_vals`
+   -  :func:`diogenes.modify.modify.label_encode`
+
+-  Selection
+
+   -  :func:`diogenes.modify.modify.choose_cols_where`
+   -  :func:`diogenes.modify.modify.choose_rows_where`
+   -  :func:`diogenes.modify.modify.remove_cols_where`
+   -  :func:`diogenes.modify.modify.remove_rows_where`
+
+-  Feature generation
+
+   -  :func:`diogenes.modify.modify.generate_bin`
+   -  :func:`diogenes.modify.modify.normalize`
+   -  :func:`diogenes.modify.modify.combine_cols`
+   -  :func:`diogenes.modify.modify.distance_from_point`
+   -  :func:`diogenes.modify.modify.where_all_are_true`
+
+In-place Cleaning
+-----------------
+
+Diogenes provides two functions for data cleaning:
+
+-  :func:`diogenes.modify.modify.replace_missing_vals`, which replaces
+   missing values with valid onces.
+-  :func:`diogenes.modify.modify.label_encode` which replaces strings
+   with corresponding integers.
+
+For this example, we'll look at Chicago's "311 Service Requests - Tree
+Debris" data on the Chicago data portal
+(https://data.cityofchicago.org/)
+
+.. code:: python
+
+    import diogenes
+    
+    data = diogenes.read.open_csv_url('https://data.cityofchicago.org/api/views/mab8-y9h3/rows.csv?accessType=DOWNLOAD', 
+                                      parse_datetimes=['Creation Date', 'Completion Date'])
+The last row of this data set repeats the labels. We're going to go
+ahead and omit it.
+
+.. code:: python
+
+    data = data[:-1]
+.. code:: python
+
+    data.dtype
+
+
+
+.. parsed-literal::
+
+    dtype((numpy.record, [('Creation Date', '<M8[ns]'), ('Status', 'O'), ('Completion Date', '<M8[ns]'), ('Service Request Number', 'O'), ('Type of Service Request', 'O'), ('If Yes, where is the debris located?', 'O'), ('Current Activity', 'O'), ('Most Recent Action', 'O'), ('Street Address', 'O'), ('ZIP Code', '<f8'), ('X Coordinate', '<f8'), ('Y Coordinate', '<f8'), ('Ward', '<f8'), ('Police District', '<f8'), ('Community Area', '<f8'), ('Latitude', '<f8'), ('Longitude', '<f8'), ('Location', 'O')]))
+
+
+
+We're going to predict whether a job is still open, so our label will
+ultimately be the "Status" column.
+
+.. code:: python
+
+    from collections import Counter
+    print Counter(data['Status']).most_common()
+
+.. parsed-literal::
+
+    [('Completed', 94286), ('Completed - Dup', 13899), ('Open', 114), ('Open - Dup', 8)]
+
+
+We'll remove the label from the rest of the data later. First, let's do
+some cleaning. Notice that we have some missing data for our floating
+point variables (encoded as numpy.nan)
+
+.. code:: python
+
+    import numpy as np
+    print sum(np.isnan(data['ZIP Code']))
+    print sum(np.isnan(data['Ward']))
+    print sum(np.isnan(data['X Coordinate']))
+
+.. parsed-literal::
+
+    270
+    31
+    39
+
+
+Sklearn can't tolerate these missing values, so we have to do something
+with them. Probably, a statistically sound thing to do with this data
+would be to leave these rows out, but for pedagogical purposes, let's
+assume it makes sense to impute the data. We can do that with
+:func:`diogenes.modify.modify.replace_missing_vals`.
+
+We could, for instance, replace every nan with a 0:
+
+.. code:: python
+
+    data_with_zeros = diogenes.modify.replace_missing_vals(data, strategy='constant', constant=0)
+    print sum(np.isnan(data_with_zeros['ZIP Code']))
+    print sum(data_with_zeros['ZIP Code'] == 0)
+
+.. parsed-literal::
+
+    0
+    277
+
+
+Looks like there were a few entries that had 0 for a zip code already.
+
+For the purposes of this tutorial, we will go ahead and replace missing
+values with the most frequent value in the column:
+
+.. code:: python
+
+    data = diogenes.modify.replace_missing_vals(data, strategy='most_frequent')
+Our data also has a number of string columns. Strings must be converted
+to numbers before Scikit-Learn can analyze them, so we will use
+:func:`diogenes.modify.modify.label_encode` to convert them
+
+.. code:: python
+
+    print Counter(data['If Yes, where is the debris located?']).most_common()
+    data, classes = diogenes.modify.label_encode(data)
+    print Counter(data['If Yes, where is the debris located?']).most_common()
+    print classes['If Yes, where is the debris located?']
+
+.. parsed-literal::
+
+    [('Parkway', 44303), ('Alley', 43064), ('', 16130), ('Vacant Lot', 4810)]
+    [(2, 44303), (1, 43064), (0, 16130), (3, 4810)]
+    ['' 'Alley' 'Parkway' 'Vacant Lot']
+
+
+Note that ``classes`` is a dictionary of arrays where each key is the
+column name and each value is an array of which string each number
+represents. For example, if we wanted to find out what category ``1``
+represents, we would look at:
+
+.. code:: python
+
+    classes['If Yes, where is the debris located?'][1]
+
+
+
+.. parsed-literal::
+
+    'Alley'
+
+
+
+and find that category 1 is 'Alley'
+
+Selection
+---------
+
+Diogenes provides a number of functions to retain only columns and rows
+matching a specific criteria:
+
+-  :func:`diogenes.modify.modify.choose_cols_where`
+-  :func:`diogenes.modify.modify.remove_cols_where`
+-  :func:`diogenes.modify.modify.choose_rows_where`
+-  :func:`diogenes.modify.modify.remove_rows_where`
+
+These are explained in detail in the module documentation for
+:mod:`diogenes.modify.modify`. Explaining all the different things you
+can do with these selection operators is outside the scope of this
+tutorial.
+
+We'll start out by removing any columns for which every row is the same
+value by employing the :func:`diogenes.modify.modify.col_val_eq_any`
+column selection function:
+
+.. code:: python
+
+    print data.dtype.names
+    print
+    print Counter(data['Type of Service Request'])
+    print
+    
+    arguments = [{'func': diogenes.modify.col_val_eq_any, 'vals': None}]
+    data = diogenes.modify.remove_cols_where(data, arguments)
+    
+    print data.dtype.names
+
+.. parsed-literal::
+
+    ('Creation Date', 'Status', 'Completion Date', 'Service Request Number', 'Type of Service Request', 'If Yes, where is the debris located?', 'Current Activity', 'Most Recent Action', 'Street Address', 'ZIP Code', 'X Coordinate', 'Y Coordinate', 'Ward', 'Police District', 'Community Area', 'Latitude', 'Longitude', 'Location')
+    
+    Counter({0: 108307})
+    
+    ('Creation Date', 'Status', 'Completion Date', 'Service Request Number', 'If Yes, where is the debris located?', 'Current Activity', 'Most Recent Action', 'Street Address', 'ZIP Code', 'X Coordinate', 'Y Coordinate', 'Ward', 'Police District', 'Community Area', 'Latitude', 'Longitude', 'Location')
+
+
+Notice that "Type of Service Request" has been removed, since every
+value in the column was the same
+
+Next, let's assume that we're only interested in requests made during
+the year 2015 and select only those rows using the
+:func:`diogenes.modify.modify.row_val_between` row selection function:
+
+.. code:: python
+
+    print data.shape
+    print data['Creation Date'].min()
+    print data['Creation Date'].max()
+    print
+    
+    arguments = [{'func': diogenes.modify.row_val_between, 
+                  'vals': [np.datetime64('2015-01-01T00:00:00', 'ns'), np.datetime64('2016-01-01T00:00:00', 'ns')], 
+                  'col_name': 'Creation Date'}]
+    data = diogenes.modify.choose_rows_where(data, arguments)
+    
+    print data.shape
+    print data['Creation Date'].min()
+    print data['Creation Date'].max()
+
+.. parsed-literal::
+
+    (108307,)
+    2004-07-20T19:00:00.000000000-0500
+    2015-10-31T19:00:00.000000000-0500
+    
+    (15380,)
+    2015-01-01T18:00:00.000000000-0600
+    2015-10-31T19:00:00.000000000-0500
+
+
+Finally, let's remove rows which the "Status" column claims are
+duplicates. We review our ``classes`` variable to find:
+
+.. code:: python
+
+    classes['Status']
+
+
+
+.. parsed-literal::
+
+    array(['Completed', 'Completed - Dup', 'Open', 'Open - Dup'], dtype=object)
+
+
+
+We want to remove rows that have either ``1`` or ``3`` in the status
+column. We don't have a row selection function already defined to select
+rows that have one of several discrete values, so we will create one:
+
+.. code:: python
+
+    def row_val_in(M, col_name, vals):
+        return np.logical_or(M[col_name] == vals[0], M[col_name] == vals[1])
+    
+    print data.shape
+    print Counter(data['Status']).most_common()
+    print
+    
+    arguments = [{'func': row_val_in, 'vals': [1, 3], 'col_name': 'Status'}]
+    data2 = diogenes.modify.remove_rows_where(data, arguments)
+    
+    print data2.shape
+    print Counter(data2['Status']).most_common()
+
+.. parsed-literal::
+
+    (15380,)
+    [(0, 13661), (1, 1599), (2, 114), (3, 6)]
+    
+    (13775,)
+    [(0, 13661), (2, 114)]
+
+
+Feature Generation
+------------------
+
+We can also create new features based on existing data. We'll start out
+by generating a feature that calculates the distance of the service
+request from Cloud Gate in downtown Chicago ``(41.882773, -87.623304)``
+using :func:`diogenes.modify.modify.distance_from_point`.
+
+.. code:: python
+
+    dist_from_cloud_gate = diogenes.modify.distance_from_point(41.882773, -87.623304, data['Latitude'], data['Longitude'])
+    print dist_from_cloud_gate[:10]
+
+.. parsed-literal::
+
+    [ 18.48754468   9.95679334  10.80453512  14.35591087  13.99126308
+      12.89855421   9.50211295  15.46302477  17.83725597  19.10774742]
+
+
+Now we'll put those distances into 10 bins using
+:func:`diogenes.modify.modify.generate_bin`.
+
+.. code:: python
+
+    dist_binned = diogenes.modify.generate_bin(dist_from_cloud_gate, 10)
+    print dist_binned[:10]
+
+.. parsed-literal::
+
+    [6, 3, 3, 5, 5, 4, 3, 5, 6, 7]
+
+
+Now we'll make a binary feature that is true if and only if the tree is
+in a parkway in ward 10 using
+:func:`diogenes.modify.modify.where_all_are_true` (which has similar
+syntax to the selection functions).
+
+.. code:: python
+
+    print classes['If Yes, where is the debris located?']
+
+.. parsed-literal::
+
+    ['' 'Alley' 'Parkway' 'Vacant Lot']
+
+
+We note that "Parkway" is category 2, so we will select items that equal
+2 in the "If Yes, where is the debris located?" column and 10 in the
+"Ward" column.
+
+.. code:: python
+
+    arguments = [{'func': diogenes.modify.row_val_eq, 
+                  'col_name': 'If Yes, where is the debris located?',
+                  'vals': 2},
+                 {'func': diogenes.modify.row_val_eq,
+                  'col_name': 'Ward',
+                  'vals': 10}]
+    parkway_in_ward_10 = diogenes.modify.where_all_are_true(data, arguments)
+    print np.where(parkway_in_ward_10)
+
+.. parsed-literal::
+
+    (array([   54,   100,   105,   391,   473,   483,   484,   608,   710,
+             720,   787,   880,   995,  1024,  1205,  1304,  1664,  1730,
+            1869,  1971,  1989,  1995,  2001,  2002,  2029,  2160,  2244,
+            2252,  2432,  2453,  2505,  2596,  2612,  2796,  2985,  3004,
+            3079,  3090,  3091,  3105,  3107,  3135,  3150,  3398,  3401,
+            3470,  3475,  3629,  3750,  3753,  3807,  3814,  3817,  4019,
+            4039,  4063,  4176,  4222,  4228,  4276,  4285,  4292,  4310,
+            4332,  4462,  4638,  4675,  4958,  5014,  5026,  5120,  5165,
+            5166,  5168,  5176,  5212,  5221,  5286,  5473,  5508,  5577,
+            5578,  5723,  5853,  5866,  5887,  6002,  6098,  6129,  6270,
+            6473,  6509,  6553,  7204,  7205,  7206,  7207,  7405,  7760,
+            7773,  7774,  7979,  7991,  8141,  8272,  8303,  8429,  8499,
+            8547,  8577,  8579,  8588,  8693,  8759,  9122,  9207,  9208,
+            9312,  9322,  9510, 10162, 10565, 10581, 10584, 10920, 11051,
+           11117, 11160, 11387, 11397, 11517, 11742, 11872, 11949, 12854,
+           12871, 13201, 13355, 13362, 13583, 13944, 14293, 14297, 14385,
+           14441, 14444, 14463, 14735, 15062, 15169, 15177, 15225]),)
+
+
+Finally, we'll add all of our generated features to our data using
+:func:`diogenes.utils.append_cols`
+
+.. code:: python
+
+    data = diogenes.utils.append_cols(data, [dist_from_cloud_gate, dist_binned, parkway_in_ward_10],
+                                      ['dist_from_cloud_gate', 'dist_binned', 'parkway_in_ward_10'])
+    print data.dtype
+
+.. parsed-literal::
+
+    [('Creation Date', '<M8[ns]'), ('Status', '<i8'), ('Completion Date', '<M8[ns]'), ('Service Request Number', '<i8'), ('If Yes, where is the debris located?', '<i8'), ('Current Activity', '<i8'), ('Most Recent Action', '<i8'), ('Street Address', '<i8'), ('ZIP Code', '<f8'), ('X Coordinate', '<f8'), ('Y Coordinate', '<f8'), ('Ward', '<f8'), ('Police District', '<f8'), ('Community Area', '<f8'), ('Latitude', '<f8'), ('Longitude', '<f8'), ('Location', '<i8'), ('dist_from_cloud_gate', '<f8'), ('dist_binned', '<i8'), ('parkway_in_ward_10', '?')]
+
+
+Last steps
+----------
+
+Now, all we have to do is make remove the "Status" column from the rest
+of the data (along with the highly correlated "Completion Date") and
+we're ready to run an experiment.
+
+.. code:: python
+
+    labels = data['Status']
+    M = diogenes.utils.remove_cols(data, ['Status', 'Completion Date'])
+    exp = diogenes.grid_search.experiment.Experiment(M, labels)
+    exp.run()
+
+
+
+.. parsed-literal::
+
+    [Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})]
+
+
+
