@@ -1,5 +1,0 @@
-
-.. code:: python
-
-    from diogenes.grid_search import Experiment 
-    from diogenes.grid_search import std_clfs as std_clfs
