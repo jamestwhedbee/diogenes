@@ -38,6 +38,7 @@ class documentation for details
     M = ae.emit_M()
     diogenes.display.pprint_sa(M)
 
+
 .. parsed-literal::
 
       id math_gpa english_gpa absences absenses

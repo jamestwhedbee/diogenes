@@ -63,9 +63,9 @@ wine_data = diogenes.read.open_csv_url(&#39;http://archive.ics.uci.edu/ml/machin
 </pre></div>
 </div>
 <p>We will then separate labels from features using
-<code class="xref py py-func docutils literal"><span class="pre">diogenes.modify.modify.remove_cols()</span></code>.</p>
+<a class="reference internal" href="../diogenes.html#diogenes.utils.remove_cols" title="diogenes.utils.remove_cols"><code class="xref py py-func docutils literal"><span class="pre">diogenes.utils.remove_cols()</span></code></a>.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">labels</span> <span class="o">=</span> <span class="n">wine_data</span><span class="p">[</span><span class="s">&#39;quality&#39;</span><span class="p">]</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">modify</span><span class="o">.</span><span class="n">remove_cols</span><span class="p">(</span><span class="n">wine_data</span><span class="p">,</span> <span class="s">&#39;quality&#39;</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">remove_cols</span><span class="p">(</span><span class="n">wine_data</span><span class="p">,</span> <span class="s">&#39;quality&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Finally, we alter labels to make this into a binary classification
@@ -136,7 +136,7 @@ in a single column (ie a 1-dimensional Numpy array)</p>
 
 <span class="n">figure</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">plot_box_plot</span><span class="p">(</span><span class="n">chlorides</span><span class="p">)</span>
 <span class="n">figure</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">plot_kernel_density</span><span class="p">(</span><span class="n">chlorides</span><span class="p">)</span>
-<span class="n">figure</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">plot_simple_histogram</span><span class="p">(</span><span class="n">chorides</span><span class="p">)</span>
+<span class="n">figure</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">plot_simple_histogram</span><span class="p">(</span><span class="n">chlorides</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../_images/display_15_0.png" src="../_images/display_15_0.png" />
@@ -448,7 +448,7 @@ using <a class="reference internal" href="../diogenes.display.html#diogenes.disp
 <li>Add text blocks with
 <a class="reference internal" href="../diogenes.display.html#diogenes.display.display.Report.add_text" title="diogenes.display.display.Report.add_text"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.display.display.Report.add_text()</span></code></a></li>
 <li>Add tables with <a class="reference internal" href="../diogenes.display.html#diogenes.display.display.Report.add_table" title="diogenes.display.display.Report.add_table"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.display.display.Report.add_table()</span></code></a></li>
-<li>Add figures with <code class="xref py py-meth docutils literal"><span class="pre">diogenes.display.display.Report.add_figure()</span></code></li>
+<li>Add figures with <a class="reference internal" href="../diogenes.display.html#diogenes.display.display.Report.add_fig" title="diogenes.display.display.Report.add_fig"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.display.display.Report.add_fig()</span></code></a></li>
 <li>Build the report with
 <a class="reference internal" href="../diogenes.display.html#diogenes.display.display.Report.to_pdf" title="diogenes.display.display.Report.to_pdf"><code class="xref py py-meth docutils literal"><span class="pre">diogenes.display.display.Report.to_pdf()</span></code></a></li>
 </ul>

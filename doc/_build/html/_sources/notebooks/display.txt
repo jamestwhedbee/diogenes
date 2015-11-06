@@ -22,13 +22,15 @@ from The Internet using :func:`diogenes.read.read.open_csv_url`.
     
     wine_data = diogenes.read.open_csv_url('http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv',
         delimiter=';')
+
 We will then separate labels from features using
-:func:`diogenes.modify.modify.remove_cols`.
+:func:`diogenes.utils.remove_cols`.
 
 .. code:: python
 
     labels = wine_data['quality']
-    M = diogenes.modify.remove_cols(wine_data, 'quality')
+    M = diogenes.utils.remove_cols(wine_data, 'quality')
+
 Finally, we alter labels to make this into a binary classification
 problem. (At this point, all Diogenes features are available for binary
 classification, but other kinds of ML have more limited support).
@@ -36,6 +38,7 @@ classification, but other kinds of ML have more limited support).
 .. code:: python
 
     labels = labels < np.average(labels)
+
 We can look at our summary statistics with
 :func:`diogenes.display.display.describe_cols`. Like most functions in
 Diogenes, ``describe_cols`` produces a Numpy `structured
@@ -46,6 +49,7 @@ array <http://docs.scipy.org/doc/numpy/user/basics.rec.html>`__.
     summary_stats = diogenes.display.describe_cols(M)
     print summary_stats.dtype
 
+
 .. parsed-literal::
 
     [('Column Name', 'S20'), ('Count', '<i8'), ('Mean', '<f8'), ('Standard Dev', '<f8'), ('Minimum', '<f8'), ('Maximum', '<f8')]
@@ -54,6 +58,7 @@ array <http://docs.scipy.org/doc/numpy/user/basics.rec.html>`__.
 .. code:: python
 
     print summary_stats
+
 
 .. parsed-literal::
 
@@ -78,6 +83,7 @@ when we print small structured arrays.
 .. code:: python
 
     diogenes.display.pprint_sa(summary_stats)
+
 
 .. parsed-literal::
 
@@ -104,6 +110,7 @@ return figures, in case the user wants to save them or plot them later.
     figure = diogenes.display.plot_correlation_scatter_plot(M)
 
 
+
 .. image:: display_files/display_13_0.png
 
 
@@ -120,7 +127,8 @@ in a single column (ie a 1-dimensional Numpy array)
     
     figure = diogenes.display.plot_box_plot(chlorides)
     figure = diogenes.display.plot_kernel_density(chlorides)
-    figure = diogenes.display.plot_simple_histogram(chorides)
+    figure = diogenes.display.plot_simple_histogram(chlorides)
+
 
 
 .. image:: display_files/display_15_0.png
@@ -137,6 +145,7 @@ in a single column (ie a 1-dimensional Numpy array)
 .. code:: python
 
     diogenes.display.pprint_sa(diogenes.display.crosstab(np.round(chlorides, 1), labels))
+
 
 .. parsed-literal::
 
@@ -163,6 +172,7 @@ grid\_search for more detail.
              'max_features': ['sqrt','log2'], 'random_state': [0]}]
     exp = diogenes.grid_search.experiment.Experiment(M, labels, clfs=clfs)
     _ = exp.run()
+
 Now, we will extract a single run, which gives us a single fitted
 classifier and a single set of test data.
 
@@ -174,6 +184,7 @@ classifier and a single set of test data.
     M_test = diogenes.utils.cast_np_sa_to_nd(M[run.test_indices])
     labels_test = labels[run.test_indices]
     scores = fitted_classifier.predict_proba(M_test)[:,1]
+
 We can use our fitted classifier and test data to make an ROC curve or a
 precision-recall curve showing us how well the classifier performs.
 
@@ -181,6 +192,7 @@ precision-recall curve showing us how well the classifier performs.
 
     roc_fig = diogenes.display.plot_roc(labels_test, scores)
     prec_recall_fig = diogenes.display.plot_prec_recall(labels_test, scores)
+
 
 
 .. image:: display_files/display_22_0.png
@@ -196,6 +208,7 @@ method to get the top ``n`` features.
 .. code:: python
 
     top_features = diogenes.display.get_top_features(fitted_classifier, M=M)
+
 
 .. parsed-literal::
 
@@ -219,6 +232,7 @@ consecutive occurence of features in decision trees. see
 .. code:: python
 
     results = diogenes.display.feature_pairs_in_rf(fitted_classifier, n=3)
+
 
 .. parsed-literal::
 
@@ -462,7 +476,7 @@ using :class:`diogenes.display.display.Report`.
 -  Add text blocks with
    :meth:`diogenes.display.display.Report.add_text`
 -  Add tables with :meth:`diogenes.display.display.Report.add_table`
--  Add figures with :meth:`diogenes.display.display.Report.add_figure`
+-  Add figures with :meth:`diogenes.display.display.Report.add_fig`
 -  Build the report with
    :meth:`diogenes.display.display.Report.to_pdf`
 
@@ -477,12 +491,14 @@ using :class:`diogenes.display.display.Report`.
     report.add_heading('ROC Plot', level=2)
     report.add_fig(roc_fig)
     full_report_path = report.to_pdf(verbose=False)
+
 Here's the result:
 
 .. code:: python
 
     from IPython.display import HTML
     HTML('<iframe src=display_sample_report.pdf width=700 height=350></iframe>')
+
 
 
 

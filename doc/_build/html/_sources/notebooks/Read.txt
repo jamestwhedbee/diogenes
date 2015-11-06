@@ -26,12 +26,14 @@ We can read local CSV files using :func:`diogenes.read.read.open_csv`.
         csv_in.write(sample_csv_text)
     
     sample_table = diogenes.read.open_csv('sample.csv')
+
 ``sample_table`` is a structured array (more specifically, a `record
 array <http://docs.scipy.org/doc/numpy/reference/generated/numpy.recarray.html>`__).
 
 .. code:: python
 
     print sample_table.dtype
+
 
 .. parsed-literal::
 
@@ -41,6 +43,7 @@ array <http://docs.scipy.org/doc/numpy/reference/generated/numpy.recarray.html>`
 .. code:: python
 
     print sample_table
+
 
 .. parsed-literal::
 
@@ -59,6 +62,7 @@ using a url
         delimiter=';')
     print remote_csv.dtype
 
+
 .. parsed-literal::
 
     (numpy.record, [('fixed acidity', '<f8'), ('volatile acidity', '<f8'), ('citric acid', '<f8'), ('residual sugar', '<f8'), ('chlorides', '<f8'), ('free sulfur dioxide', '<f8'), ('total sulfur dioxide', '<f8'), ('density', '<f8'), ('pH', '<f8'), ('sulphates', '<f8'), ('alcohol', '<f8'), ('quality', '<i8')])
@@ -67,6 +71,7 @@ using a url
 .. code:: python
 
     print remote_csv[:10]
+
 
 .. parsed-literal::
 
@@ -101,6 +106,7 @@ with :meth:`diogenes.read.read.SQLConnection` in a way that resembles
     conn.execute('CREATE TABLE sample_table (id INT, name TEXT, age INT)')
     for row in sample_table:
         conn.execute('INSERT INTO sample_table (id, name, age) VALUES (?, ?, ?)', row)
+
 An important difference between most Python SQL libraries and Diogenes
 is that Diogenes returns queries in structured arrays.
 
@@ -108,6 +114,7 @@ is that Diogenes returns queries in structured arrays.
 
     sql_result = conn.execute('SELECT * FROM sample_table')
     print sql_result.dtype
+
 
 .. parsed-literal::
 
@@ -117,6 +124,7 @@ is that Diogenes returns queries in structured arrays.
 .. code:: python
 
     print sql_result
+
 
 .. parsed-literal::
 

@@ -42,6 +42,7 @@ We start by preparing the wine data set for binary classification
     labels = data['quality']
     labels = labels < np.average(labels)
     M = diogenes.modify.remove_cols(data, 'quality')
+
 We then design an experiment that fits data against Random Forest and
 SVC with a number of hyperparameters:
 
@@ -53,6 +54,7 @@ SVC with a number of hyperparameters:
              'max_features': ['sqrt','log2'], 'random_state': [0]},
             {'clf': SVC, 'C': [0.1, 1.0, 10], 'kernel': ['linear', 'rbf'], 
              'max_iter': [1000], 'random_state': [0]}]
+
 This experiment will fit the data to one classifier for each element in
 the Cartesian product of the parameters that we passed in. It's
 equivalent to creating all the following classifiers:
@@ -87,6 +89,7 @@ which classifier and which hyperparameters performed the best.
         print score
         print
 
+
 .. parsed-literal::
 
     Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 50, 'max_features': 'sqrt', 'random_state': 0}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
@@ -102,11 +105,11 @@ which classifier and which hyperparameters performed the best.
 
 .. parsed-literal::
 
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
       % self.max_iter, ConvergenceWarning)
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
       % self.max_iter, ConvergenceWarning)
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
       % self.max_iter, ConvergenceWarning)
 
 
@@ -128,24 +131,25 @@ your own, you can look use :mod:`diogenes.grid_search.standard_clfs`.
         print score
         print
 
+
 .. parsed-literal::
 
-    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 30, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.757665504965
+    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 50, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
+    0.756234765799
     
-    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 10, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.756645764041
+    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 50, 'max_features': 'sqrt', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
+    0.75521377412
     
     Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 30, 'max_features': 'sqrt', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.756236016554
+    0.753377540034
     
 
 
 .. parsed-literal::
 
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
       % self.max_iter, ConvergenceWarning)
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
       % self.max_iter, ConvergenceWarning)
 
 
@@ -204,6 +208,7 @@ without varying the distribution of labels, so we will use
     plt.show()
 
 
+
 .. image:: grid_search_files/grid_search_10_0.png
 
 
@@ -237,14 +242,15 @@ validation:
     for run in exp.trials[0].runs_flattened():
         print run.score()
 
+
 .. parsed-literal::
 
     [Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.StratifiedKFold'>, cv_params={'n_folds': 5})]
-    0.698979591837
-    0.702040816327
-    0.755102040816
-    0.723186925434
-    0.746680286006
+    0.705102040816
+    0.723469387755
+    0.742857142857
+    0.744637385087
+    0.73646578141
 
 
 We have 1 ``Trial`` with 5 ``Run``\ s, one ``Run`` per fold. We discuss
@@ -316,6 +322,7 @@ happened during a particular year:
     print years[:10]
     M_with_year = diogenes.utils.append_cols(M, years, 'year')
 
+
 .. parsed-literal::
 
     [1995 1990 1993 1993 1997 1999 1993 1995 1992 1994]
@@ -341,6 +348,7 @@ happened during a particular year:
             run.cv_note['test_start'],
             run.cv_note['test_end'],
             run.score())
+
 
 .. parsed-literal::
 
@@ -378,6 +386,7 @@ subsets, and folds:
     cvs = [{'cv': StratifiedKFold, 'n_folds': [4]}]
     exp = diogenes.grid_search.experiment.Experiment(M, labels, clfs=clfs, subsets=subsets, cvs=cvs)
     _ = exp.run()
+
 We can access our ``Trial``\ s with ``exp.trials``
 
 .. code:: python
@@ -386,6 +395,7 @@ We can access our ``Trial``\ s with ``exp.trials``
         print 'trial with n_estimators={} and subset_size={}'.format(
             trial.clf_params['n_estimators'],
             trial.subset_params['subset_size'])
+
 
 .. parsed-literal::
 
@@ -417,6 +427,7 @@ We can access the ``Run``\ s in a given ``Trial`` with ``Trial.runs``
                 run.subset_note['sample_num'],
                 run.cv_note['fold'])
 
+
 .. parsed-literal::
 
     Run from subset: 0, fold: 0
@@ -443,6 +454,7 @@ subsets and the inner list organizes folds. To get a flat list, use
         print 'Run from subset: {}, fold: {}'.format(
                 run.subset_note['sample_num'],
                 run.cv_note['fold'])
+
 
 .. parsed-literal::
 
@@ -471,10 +483,11 @@ aggregations of metrics are available at the ``Trial`` level
     print run_0.f1_score()
     fig = run_0.prec_recall_curve()
 
+
 .. parsed-literal::
 
-    0.674880525687
-    0.691729323308
+    0.67620327701
+    0.698412698413
 
 
 
@@ -511,6 +524,7 @@ We'll look at the pdf report in detail:
     exp.make_report(report_file_name='grid_search_sample_report.pdf', verbose=False)
     from IPython.display import HTML
     HTML('<iframe src=grid_search_sample_report.pdf width=800 height=350></iframe>')
+
 
 
 

@@ -129,11 +129,11 @@ Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;
 0.730916098323
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+<div class="highlight-python"><div class="highlight"><pre>/Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
-/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+/Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
-/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+/Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
 </pre></div>
 </div>
@@ -152,19 +152,19 @@ your own, you can look use <a class="reference internal" href="../diogenes.grid_
     <span class="k">print</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 30, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
-0.757665504965
+<div class="highlight-python"><div class="highlight"><pre>Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 50, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.756234765799
 
-Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 10, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
-0.756645764041
+Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 50, &#39;max_features&#39;: &#39;sqrt&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.75521377412
 
 Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 30, &#39;max_features&#39;: &#39;sqrt&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
-0.756236016554
+0.753377540034
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+<div class="highlight-python"><div class="highlight"><pre>/Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
-/Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+/Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
 </pre></div>
 </div>
@@ -247,11 +247,11 @@ validation:</p>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>[Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.StratifiedKFold&#39;&gt;, cv_params={&#39;n_folds&#39;: 5})]
-0.698979591837
-0.702040816327
-0.755102040816
-0.723186925434
-0.746680286006
+0.705102040816
+0.723469387755
+0.742857142857
+0.744637385087
+0.73646578141
 </pre></div>
 </div>
 <p>We have 1 <code class="docutils literal"><span class="pre">Trial</span></code> with 5 <code class="docutils literal"><span class="pre">Run</span></code>s, one <code class="docutils literal"><span class="pre">Run</span></code> per fold. We discuss
@@ -498,8 +498,8 @@ aggregations of metrics are available at the <code class="docutils literal"><spa
 <span class="n">fig</span> <span class="o">=</span> <span class="n">run_0</span><span class="o">.</span><span class="n">prec_recall_curve</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="mf">0.674880525687</span>
-<span class="mf">0.691729323308</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="mf">0.67620327701</span>
+<span class="mf">0.698412698413</span>
 </pre></div>
 </div>
 <img alt="../_images/grid_search_27_1.png" src="../_images/grid_search_27_1.png" />

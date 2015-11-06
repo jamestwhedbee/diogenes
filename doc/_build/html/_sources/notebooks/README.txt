@@ -4,6 +4,7 @@
     %matplotlib inline
     import diogenes
     import numpy as np
+
 Get data from wine quality data set
 
 .. code:: python
@@ -11,6 +12,7 @@ Get data from wine quality data set
     data = diogenes.read.open_csv_url(
         'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv',
         delimiter=';')
+
 Note that data is a `Numpy structured
 array <http://docs.scipy.org/doc/numpy/user/basics.rec.html>`__ We can
 use it like this:
@@ -18,6 +20,7 @@ use it like this:
 .. code:: python
 
     data.dtype.names
+
 
 
 
@@ -42,6 +45,7 @@ use it like this:
 
     print data.shape
 
+
 .. parsed-literal::
 
     (4898,)
@@ -50,6 +54,7 @@ use it like this:
 .. code:: python
 
     print data['fixed acidity']
+
 
 .. parsed-literal::
 
@@ -65,6 +70,7 @@ into binary classes.
     labels = labels < np.average(labels)
     print labels
 
+
 .. parsed-literal::
 
     [False False False ..., False False False]
@@ -77,6 +83,7 @@ Remove the labels from the rest of our data
     M = diogenes.modify.remove_cols(data, 'quality')
     print M.dtype.names
 
+
 .. parsed-literal::
 
     ('fixed acidity', 'volatile acidity', 'citric acid', 'residual sugar', 'chlorides', 'free sulfur dioxide', 'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol')
@@ -87,6 +94,7 @@ Print summary statistics for our features
 .. code:: python
 
     diogenes.display.pprint_sa(diogenes.display.describe_cols(M))
+
 
 .. parsed-literal::
 
@@ -111,7 +119,14 @@ Plot correlation between features
     fig = diogenes.display.plot_correlation_matrix(M)
 
 
-.. image:: README_files/README_14_0.png
+.. parsed-literal::
+
+    /Users/zar1/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+      if self._edgecolors == str('face'):
+
+
+
+.. image:: README_files/README_14_1.png
 
 
 Arrange an experiment trying different classifiers
@@ -122,25 +137,27 @@ Arrange an experiment trying different classifiers
         M,
         labels,
         clfs=diogenes.grid_search.standard_clfs.std_clfs)
+
 Make a pdf report
 
 .. code:: python
 
     exp.make_report(verbose=False)
 
-.. parsed-literal::
-
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
-      % self.max_iter, ConvergenceWarning)
-    /Library/Python/2.7/site-packages/sklearn/svm/base.py:204: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
-      % self.max_iter, ConvergenceWarning)
-
-
-
 
 .. parsed-literal::
 
-    '/Users/zar1/dssg/diogenes/report.pdf'
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+      % self.max_iter, ConvergenceWarning)
+    /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+      % self.max_iter, ConvergenceWarning)
+
+
+
+
+.. parsed-literal::
+
+    '/Users/zar1/dssg/diogenes/doc/notebooks/report.pdf'
 
 
 
@@ -153,15 +170,17 @@ Find the trial with the best score and make an ROC curve
     print best_trial
     print best_score
 
+
 .. parsed-literal::
 
-    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 50, 'max_features': 'sqrt', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.756236767007
+    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 30, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
+    0.755828395351
 
 
 .. code:: python
 
     fig = best_trial.roc_curve()
+
 
 
 .. image:: README_files/README_21_0.png

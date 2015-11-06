@@ -45,15 +45,18 @@ Debris" data on the Chicago data portal
     
     data = diogenes.read.open_csv_url('https://data.cityofchicago.org/api/views/mab8-y9h3/rows.csv?accessType=DOWNLOAD', 
                                       parse_datetimes=['Creation Date', 'Completion Date'])
+
 The last row of this data set repeats the labels. We're going to go
 ahead and omit it.
 
 .. code:: python
 
     data = data[:-1]
+
 .. code:: python
 
     data.dtype
+
 
 
 
@@ -71,6 +74,7 @@ ultimately be the "Status" column.
     from collections import Counter
     print Counter(data['Status']).most_common()
 
+
 .. parsed-literal::
 
     [('Completed', 94286), ('Completed - Dup', 13899), ('Open', 114), ('Open - Dup', 8)]
@@ -86,6 +90,7 @@ point variables (encoded as numpy.nan)
     print sum(np.isnan(data['ZIP Code']))
     print sum(np.isnan(data['Ward']))
     print sum(np.isnan(data['X Coordinate']))
+
 
 .. parsed-literal::
 
@@ -108,6 +113,7 @@ We could, for instance, replace every nan with a 0:
     print sum(np.isnan(data_with_zeros['ZIP Code']))
     print sum(data_with_zeros['ZIP Code'] == 0)
 
+
 .. parsed-literal::
 
     0
@@ -122,6 +128,7 @@ values with the most frequent value in the column:
 .. code:: python
 
     data = diogenes.modify.replace_missing_vals(data, strategy='most_frequent')
+
 Our data also has a number of string columns. Strings must be converted
 to numbers before Scikit-Learn can analyze them, so we will use
 :func:`diogenes.modify.modify.label_encode` to convert them
@@ -132,6 +139,7 @@ to numbers before Scikit-Learn can analyze them, so we will use
     data, classes = diogenes.modify.label_encode(data)
     print Counter(data['If Yes, where is the debris located?']).most_common()
     print classes['If Yes, where is the debris located?']
+
 
 .. parsed-literal::
 
@@ -148,6 +156,7 @@ represents, we would look at:
 .. code:: python
 
     classes['If Yes, where is the debris located?'][1]
+
 
 
 
@@ -191,6 +200,7 @@ column selection function:
     
     print data.dtype.names
 
+
 .. parsed-literal::
 
     ('Creation Date', 'Status', 'Completion Date', 'Service Request Number', 'Type of Service Request', 'If Yes, where is the debris located?', 'Current Activity', 'Most Recent Action', 'Street Address', 'ZIP Code', 'X Coordinate', 'Y Coordinate', 'Ward', 'Police District', 'Community Area', 'Latitude', 'Longitude', 'Location')
@@ -223,6 +233,7 @@ the year 2015 and select only those rows using the
     print data['Creation Date'].min()
     print data['Creation Date'].max()
 
+
 .. parsed-literal::
 
     (108307,)
@@ -240,6 +251,7 @@ duplicates. We review our ``classes`` variable to find:
 .. code:: python
 
     classes['Status']
+
 
 
 
@@ -268,6 +280,7 @@ rows that have one of several discrete values, so we will create one:
     print data2.shape
     print Counter(data2['Status']).most_common()
 
+
 .. parsed-literal::
 
     (15380,)
@@ -290,6 +303,7 @@ using :func:`diogenes.modify.modify.distance_from_point`.
     dist_from_cloud_gate = diogenes.modify.distance_from_point(41.882773, -87.623304, data['Latitude'], data['Longitude'])
     print dist_from_cloud_gate[:10]
 
+
 .. parsed-literal::
 
     [ 18.48754468   9.95679334  10.80453512  14.35591087  13.99126308
@@ -304,6 +318,7 @@ Now we'll put those distances into 10 bins using
     dist_binned = diogenes.modify.generate_bin(dist_from_cloud_gate, 10)
     print dist_binned[:10]
 
+
 .. parsed-literal::
 
     [6, 3, 3, 5, 5, 4, 3, 5, 6, 7]
@@ -317,6 +332,7 @@ syntax to the selection functions).
 .. code:: python
 
     print classes['If Yes, where is the debris located?']
+
 
 .. parsed-literal::
 
@@ -337,6 +353,7 @@ We note that "Parkway" is category 2, so we will select items that equal
                   'vals': 10}]
     parkway_in_ward_10 = diogenes.modify.where_all_are_true(data, arguments)
     print np.where(parkway_in_ward_10)
+
 
 .. parsed-literal::
 
@@ -368,6 +385,7 @@ Finally, we'll add all of our generated features to our data using
                                       ['dist_from_cloud_gate', 'dist_binned', 'parkway_in_ward_10'])
     print data.dtype
 
+
 .. parsed-literal::
 
     [('Creation Date', '<M8[ns]'), ('Status', '<i8'), ('Completion Date', '<M8[ns]'), ('Service Request Number', '<i8'), ('If Yes, where is the debris located?', '<i8'), ('Current Activity', '<i8'), ('Most Recent Action', '<i8'), ('Street Address', '<i8'), ('ZIP Code', '<f8'), ('X Coordinate', '<f8'), ('Y Coordinate', '<f8'), ('Ward', '<f8'), ('Police District', '<f8'), ('Community Area', '<f8'), ('Latitude', '<f8'), ('Longitude', '<f8'), ('Location', '<i8'), ('dist_from_cloud_gate', '<f8'), ('dist_binned', '<i8'), ('parkway_in_ward_10', '?')]
@@ -386,6 +404,7 @@ we're ready to run an experiment.
     M = diogenes.utils.remove_cols(data, ['Status', 'Completion Date'])
     exp = diogenes.grid_search.experiment.Experiment(M, labels)
     exp.run()
+
 
 
 

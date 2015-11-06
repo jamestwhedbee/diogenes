@@ -815,6 +815,150 @@ Based on <a class="reference external" href="http://wiki.scipy.org/Cookbook/Reca
 </dd></dl>
 
 <dl class="function">
+<dt id="diogenes.utils.check_arguments">
+<code class="descclassname">diogenes.utils.</code><code class="descname">check_arguments</code><span class="sig-paren">(</span><em>args</em>, <em>required_keys</em>, <em>optional_keys_take_lists=False</em>, <em>argument_name='arguments'</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.check_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that args adheres to the &#8220;arguments&#8221; format.</p>
+<p>The arguments format is the format expected by &#8220;arguments&#8221; in, for
+example, diogenes.modify.choose_cols_where,
+diogenes.modify.remove_rows_where, diogenes.modify.where_all_are_true,
+and diogenes.grid_search.experiment.Experiment. If args does not
+adhere to this format, raises a ValueError</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>args</strong> (<em>list of dict</em>) &#8211; Arguments to verify</li>
+<li><strong>required_keys</strong> (<em>dict of str : ((? -&gt; bool) or None)</em>) &#8211; <p>A dictionary specifying which keys will be required in each
+dict in args. If a value in required_keys is not None, it should be
+a lambda that takes the argument passed to the key in args and returns
+a bool signifying whether or not the input is valid for that
+required key. For example, if every dict in args requires the key
+&#8216;func&#8217; and the argument for that key must be callable, you could pass:</p>
+<blockquote>
+<div>required_keys = {&#8216;func&#8217;: lambda f: hasattr(f, &#8216;__call__&#8217;)}</div></blockquote>
+<p>If a key in required_keys has the value None, then the corresponding
+key in args will not be verified.</p>
+</li>
+<li><strong>argument_name</strong> (<em>str</em>) &#8211; Name of variable that was supposed to be in argument format</li>
+<li><strong>optional_keys_take_lists</strong> (<em>bool</em>) &#8211; Iff True, will make sure that arguments for keys in args that are
+not required_keys have values that are lists. This is a consolation
+to diogenes.grid_search.Experiment</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The verified args</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.check_col">
+<code class="descclassname">diogenes.utils.</code><code class="descname">check_col</code><span class="sig-paren">(</span><em>col</em>, <em>argument_name='col'</em>, <em>n_rows=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.check_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that col is a 1-dimensional array. Otherwise, throws an error</p>
+<p>If col is not a numpy array, but is an iterable that can be converted to
+an array, the conversion will be performed and an error will not be
+thrown.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col</strong> &#8211; Object to check</li>
+<li><strong>argument_name</strong> (<em>str</em>) &#8211; Name of variable that was supposed to be a 1-dimensional array</li>
+<li><strong>n_rows</strong> (<em>int or None</em>) &#8211; If not None, number or rows that col should have</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The verified (and possibly converted) col</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">np.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.check_col_names">
+<code class="descclassname">diogenes.utils.</code><code class="descname">check_col_names</code><span class="sig-paren">(</span><em>col_names</em>, <em>argument_name='col_names'</em>, <em>n_cols=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.check_col_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes sure that col_names is a valid list of str.</p>
+<p>If col_names is a str, will transform it into a list of str</p>
+<p>If any of col_names is unicode, translates to ascii</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>col_names</strong> &#8211; Object to check</li>
+<li><strong>argument_name</strong> (<em>str</em>) &#8211; Name of variable that was supposed to be in col_names format</li>
+<li><strong>n_cols</strong> (<em>None or int</em>) &#8211; If not None, number of entries that col_names should have</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">transformed col_names</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.check_consistent">
+<code class="descclassname">diogenes.utils.</code><code class="descname">check_consistent</code><span class="sig-paren">(</span><em>M</em>, <em>col=None</em>, <em>col_names=None</em>, <em>M_argument_name='M'</em>, <em>col_argument_name='col'</em>, <em>col_names_argument_name='col_names'</em>, <em>n_rows=None</em>, <em>n_cols=None</em>, <em>col_names_if_M_converted=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.check_consistent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes sure that input is valid and self-consistent</p>
+<ol class="arabic simple">
+<li>Makes sure that M is a valid structured array.</li>
+<li>If col is provided, makes sure it&#8217;s a valid column.</li>
+<li>If col is provided, makes sure that M and col have the same number of
+rows</li>
+<li>If col_names is provided, makes sure that col_names is a list of str</li>
+<li>If col_names is provided, make sure that the col_names are in M</li>
+</ol>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.check_sa">
+<code class="descclassname">diogenes.utils.</code><code class="descname">check_sa</code><span class="sig-paren">(</span><em>M</em>, <em>argument_name='M'</em>, <em>n_rows=None</em>, <em>n_cols=None</em>, <em>col_names_if_converted=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.check_sa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that M is a structured array. Otherwise, throws an error</p>
+<p>If M is not a structured array, but can be converted to a structured
+array, this function will return the converted structured array without
+throwing an error.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>M</strong> &#8211; Object to check</li>
+<li><strong>argument_name</strong> (<em>str</em>) &#8211; Name of variable that was supposed to be a structured array</li>
+<li><strong>n_rows</strong> (<em>int or None</em>) &#8211; If not None, number or rows that M should have</li>
+<li><strong>n_cols</strong> (<em>int or None</em>) &#8211; If not None, number of columns that M should have</li>
+<li><strong>col_names_if_converted</strong> (<em>list of str or None</em>) &#8211; If M is converted to a structured array from a list of lists or
+a homogeneous numpy array, the created structured array will
+use these names for columns</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The verified (and possibly converted) M</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="diogenes.utils.convert_to_sa">
 <code class="descclassname">diogenes.utils.</code><code class="descname">convert_to_sa</code><span class="sig-paren">(</span><em>M</em>, <em>col_names=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.convert_to_sa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an list of lists or a np ndarray to a Structured Arrray
@@ -1033,7 +1177,7 @@ structured array corresponding to the csv</li>
 
 <dl class="function">
 <dt id="diogenes.utils.stack_rows">
-<code class="descclassname">diogenes.utils.</code><code class="descname">stack_rows</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.stack_rows" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">diogenes.utils.</code><code class="descname">stack_rows</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.stack_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a structured array containing all the rows in its arguments</p>
 <p>Each argument must be a structured array with the same column names
 and column types. Similar to SQL UNION</p>
@@ -1061,7 +1205,8 @@ and column types. Similar to SQL UNION</p>
 <dl class="function">
 <dt id="diogenes.utils.utf_to_ascii">
 <code class="descclassname">diogenes.utils.</code><code class="descname">utf_to_ascii</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.utf_to_ascii" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a unicode string to an ascii string</p>
+<dd><p>Converts a unicode string to an ascii string.</p>
+<p>If the argument is not a unicode string, returns the argument.</p>
 </dd></dl>
 
 </div>
