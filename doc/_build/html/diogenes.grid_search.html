@@ -54,7 +54,7 @@
 <p>Provides classes necessary for organizing an Experiment</p>
 <dl class="class">
 <dt id="diogenes.grid_search.experiment.Experiment">
-<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Experiment</code><span class="sig-paren">(</span><em>M, y, clfs=[{'clf': &lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;}], subsets=[{'subset': &lt;class 'diogenes.grid_search.subset.SubsetNoSubset'&gt;}], cvs=[{'cv': &lt;class 'sklearn.cross_validation.KFold'&gt;}], trials=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Experiment</code><span class="sig-paren">(</span><em>M, labels, clfs=[{'clf': &lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;}], subsets=[{'subset': &lt;class 'diogenes.grid_search.subset.SubsetNoSubset'&gt;}], cvs=[{'cv': &lt;class 'sklearn.cross_validation.KFold'&gt;}], trials=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Experiment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Class to execute and organize grid searches.</p>
 <p>Several of the init arguments are of type list of dict. Experiment
@@ -134,7 +134,7 @@ diogenes.grid_search.standard_clfs.py.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; structured array corresponding to features to experiment on</li>
-<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; vector of labels</li>
+<li><strong>labels</strong> (<em>numpy.ndarray</em>) &#8211; vector of labels</li>
 <li><strong>clfs</strong> (<em>list of dict</em>) &#8211; classifiers to run</li>
 <li><strong>subsets</strong> (<em>list of dict</em>) &#8211; subsetting operations to perform</li>
 <li><strong>cvs</strong> (<em>list of dict</em>) &#8211; directives to make train and test sets</li>
@@ -385,7 +385,7 @@ value</dd>
 
 <dl class="class">
 <dt id="diogenes.grid_search.experiment.Run">
-<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Run</code><span class="sig-paren">(</span><em>M</em>, <em>y</em>, <em>col_names</em>, <em>clf</em>, <em>train_indices</em>, <em>test_indices</em>, <em>sub_col_names</em>, <em>sub_col_inds</em>, <em>subset_note</em>, <em>cv_note</em>, <em>M_test=None</em>, <em>y_test=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Run</code><span class="sig-paren">(</span><em>M</em>, <em>labels</em>, <em>col_names</em>, <em>clf</em>, <em>train_indices</em>, <em>test_indices</em>, <em>sub_col_names</em>, <em>sub_col_inds</em>, <em>subset_note</em>, <em>cv_note</em>, <em>M_test=None</em>, <em>labels_test=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Object encapsulating a single fitted classifier and specific data</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -396,14 +396,14 @@ value</dd>
 <li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Homogeneous (not structured) array. The array of features.
 If M_test is None, M contains both train and test sets. If
 M_test is not None, M contains only the training set.</li>
-<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; Array of labels. If y_test is None, y contains both train and
-test sets. If y_test is not None, M contains only the training
+<li><strong>labels</strong> (<em>numpy.ndarray</em>) &#8211; Array of labels. If labels_test is None, labels contains both train and
+test sets. If labels_test is not None, M contains only the training
 set.</li>
 <li><strong>col_names</strong> (<em>list of str</em>) &#8211; Names of features</li>
 <li><strong>clf</strong> (<em>sklearn.base.BaseEstimator</em>) &#8211; clf fitted with testing data</li>
-<li><strong>train_indices</strong> (<em>np.ndarray or None</em>) &#8211; If M_test and y_test are None, The indices of M and y that
+<li><strong>train_indices</strong> (<em>np.ndarray or None</em>) &#8211; If M_test and labels_test are None, The indices of M and labels that
 comprise the training set</li>
-<li><strong>test_indices</strong> (<em>np.ndarray or None</em>) &#8211; If M_test and y_test are None, The indices of M and y that
+<li><strong>test_indices</strong> (<em>np.ndarray or None</em>) &#8211; If M_test and labels_test are None, The indices of M and labels that
 comprise the testing set</li>
 <li><strong>sub_col_names</strong> (<em>list of str</em>) &#8211; If subset takes a subset of columns, these are the column names
 involved in this subset</li>
@@ -412,7 +412,7 @@ columns involved in this subset</li>
 <li><strong>subset_note</strong> (<em>dict of str : ?</em>) &#8211; Extra information about this Run provided by the subsetter</li>
 <li><strong>cv_note</strong> (<em>dict of str : ?</em>) &#8211; Extra information about this run provided by the partition iterator</li>
 <li><strong>M_test</strong> (<em>np.ndarray or None</em>) &#8211; If not None, the features in the test set</li>
-<li><strong>y_test</strong> (<em>np.ndarray or None</em>) &#8211; If not None, the labels in the test set</li>
+<li><strong>labels_test</strong> (<em>np.ndarray or None</em>) &#8211; If not None, the labels in the test set</li>
 </ul>
 </td>
 </tr>
@@ -428,11 +428,11 @@ M_test is not None, M contains only the training set.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="diogenes.grid_search.experiment.Run.y">
-<code class="descname">y</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.y" title="Permalink to this definition">¶</a></dt>
+<dt id="diogenes.grid_search.experiment.Run.labels">
+<code class="descname">labels</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em></p>
-<p>Array of labels. If y_test is None, y contains both train and
-test sets. If y_test is not None, M contains only the training
+<p>Array of labels. If labels_test is None, labels contains both train and
+test sets. If labels_test is not None, M contains only the training
 set.</p>
 </dd></dl>
 
@@ -454,7 +454,7 @@ set.</p>
 <dt id="diogenes.grid_search.experiment.Run.train_indices">
 <code class="descname">train_indices</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.train_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>np.ndarray or None</em></p>
-<p>If M_test and y_test are None, The indices of M and y that
+<p>If M_test and labels_test are None, The indices of M and labels that
 comprise the training set</p>
 </dd></dl>
 
@@ -462,7 +462,7 @@ comprise the training set</p>
 <dt id="diogenes.grid_search.experiment.Run.test_indices">
 <code class="descname">test_indices</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.test_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>np.ndarray or None</em></p>
-<p>If M_test and y_test are None, The indices of M and y that
+<p>If M_test and labels_test are None, The indices of M and labels that
 comprise the testing set</p>
 </dd></dl>
 
@@ -504,8 +504,8 @@ columns involved in this subset</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="diogenes.grid_search.experiment.Run.y_test">
-<code class="descname">y_test</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.y_test" title="Permalink to this definition">¶</a></dt>
+<dt id="diogenes.grid_search.experiment.Run.labels_test">
+<code class="descname">labels_test</code><a class="headerlink" href="#diogenes.grid_search.experiment.Run.labels_test" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>np.ndarray or None</em></p>
 <p>If not None, the labels in the test set</p>
 </dd></dl>
@@ -592,7 +592,7 @@ columns involved in this subset</p>
 
 <dl class="class">
 <dt id="diogenes.grid_search.experiment.Trial">
-<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Trial</code><span class="sig-paren">(</span><em>M</em>, <em>y</em>, <em>col_names</em>, <em>clf=&lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;</em>, <em>clf_params={}</em>, <em>subset=&lt;class 'diogenes.grid_search.subset.SubsetNoSubset'&gt;</em>, <em>subset_params={}</em>, <em>cv=&lt;class 'diogenes.grid_search.partition_iterator.NoCV'&gt;</em>, <em>cv_params={}</em>, <em>runs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">diogenes.grid_search.experiment.</code><code class="descname">Trial</code><span class="sig-paren">(</span><em>M</em>, <em>labels</em>, <em>col_names</em>, <em>clf=&lt;class 'sklearn.ensemble.forest.RandomForestClassifier'&gt;</em>, <em>clf_params={}</em>, <em>subset=&lt;class 'diogenes.grid_search.subset.SubsetNoSubset'&gt;</em>, <em>subset_params={}</em>, <em>cv=&lt;class 'diogenes.grid_search.partition_iterator.NoCV'&gt;</em>, <em>cv_params={}</em>, <em>runs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.grid_search.experiment.Trial" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Object encapsulating all Runs for a given configuration</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -601,7 +601,7 @@ columns involved in this subset</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>M</strong> (<em>numpy.ndarray</em>) &#8211; Homogeneous (not structured) array of features</li>
-<li><strong>y</strong> (<em>numpy.ndarray</em>) &#8211; Array of labels</li>
+<li><strong>labels</strong> (<em>numpy.ndarray</em>) &#8211; Array of labels</li>
 <li><strong>col_names</strong> (<em>list of str</em>) &#8211; Names of features</li>
 <li><strong>clf</strong> (<em>sklearn.base.BaseEstimator class</em>) &#8211; Classifier for this trial</li>
 <li><strong>clf_params</strong> (<em>dict of str : ?</em>) &#8211; init parameters for clf</li>
@@ -624,8 +624,8 @@ that have already been created.</li>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="diogenes.grid_search.experiment.Trial.y">
-<code class="descname">y</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.y" title="Permalink to this definition">¶</a></dt>
+<dt id="diogenes.grid_search.experiment.Trial.labels">
+<code class="descname">labels</code><a class="headerlink" href="#diogenes.grid_search.experiment.Trial.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em></p>
 <p>Array of labels</p>
 </dd></dl>

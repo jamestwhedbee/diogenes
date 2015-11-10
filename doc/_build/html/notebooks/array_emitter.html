@@ -50,7 +50,7 @@
 <a class="reference internal" href="../diogenes.html#diogenes.array_emitter.ArrayEmitter" title="diogenes.array_emitter.ArrayEmitter"><code class="xref py py-class docutils literal"><span class="pre">diogenes.array_emitter.ArrayEmitter</span></code></a>, which generates tables
 digestable by Scikit-Learn from RG-formatted (transposed) tables. See
 class documentation for details</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">diogenes</span> <span class="kn">import</span> <span class="n">array_emitter</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">diogenes</span>
 
 <span class="n">rg_table_csv</span> <span class="o">=</span> <span class="p">(</span>
 <span class="sd">&quot;&quot;&quot;student_id,start_year,end_year,feature,value</span>
@@ -73,7 +73,7 @@ class documentation for details</p>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;sample.csv&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">sample_csv_in</span><span class="p">:</span>
     <span class="n">sample_csv_in</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rg_table_csv</span><span class="p">)</span>
 
-<span class="n">ae</span> <span class="o">=</span> <span class="n">array_emitter</span><span class="o">.</span><span class="n">ArrayEmitter</span><span class="p">()</span>
+<span class="n">ae</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">array_emitter</span><span class="o">.</span><span class="n">ArrayEmitter</span><span class="p">()</span>
 <span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">get_rg_from_csv</span><span class="p">(</span><span class="s">&#39;sample.csv&#39;</span><span class="p">)</span>
 <span class="n">ae</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">set_interval</span><span class="p">(</span><span class="mi">2005</span><span class="p">,</span> <span class="mi">2007</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">emit_M</span><span class="p">()</span>

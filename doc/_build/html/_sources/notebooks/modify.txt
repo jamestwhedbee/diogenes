@@ -77,7 +77,7 @@ ultimately be the "Status" column.
 
 .. parsed-literal::
 
-    [('Completed', 94286), ('Completed - Dup', 13899), ('Open', 114), ('Open - Dup', 8)]
+    [('Completed', 94431), ('Completed - Dup', 13912), ('Open', 144), ('Open - Dup', 6)]
 
 
 We'll remove the label from the rest of the data later. First, let's do
@@ -143,8 +143,8 @@ to numbers before Scikit-Learn can analyze them, so we will use
 
 .. parsed-literal::
 
-    [('Parkway', 44303), ('Alley', 43064), ('', 16130), ('Vacant Lot', 4810)]
-    [(2, 44303), (1, 43064), (0, 16130), (3, 4810)]
+    [('Parkway', 44385), ('Alley', 43146), ('', 16145), ('Vacant Lot', 4817)]
+    [(2, 44385), (1, 43146), (0, 16145), (3, 4817)]
     ['' 'Alley' 'Parkway' 'Vacant Lot']
 
 
@@ -205,7 +205,7 @@ column selection function:
 
     ('Creation Date', 'Status', 'Completion Date', 'Service Request Number', 'Type of Service Request', 'If Yes, where is the debris located?', 'Current Activity', 'Most Recent Action', 'Street Address', 'ZIP Code', 'X Coordinate', 'Y Coordinate', 'Ward', 'Police District', 'Community Area', 'Latitude', 'Longitude', 'Location')
     
-    Counter({0: 108307})
+    Counter({0: 108493})
     
     ('Creation Date', 'Status', 'Completion Date', 'Service Request Number', 'If Yes, where is the debris located?', 'Current Activity', 'Most Recent Action', 'Street Address', 'ZIP Code', 'X Coordinate', 'Y Coordinate', 'Ward', 'Police District', 'Community Area', 'Latitude', 'Longitude', 'Location')
 
@@ -236,13 +236,13 @@ the year 2015 and select only those rows using the
 
 .. parsed-literal::
 
-    (108307,)
+    (108493,)
     2004-07-20T19:00:00.000000000-0500
-    2015-10-31T19:00:00.000000000-0500
+    2015-11-04T18:00:00.000000000-0600
     
-    (15380,)
+    (15566,)
     2015-01-01T18:00:00.000000000-0600
-    2015-10-31T19:00:00.000000000-0500
+    2015-11-04T18:00:00.000000000-0600
 
 
 Finally, let's remove rows which the "Status" column claims are
@@ -283,11 +283,11 @@ rows that have one of several discrete values, so we will create one:
 
 .. parsed-literal::
 
-    (15380,)
-    [(0, 13661), (1, 1599), (2, 114), (3, 6)]
+    (15566,)
+    [(0, 13806), (1, 1612), (2, 144), (3, 4)]
     
-    (13775,)
-    [(0, 13661), (2, 114)]
+    (13950,)
+    [(0, 13806), (2, 144)]
 
 
 Feature Generation
@@ -306,8 +306,8 @@ using :func:`diogenes.modify.modify.distance_from_point`.
 
 .. parsed-literal::
 
-    [ 18.48754468   9.95679334  10.80453512  14.35591087  13.99126308
-      12.89855421   9.50211295  15.46302477  17.83725597  19.10774742]
+    [ 12.37824118  13.37711223  18.95988034  26.2061016   20.18279666
+      12.08154288  17.63119029  21.29986356   8.09220669  11.27721597]
 
 
 Now we'll put those distances into 10 bins using
@@ -321,7 +321,7 @@ Now we'll put those distances into 10 bins using
 
 .. parsed-literal::
 
-    [6, 3, 3, 5, 5, 4, 3, 5, 6, 7]
+    [4, 4, 6, 9, 7, 4, 6, 7, 2, 4]
 
 
 Now we'll make a binary feature that is true if and only if the tree is
@@ -357,23 +357,24 @@ We note that "Parkway" is category 2, so we will select items that equal
 
 .. parsed-literal::
 
-    (array([   54,   100,   105,   391,   473,   483,   484,   608,   710,
-             720,   787,   880,   995,  1024,  1205,  1304,  1664,  1730,
-            1869,  1971,  1989,  1995,  2001,  2002,  2029,  2160,  2244,
-            2252,  2432,  2453,  2505,  2596,  2612,  2796,  2985,  3004,
-            3079,  3090,  3091,  3105,  3107,  3135,  3150,  3398,  3401,
-            3470,  3475,  3629,  3750,  3753,  3807,  3814,  3817,  4019,
-            4039,  4063,  4176,  4222,  4228,  4276,  4285,  4292,  4310,
-            4332,  4462,  4638,  4675,  4958,  5014,  5026,  5120,  5165,
-            5166,  5168,  5176,  5212,  5221,  5286,  5473,  5508,  5577,
-            5578,  5723,  5853,  5866,  5887,  6002,  6098,  6129,  6270,
-            6473,  6509,  6553,  7204,  7205,  7206,  7207,  7405,  7760,
-            7773,  7774,  7979,  7991,  8141,  8272,  8303,  8429,  8499,
-            8547,  8577,  8579,  8588,  8693,  8759,  9122,  9207,  9208,
-            9312,  9322,  9510, 10162, 10565, 10581, 10584, 10920, 11051,
-           11117, 11160, 11387, 11397, 11517, 11742, 11872, 11949, 12854,
-           12871, 13201, 13355, 13362, 13583, 13944, 14293, 14297, 14385,
-           14441, 14444, 14463, 14735, 15062, 15169, 15177, 15225]),)
+    (array([    3,   149,   174,   248,   274,   277,   598,   672,   675,
+             698,   796,   945,   949,   963,  1061,  1184,  1206,  1408,
+            1509,  1799,  1902,  2077,  2177,  2185,  2193,  2213,  2215,
+            2230,  2341,  2439,  2444,  2562,  2668,  2683,  2790,  2807,
+            2943,  3181,  3189,  3230,  3232,  3235,  3236,  3237,  3339,
+            3345,  3603,  3609,  3624,  3639,  3824,  3950,  3979,  3998,
+            4002,  4005,  4208,  4224,  4274,  4378,  4391,  4440,  4446,
+            4460,  4486,  4557,  4558,  4630,  4751,  4893,  5074,  5190,
+            5224,  5266,  5288,  5296,  5328,  5372,  5373,  5399,  5531,
+            5603,  5613,  5728,  5729,  5819,  6040,  6052,  6056,  6191,
+            6192,  6517,  6528,  6593,  6682,  7038,  7376,  7387,  7397,
+            7398,  7600,  7883,  7884,  7948,  8132,  8177,  8344,  8499,
+            8516,  8682,  8691,  8699,  8718,  8773,  8776,  8912,  8955,
+            9333,  9424,  9435,  9501,  9518,  9681, 10363, 10731, 10732,
+           10735, 11107, 11259, 11268, 11288, 11582, 11590, 11777, 11956,
+           12064, 12135, 13028, 13067, 13402, 13493, 13603, 13787, 14093,
+           14466, 14484, 14553, 14618, 14625, 14632, 14915, 15248, 15356,
+           15364, 15407]),)
 
 
 Finally, we'll add all of our generated features to our data using

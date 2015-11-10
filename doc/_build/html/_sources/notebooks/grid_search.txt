@@ -134,14 +134,14 @@ your own, you can look use :mod:`diogenes.grid_search.standard_clfs`.
 
 .. parsed-literal::
 
-    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 50, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.756234765799
-    
     Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 50, 'max_features': 'sqrt', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.75521377412
+    0.757257633611
+    
+    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 30, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
+    0.754194533498
     
     Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 30, 'max_features': 'sqrt', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.753377540034
+    0.751742927728
     
 
 
@@ -246,11 +246,11 @@ validation:
 .. parsed-literal::
 
     [Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.StratifiedKFold'>, cv_params={'n_folds': 5})]
-    0.705102040816
-    0.723469387755
-    0.742857142857
-    0.744637385087
-    0.73646578141
+    0.704081632653
+    0.714285714286
+    0.732653061224
+    0.745658835546
+    0.740551583248
 
 
 We have 1 ``Trial`` with 5 ``Run``\ s, one ``Run`` per fold. We discuss
@@ -486,8 +486,8 @@ aggregations of metrics are available at the ``Trial`` level
 
 .. parsed-literal::
 
-    0.67620327701
-    0.698412698413
+    0.683009045912
+    0.666666666667
 
 
 

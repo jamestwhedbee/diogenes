@@ -9,7 +9,7 @@ class documentation for details
 
 .. code:: python
 
-    from diogenes import array_emitter
+    import diogenes
     
     rg_table_csv = (
     """student_id,start_year,end_year,feature,value
@@ -32,7 +32,7 @@ class documentation for details
     with open('sample.csv', 'w') as sample_csv_in:
         sample_csv_in.write(rg_table_csv)
     
-    ae = array_emitter.ArrayEmitter()
+    ae = diogenes.array_emitter.ArrayEmitter()
     ae = ae.get_rg_from_csv('sample.csv')
     ae = ae.set_interval(2005, 2007)
     M = ae.emit_M()

@@ -963,7 +963,7 @@ use these names for columns</li>
 <code class="descclassname">diogenes.utils.</code><code class="descname">convert_to_sa</code><span class="sig-paren">(</span><em>M</em>, <em>col_names=None</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.convert_to_sa" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an list of lists or a np ndarray to a Structured Arrray
 :param M: This is the Matrix M, that it is assumed is the basis for the ML algorithm
-:type M: List of List or np.ndarray
+:type M: List of List or np.ndarray or pandas.Dataframe
 :param col_names: Column names for new sa. If M is already a structured array, col_names</p>
 <blockquote>
 <div>will be ignored. If M is not a structured array and col_names is None,
@@ -1114,6 +1114,12 @@ right_on</li>
 <dt id="diogenes.utils.np_dtype_is_homogeneous">
 <code class="descclassname">diogenes.utils.</code><code class="descname">np_dtype_is_homogeneous</code><span class="sig-paren">(</span><em>A</em><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.np_dtype_is_homogeneous" title="Permalink to this definition">¶</a></dt>
 <dd><p>True iff dtype is nonstructured or every sub dtype is the same</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="diogenes.utils.on_headless_server">
+<code class="descclassname">diogenes.utils.</code><code class="descname">on_headless_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#diogenes.utils.on_headless_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>True iff the host doesn&#8217;t appear to have a display to plot to</p>
 </dd></dl>
 
 <dl class="function">

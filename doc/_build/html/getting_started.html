@@ -156,26 +156,23 @@ into binary classes.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">fig</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">plot_correlation_matrix</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>/Users/zar1/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-  if self._edgecolors == str(&#39;face&#39;):
-</pre></div>
-</div>
-<img alt="README_files/README_14_1.png" src="README_files/README_14_1.png" />
+<img alt="README_files/README_14_0.png" src="README_files/README_14_0.png" />
 <p>Arrange an experiment trying different classifiers</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">exp</span> <span class="o">=</span> <span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">experiment</span><span class="o">.</span><span class="n">Experiment</span><span class="p">(</span>
     <span class="n">M</span><span class="p">,</span>
     <span class="n">labels</span><span class="p">,</span>
     <span class="n">clfs</span><span class="o">=</span><span class="n">diogenes</span><span class="o">.</span><span class="n">grid_search</span><span class="o">.</span><span class="n">standard_clfs</span><span class="o">.</span><span class="n">std_clfs</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Make a pdf report</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">exp</span><span class="o">.</span><span class="n">make_report</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>/Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
 /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
   % self.max_iter, ConvergenceWarning)
+</pre></div>
+</div>
+<p>Make a pdf report</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">exp</span><span class="o">.</span><span class="n">make_report</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;/Users/zar1/dssg/diogenes/doc/notebooks/report.pdf&#39;</span>
@@ -188,8 +185,8 @@ into binary classes.</p>
 <span class="k">print</span> <span class="n">best_score</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 30, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
-0.755828395351
+<div class="highlight-python"><div class="highlight"><pre>Trial(clf=&lt;class &#39;sklearn.ensemble.forest.RandomForestClassifier&#39;&gt;, clf_params={&#39;n_estimators&#39;: 10, &#39;max_features&#39;: &#39;log2&#39;, &#39;n_jobs&#39;: 1, &#39;max_depth&#39;: 7}, subset=&lt;class &#39;diogenes.grid_search.subset.SubsetNoSubset&#39;&gt;, subset_params={}, cv=&lt;class &#39;sklearn.cross_validation.KFold&#39;&gt;, cv_params={})
+0.757462757506
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">fig</span> <span class="o">=</span> <span class="n">best_trial</span><span class="o">.</span><span class="n">roc_curve</span><span class="p">()</span>

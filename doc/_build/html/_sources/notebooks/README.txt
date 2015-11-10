@@ -119,14 +119,8 @@ Plot correlation between features
     fig = diogenes.display.plot_correlation_matrix(M)
 
 
-.. parsed-literal::
 
-    /Users/zar1/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
-      if self._edgecolors == str('face'):
-
-
-
-.. image:: README_files/README_14_1.png
+.. image:: README_files/README_14_0.png
 
 
 Arrange an experiment trying different classifiers
@@ -137,12 +131,7 @@ Arrange an experiment trying different classifiers
         M,
         labels,
         clfs=diogenes.grid_search.standard_clfs.std_clfs)
-
-Make a pdf report
-
-.. code:: python
-
-    exp.make_report(verbose=False)
+    trials = exp.run()
 
 
 .. parsed-literal::
@@ -151,6 +140,13 @@ Make a pdf report
       % self.max_iter, ConvergenceWarning)
     /Users/zar1/anaconda/lib/python2.7/site-packages/sklearn/svm/base.py:209: ConvergenceWarning: Solver terminated early (max_iter=1000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
       % self.max_iter, ConvergenceWarning)
+
+
+Make a pdf report
+
+.. code:: python
+
+    exp.make_report(verbose=False)
 
 
 
@@ -173,8 +169,8 @@ Find the trial with the best score and make an ROC curve
 
 .. parsed-literal::
 
-    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 30, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
-    0.755828395351
+    Trial(clf=<class 'sklearn.ensemble.forest.RandomForestClassifier'>, clf_params={'n_estimators': 10, 'max_features': 'log2', 'n_jobs': 1, 'max_depth': 7}, subset=<class 'diogenes.grid_search.subset.SubsetNoSubset'>, subset_params={}, cv=<class 'sklearn.cross_validation.KFold'>, cv_params={})
+    0.757462757506
 
 
 .. code:: python

@@ -110,12 +110,18 @@ return figures, in case the user wants to save them or plot them later.
     figure = diogenes.display.plot_correlation_scatter_plot(M)
 
 
+.. parsed-literal::
 
-.. image:: display_files/display_13_0.png
+    /Users/zar1/anaconda/lib/python2.7/site-packages/matplotlib/collections.py:590: FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+      if self._edgecolors == str('face'):
 
 
 
 .. image:: display_files/display_13_1.png
+
+
+
+.. image:: display_files/display_13_2.png
 
 
 There are also a number of tools for exploring the distribution of data
