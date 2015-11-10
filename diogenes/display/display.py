@@ -12,6 +12,11 @@ import itertools as it
 
 import numpy as np
 
+from diogenes import utils
+import matplotlib
+if utils.on_headless_server():
+    matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import matplotlib.dates
 from matplotlib.pylab import boxplot 
@@ -28,11 +33,11 @@ import pdfkit
 
 from diogenes.grid_search import Experiment
 from diogenes.utils import is_sa, is_nd, cast_np_sa_to_nd, convert_to_sa, cast_list_of_list_to_sa
-from diogenes import utils
 
 if hasattr(plt, 'style'):
     # Make our plots pretty if matplotlib is new enough
     plt.style.use('ggplot')
+
 
 def pprint_sa(M, row_labels=None, col_labels=None):
     """Prints a nicely formatted Structured array (or similar object) to console
@@ -918,6 +923,7 @@ class Report(object):
         x = xrange(len(results))
         fig = plt.figure()
         plt.bar(x, y)
+        fig.set_size_inches(8, fig.get_size_inches()[1])
         maxy = max(y)
         for rank, result in enumerate(results_sorted):
             plt.text(rank, result[1], '{}'.format(result[2]))
